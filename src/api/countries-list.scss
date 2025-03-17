@@ -1,0 +1,179 @@
+// Variables
+$background-dark: #1c1f26;
+$item-background: #2a2e37;
+$text-color: #ffffff;
+$text-secondary: rgba(255, 255, 255, 0.7);
+$border-radius: 12px;
+$transition: all ease-in-out;
+@use "sass:color";
+
+body {
+    background-color: #121418;
+    margin: 0;
+    padding: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+        "Helvetica Neue", sans-serif;
+}
+
+.countries-container {
+    background-color: $background-dark;
+    padding: 1.5rem;
+    border-radius: $border-radius;
+    color: $text-color;
+    width: 350px;
+    max-width: 400px;
+    margin: 0 auto;
+
+    &__countries-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        padding: 0 0.5rem;
+    }
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: #00000080;
+    border-radius: $border-radius;
+    padding: 0.75rem 1rem;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+
+    &__search-icon {
+        width: 1.25rem;
+        height: 1.25rem;
+        color: $text-secondary;
+    }
+
+    &__search-input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        color: $text-color;
+        font-size: 0.95rem;
+        padding-left: 0.75rem;
+
+        &::placeholder {
+            color: $text-secondary;
+        }
+
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+}
+
+.loading {
+    text-align: center;
+    padding: 1rem;
+    color: $text-secondary;
+}
+
+.countries-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 8px;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 3px;
+    }
+}
+
+.country-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: $item-background;
+    border: none;
+    border-radius: $border-radius;
+    color: $text-color;
+    cursor: pointer;
+    transition: $transition;
+    text-align: left;
+    box-sizing: border-box;
+
+    &:hover {
+        background-color: color.mix(white, $item-background, 10%);
+    }
+
+    &--active {
+        background-color: rgba(122, 132, 255, 0.25);
+    }
+
+    &--active:hover {
+        background-color: rgba(122, 132, 255, 0.25);
+    }
+
+    &--league-item {
+        margin-bottom: 10px;
+        padding: 0.3rem 1rem;
+        background-color: #111111;
+    }
+
+    &__country-flag {
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-right: 0.75rem;
+        flex-shrink: 0;
+        background-color: rgba(255, 255, 255, 0.1);
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .flag-placeholder {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    &__country-name {
+        flex: 1;
+        font-size: 0.95rem;
+    }
+
+    &__chevron-icon {
+        width: 1.25rem;
+        height: 1.25rem;
+        transition: transform 0.2s ease;
+        color: $text-secondary;
+
+        &--expanded {
+            transform: rotate(180deg);
+            color: rgb(122, 132, 255);
+        }
+    }
+
+    &__country-leagues {
+        margin-top: 10px;
+
+        .league-logo {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+    }
+}
