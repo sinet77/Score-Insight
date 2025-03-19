@@ -1,20 +1,13 @@
 import { useEffect, useState } from "react";
 import { countriesApi } from "./countries-api";
-import type { Country } from "./countries-types";
+import type { Country, LeagueSelect, League } from "./countries-types";
 import "./countries-list.scss";
-
-interface League {
-  id: number;
-  name: string;
-  type: string;
-  logo: string;
-}
 
 interface CountryWithLeagues extends Country {
   leagues: League[];
 }
 
-const CountriesList = () => {
+const CountriesList = ({ onLeagueSelect }: LeagueSelect) => {
   const [countries, setCountries] = useState<CountryWithLeagues[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -29,7 +22,7 @@ const CountriesList = () => {
           const countriesWithLeagues = data.response.map(
             (countryData: any) => ({
               ...countryData.country,
-              leagues: countryData.league ? [countryData.league] : [], // Przypisujemy tablicę lig
+              leagues: countryData.league ? [countryData.league] : [],
             })
           );
 
@@ -71,6 +64,10 @@ const CountriesList = () => {
         return [...prevExpandedCountries, countryCode];
       }
     });
+  };
+
+  const handleLeagueClick = (leagueId: number) => {
+    onLeagueSelect(leagueId);
   };
 
   return (
@@ -151,6 +148,7 @@ const CountriesList = () => {
                       <div
                         key={league.id}
                         className="country-item country-item--league-item"
+                        onClick={() => handleLeagueClick(league.id)}
                       >
                         <img
                           src={league.logo}

@@ -3,7 +3,12 @@ export interface Country {
   code: string | null;
   flag: string | null;
 }
-
+export interface League {
+  id: number;
+  name: string;
+  type: string;
+  logo: string;
+}
 export interface CountriesResponse {
   get: string;
   parameters: unknown[];
@@ -14,4 +19,8 @@ export interface CountriesResponse {
     total: number;
   };
   response: Country[];
+}
+
+export interface LeagueSelect {
+  onLeagueSelect: (leagueId: number) => void;
 }

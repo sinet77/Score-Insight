@@ -1,4 +1,4 @@
-import leaguesData from "./leagues/leaguesData.json"
+import leaguesData from "../../data/leaguesData.json"
 import type { CountriesResponse } from "./countries-types";
 
 const isDevelop = import.meta.env.DEV;
