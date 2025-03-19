@@ -113,11 +113,11 @@ const CountriesList = ({ onLeagueSelect }: LeagueSelect) => {
                   }`}
                   onClick={() => handleCountryClick(countryId)}
                 >
-                  <div className="country-item__country-flag">
+                  <div className="country-flag">
                     {country.flag ? (
                       <img src={country.flag} alt={`${country.name} flag`} />
                     ) : (
-                      <div className="country-item__flag-placeholder"></div>
+                      <div className="country-flag__flag-placeholder"></div>
                     )}
                   </div>
                   <span className="country-item__country-name">
@@ -143,7 +143,7 @@ const CountriesList = ({ onLeagueSelect }: LeagueSelect) => {
                 </button>
 
                 {expandedCountries.includes(countryId) && (
-                  <div className="country-item__country-leagues">
+                  <div className="country-leagues">
                     {country.leagues.map((league) => (
                       <div
                         key={league.id}
@@ -153,7 +153,7 @@ const CountriesList = ({ onLeagueSelect }: LeagueSelect) => {
                         <img
                           src={league.logo}
                           alt={league.name}
-                          className="league-logo"
+                          className="country-leagues__league-logo"
                         />
                         <span>{league.name}</span>
                       </div>

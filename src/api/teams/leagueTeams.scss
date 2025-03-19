@@ -13,29 +13,29 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
+}
 
-    .league-info {
-        display: flex;
-        align-items: center;
-        gap: 12px;
+.league-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 
-        .league-logo {
-            width: 32px;
-            height: 32px;
-            object-fit: contain;
-        }
+    &__league-logo {
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
     }
+}
 
-    .country-info {
-        display: flex;
-        align-items: center;
-        gap: 8px;
+.country-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
-        .country-flag {
-            width: 24px;
-            height: 16px;
-            object-fit: contain;
-        }
+    &__country-flag {
+        width: 24px;
+        height: 16px;
+        object-fit: contain;
     }
 }
 
@@ -53,7 +53,7 @@
     padding: 40px 0;
     gap: 16px;
 
-    .loading-spinner {
+    &__loading-spinner {
         width: 40px;
         height: 40px;
         border: 3px solid rgba(255, 255, 255, 0.1);
@@ -115,14 +115,14 @@
     align-items: center;
     min-width: 150px;
 
-    .team-logo {
+    &__team-logo {
         width: 24px;
         height: 24px;
         object-fit: contain;
         margin-right: 8px;
     }
 
-    .team-name {
+    &__team-name {
         font-weight: 500;
     }
 }
@@ -208,12 +208,12 @@
     display: flex;
     flex-direction: column;
 
-    .stat-label {
+    &__stat-label {
         font-size: 0.8rem;
         color: #8a8d98;
     }
 
-    .stat-value {
+    &__stat-value {
         font-size: 1rem;
         font-weight: 600;
     }
@@ -224,13 +224,13 @@
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: 4px;
 
-    .description-label {
+    &__description-label {
         font-size: 0.8rem;
         color: #8a8d98;
         margin-right: 8px;
     }
 
-    .description-value {
+    &__description-value {
         font-weight: 500;
     }
 }

@@ -76,7 +76,7 @@ export const TeamTable = ({ leagueId, season }: TeamTableProps) => {
             <img
               src={leagueInfo.logo || "/placeholder.svg"}
               alt={leagueInfo.name}
-              className="league-logo"
+              className="league-info__league-logo"
             />
             <h2 className="table-title">{leagueInfo.name}</h2>
           </div>
@@ -84,7 +84,7 @@ export const TeamTable = ({ leagueId, season }: TeamTableProps) => {
             <img
               src={leagueInfo.flag || "/placeholder.svg"}
               alt={leagueInfo.country}
-              className="country-flag"
+              className="country-info__country-flag"
             />
             <span>{leagueInfo.country}</span>
           </div>
@@ -93,7 +93,7 @@ export const TeamTable = ({ leagueId, season }: TeamTableProps) => {
 
       {loading ? (
         <div className="loading-container">
-          <div className="loading-spinner"></div>
+          <div className="loading-container__loading-spinner"></div>
           <span>Loading...</span>
         </div>
       ) : (
@@ -127,9 +127,9 @@ export const TeamTable = ({ leagueId, season }: TeamTableProps) => {
                     <img
                       src={team.team.logo}
                       alt={team.team.name}
-                      className="team-logo"
+                      className="team-column__team-logo"
                     />
-                    <span className="team-name">{team.team.name}</span>
+                    <span className="team-column__team-name">{team.team.name}</span>
                   </div>
                   <div className="stat-column">{team.all.played}</div>
                   <div className="stat-column">{team.all.win}</div>
@@ -161,24 +161,24 @@ export const TeamTable = ({ leagueId, season }: TeamTableProps) => {
                       <h4>Home</h4>
                       <div className="team-stats-grid">
                         <div className="team-stat-item">
-                          <span className="stat-label">Matches</span>
-                          <span className="stat-value">{team.home.played}</span>
+                          <span className="team-stat-item__stat-label">Matches</span>
+                          <span className="team-stat-item__stat-value">{team.home.played}</span>
                         </div>
                         <div className="team-stat-item">
-                          <span className="stat-label">Won</span>
-                          <span className="stat-value">{team.home.win}</span>
+                          <span className="team-stat-item__stat-label">Won</span>
+                          <span className="team-stat-item__stat-value">{team.home.win}</span>
                         </div>
                         <div className="team-stat-item">
-                          <span className="stat-label">Draws</span>
-                          <span className="stat-value">{team.home.draw}</span>
+                          <span className="team-stat-item__stat-label">Draws</span>
+                          <span className="team-stat-item__stat-value">{team.home.draw}</span>
                         </div>
                         <div className="team-stat-item">
-                          <span className="stat-label">Loses</span>
-                          <span className="stat-value">{team.home.lose}</span>
+                          <span className="team-stat-item__stat-label">Loses</span>
+                          <span className="team-stat-item__stat-value">{team.home.lose}</span>
                         </div>
                         <div className="team-stat-item">
-                          <span className="stat-label">Goals</span>
-                          <span className="stat-value">
+                          <span className="team-stat-item__stat-label">Goals</span>
+                          <span className="team-stat-item__stat-value">
                             {team.home.goals.for}:{team.home.goals.against}
                           </span>
                         </div>
@@ -189,24 +189,24 @@ export const TeamTable = ({ leagueId, season }: TeamTableProps) => {
                       <h4>Away</h4>
                       <div className="team-stats-grid">
                         <div className="team-stat-item">
-                          <span className="stat-label">Matches</span>
-                          <span className="stat-value">{team.away.played}</span>
+                          <span className="team-stat-item__stat-label">Matches</span>
+                          <span className="team-stat-item__stat-value">{team.away.played}</span>
                         </div>
                         <div className="team-stat-item">
-                          <span className="stat-label">Won</span>
-                          <span className="stat-value">{team.away.win}</span>
+                          <span className="team-stat-item__stat-label">Won</span>
+                          <span className="team-stat-item__stat-value">{team.away.win}</span>
                         </div>
                         <div className="team-stat-item">
-                          <span className="stat-label">Draws</span>
-                          <span className="stat-value">{team.away.draw}</span>
+                          <span className="team-stat-item__stat-label">Draws</span>
+                          <span className="team-stat-item__stat-value">{team.away.draw}</span>
                         </div>
                         <div className="team-stat-item">
-                          <span className="stat-label">Loses</span>
-                          <span className="stat-value">{team.away.lose}</span>
+                          <span className="team-stat-item__stat-label">Loses</span>
+                          <span className="team-stat-item__stat-value">{team.away.lose}</span>
                         </div>
                         <div className="team-stat-item">
-                          <span className="stat-label">Goals</span>
-                          <span className="stat-value">
+                          <span className="team-stat-item__stat-label">Goals</span>
+                          <span className="team-stat-item__stat-value">
                             {team.away.goals.for}:{team.away.goals.against}
                           </span>
                         </div>
@@ -215,8 +215,8 @@ export const TeamTable = ({ leagueId, season }: TeamTableProps) => {
 
                     {team.description && (
                       <div className="team-description">
-                        <span className="description-label">Status:</span>
-                        <span className="description-value">
+                        <span className="team-description__description-label">Status:</span>
+                        <span className="team-description__description-value">
                           {team.description}
                         </span>
                       </div>
