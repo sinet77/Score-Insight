@@ -105,7 +105,7 @@ export const TeamTable = ({ leagueId, season }: TeamTableProps) => {
             <div className="stat-column">W</div>
             <div className="stat-column">D</div>
             <div className="stat-column">L</div>
-            <div className="stat-column">DIFF</div>
+            <div className="stat-column">+/-</div>
             <div className="stat-column">Goals</div>
             <div className="last-five-column">Last 5</div>
             <div className="points-column">PTS</div>

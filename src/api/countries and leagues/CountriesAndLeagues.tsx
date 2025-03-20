@@ -7,7 +7,7 @@ interface CountryWithLeagues extends Country {
   leagues: League[];
 }
 
-const CountriesList = ({ onLeagueSelect }: LeagueSelect) => {
+const CountriesList = ({ onLeagueSelect, onSeasonSelect }: LeagueSelect) => {
   const [countries, setCountries] = useState<CountryWithLeagues[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -69,10 +69,29 @@ const CountriesList = ({ onLeagueSelect }: LeagueSelect) => {
   const handleLeagueClick = (leagueId: number) => {
     onLeagueSelect(leagueId);
   };
+  const handleSeasonChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    onSeasonSelect(event.target.value);
+  };
 
   return (
     <div className="countries-container">
       <h2 className="countries-container__countries-title">All competitions</h2>
+      <div className="countries-container__season-choose">
+        <label htmlFor="year">Season: </label>
+        <select
+          id="year"
+          name="year"
+          className="year-select"
+          onChange={handleSeasonChange}
+        >
+          <option value="" disabled>
+            Season
+          </option>
+          <option value="2021">2021</option>
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+        </select>
+      </div>
 
       <div className="search-container">
         <svg

@@ -23,4 +23,5 @@ export interface CountriesResponse {
 
 export interface LeagueSelect {
   onLeagueSelect: (leagueId: number) => void;
+  onSeasonSelect: (season: string) => void;
 }
