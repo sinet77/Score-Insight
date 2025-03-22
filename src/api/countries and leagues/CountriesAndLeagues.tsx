@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { countriesApi } from "./countries-api";
-import type { Country, LeagueSelect, League } from "./countries-types";
+import type { LeagueSelect, CountryWithLeagues } from "./countries-types";
 import "./countries-list.scss";
-
-interface CountryWithLeagues extends Country {
-  leagues: League[];
-}
 
 const CountriesList = ({ onLeagueSelect, onSeasonSelect }: LeagueSelect) => {
   const [countries, setCountries] = useState<CountryWithLeagues[]>([]);
@@ -19,10 +15,10 @@ const CountriesList = ({ onLeagueSelect, onSeasonSelect }: LeagueSelect) => {
         setLoading(true);
         const data = await countriesApi.get();
         if (data) {
-          const countriesWithLeagues = data.response.map(
-            (countryData: any) => ({
-              ...countryData.country,
-              leagues: countryData.league ? [countryData.league] : [],
+          const countriesWithLeagues: CountryWithLeagues[] = data.response.map(
+            ({ country, league }) => ({
+              ...country,
+              leagues: league ? [league] : [],
             })
           );
 
@@ -69,9 +65,6 @@ const CountriesList = ({ onLeagueSelect, onSeasonSelect }: LeagueSelect) => {
   const handleLeagueClick = (leagueId: number) => {
     onLeagueSelect(leagueId);
   };
-  const handleSeasonChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    onSeasonSelect(event.target.value);
-  };
 
   return (
     <div className="countries-container">
@@ -82,11 +75,9 @@ const CountriesList = ({ onLeagueSelect, onSeasonSelect }: LeagueSelect) => {
           id="year"
           name="year"
           className="year-select"
-          onChange={handleSeasonChange}
+          onChange={(event) => onSeasonSelect(event.target.value)}
         >
-          <option value="" disabled>
-            Season
-          </option>
+          <option value="">Season</option>
           <option value="2021">2021</option>
           <option value="2022">2022</option>
           <option value="2023">2023</option>

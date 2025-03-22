@@ -23,7 +23,7 @@ export const TeamTable = ({ leagueId, season }: TeamTableProps) => {
     const fetchStandings = async () => {
       try {
         setLoading(true);
-        const data = await leagueTeamsApi.get(leagueId);
+        const data = await leagueTeamsApi.get(leagueId,season);
 
         if (data && data.response.length > 0) {
           const leagueStanding: LeagueStanding = data.response[0];

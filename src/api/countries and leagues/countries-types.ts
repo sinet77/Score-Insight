@@ -9,6 +9,10 @@ export interface League {
   type: string;
   logo: string;
 }
+
+export interface CountryWithLeagues extends Country {
+  leagues: League[];
+}
 export interface CountriesResponse {
   get: string;
   parameters: unknown[];
@@ -18,7 +22,10 @@ export interface CountriesResponse {
     current: number;
     total: number;
   };
-  response: Country[];
+  response: {
+    country: Country;
+    league?: League;
+  }[];
 }
 
 export interface LeagueSelect {

@@ -1,11 +1,6 @@
-// Variables
-$background-dark: #1c1f26;
-$item-background: #2a2e37;
-$text-color: #ffffff;
-$text-secondary: rgba(255, 255, 255, 0.7);
+@use "../../styles/variables" as vars;
+
 $border-radius: 12px;
-$transition: all ease-in-out;
-@use "sass:color";
 
 body {
     background-color: #121418;
@@ -16,10 +11,10 @@ body {
 }
 
 .countries-container {
-    background-color: $background-dark;
+    background-color: vars.$background-dark;
     padding: 1.5rem;
     border-radius: $border-radius;
-    color: $text-color;
+    color: vars.$white_text-color;
     width: 350px;
     max-width: 400px;
     margin: 0 auto;
@@ -72,19 +67,19 @@ body {
     &__search-icon {
         width: 1.25rem;
         height: 1.25rem;
-        color: $text-secondary;
+        color: vars.$grey_text-color-secondary;
     }
 
     &__search-input {
         flex: 1;
         border: none;
         background: transparent;
-        color: $text-color;
+        color: vars.$white_text-color;
         font-size: 0.95rem;
         padding-left: 0.75rem;
 
         &::placeholder {
-            color: $text-secondary;
+            color: vars.$grey_text-color-secondary;
         }
 
         &:focus {
@@ -97,7 +92,7 @@ body {
 .loading {
     text-align: center;
     padding: 1rem;
-    color: $text-secondary;
+    color: vars.$grey_text-color-secondary;
 }
 
 .countries-list {
@@ -128,25 +123,25 @@ body {
     align-items: center;
     width: 100%;
     padding: 0.75rem 1rem;
-    background-color: $item-background;
+    background-color: vars.$item-background;
     border: none;
     border-radius: $border-radius;
-    color: $text-color;
+    color: vars.$white_text-color;
     cursor: pointer;
-    transition: $transition;
+    transition: vars.$transition;
     text-align: left;
     box-sizing: border-box;
 
     &:hover {
-        background-color: color.mix(white, $item-background, 10%);
+        background-color: vars.$item-hover;
     }
 
     &--active {
-        background-color: rgba(122, 132, 255, 0.25);
+        background-color: vars.$item-active;
     }
 
     &--active:hover {
-        background-color: rgba(122, 132, 255, 0.25);
+        background-color: vars.$item-active;
     }
 
     &--league-item {
@@ -164,7 +159,7 @@ body {
         width: 1.25rem;
         height: 1.25rem;
         transition: transform 0.2s ease;
-        color: $text-secondary;
+        color: vars.$grey_text-color-secondary;
 
         &--expanded {
             transform: rotate(180deg);
