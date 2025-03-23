@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { countriesApi } from "./countries-api";
+import { countriesApi } from "../../api/countries-api";
 import type { LeagueSelect, CountryWithLeagues } from "./countries-types";
-import "./countries-list.scss";
+import styles from "./countries-list.module.scss";
 
 const CountriesList = ({ onLeagueSelect, onSeasonSelect }: LeagueSelect) => {
   const [countries, setCountries] = useState<CountryWithLeagues[]>([]);
@@ -67,14 +67,14 @@ const CountriesList = ({ onLeagueSelect, onSeasonSelect }: LeagueSelect) => {
   };
 
   return (
-    <div className="countries-container">
-      <h2 className={"title title--fs24"}>All competitions</h2>
-      <div className="countries-container__season-choose">
+    <div className={styles["countries-container"]}>
+      <h2 className={'title title--fs24'}>All competitions</h2>
+      <div className={styles["countries-container__season-choose"]}>
         <label htmlFor="year">Season: </label>
         <select
           id="year"
           name="year"
-          className="year-select"
+          className={styles["year-select"]}
           onChange={(event) => onSeasonSelect(event.target.value)}
           value={"2023"}
         >
@@ -84,87 +84,62 @@ const CountriesList = ({ onLeagueSelect, onSeasonSelect }: LeagueSelect) => {
         </select>
       </div>
 
-      <div className="search-container">
-        <svg
-          className="search-container__search-icon"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-          />
+      <div className={styles["search-container"]}>
+        <svg className={styles["search-container__search-icon"]} viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
         <input
           type="text"
           placeholder="Filtr"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="search-container__search-input"
+          className={styles["search-container__search-input"]}
         />
       </div>
 
       {loading ? (
-        <div className="loading">Loading...</div>
+        <div className={styles.loading}>Loading...</div>
       ) : (
-        <div className="countries-list">
+        <div className={styles["countries-list"]}>
           {filteredCountries.map((country) => {
             const countryId = country.code || country.name;
             return (
               <div key={countryId}>
                 <button
-                  className={`country-item ${
-                    expandedCountries.includes(countryId)
-                      ? "country-item--expanded country-item--active"
-                      : ""
-                  }`}
+                  className={`${styles["country-item"]} ${
+                    expandedCountries.includes(countryId) ? styles["country-item--expanded"] : ""
+                  } ${expandedCountries.includes(countryId) ? styles["country-item--active"] : ""}`}
                   onClick={() => handleCountryClick(countryId)}
                 >
-                  <div className="country-flag">
+                  <div className={styles["country-flag"]}>
                     {country.flag ? (
                       <img src={country.flag} alt={`${country.name} flag`} />
                     ) : (
-                      <div className="country-flag__flag-placeholder"></div>
+                      <div className={styles["country-flag__flag-placeholder"]}></div>
                     )}
                   </div>
-                  <span>
-                    {country.name}
-                  </span>
+                  <span>{country.name}</span>
                   <svg
-                    className={`country-item__chevron-icon ${
-                      expandedCountries.includes(countryId)
-                        ? "country-item__chevron-icon--expanded"
-                        : ""
+                    className={`${styles["country-item__chevron-icon"]} ${
+                      expandedCountries.includes(countryId) ? styles["country-item__chevron-icon--expanded"] : ""
                     }`}
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
 
                 {expandedCountries.includes(countryId) && (
-                  <div className="country-leagues">
+                  <div className={styles["country-leagues"]}>
                     {country.leagues.map((league) => (
                       <button
                         key={league.id}
-                        className="country-item country-item--league-item"
+                        className={`${styles["country-item"]} ${styles["country-item--league-item"]}`}
                         onClick={() => handleLeagueClick(league.id)}
                       >
-                        <img
-                          src={league.logo}
-                          alt={league.name}
-                          className="country-leagues__league-logo"
-                        />
+                        <img src={league.logo} alt={league.name} className={styles["country-leagues__league-logo"]} />
                         <span>{league.name}</span>
                       </button>
                     ))}

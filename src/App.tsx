@@ -1,6 +1,6 @@
 import { useState } from "react";
-import CountriesList from "./api/countries and leagues/CountriesAndLeagues";
-import { LeagueTeams } from "./api/teams/LeagueTeams";
+import CountriesList from "@components/CountriesAndLeagues/CountriesAndLeagues";
+import { LeagueTeams } from "@components/Teams/LeagueTeams";
 
 function App() {
   const [selectedLeagueId, setSelectedLeagueId] = useState<number | null>(null);
@@ -19,10 +19,12 @@ function App() {
         width: "100%",
       }}
     >
-      <CountriesList
-        onLeagueSelect={setSelectedLeagueId}
-        onSeasonSelect={handleSeasonSelect}
-      />
+      <div style={{ height: "600px"}}>
+        <CountriesList
+          onLeagueSelect={setSelectedLeagueId}
+          onSeasonSelect={handleSeasonSelect}
+        />
+      </div>
       {selectedLeagueId && (
         <LeagueTeams
           key={`${selectedLeagueId}-${selectedSeason}`}

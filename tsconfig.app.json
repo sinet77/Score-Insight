@@ -26,6 +26,7 @@
       "@styles/*": [
         "src/styles/*"
       ],
+      "@components/*": ["src/components/*"]
     },
     "types": ["node", "@types/css-modules"]
   },
