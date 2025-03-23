@@ -78,7 +78,7 @@ export const TeamTable = ({ leagueId, season }: TeamTableProps) => {
               alt={leagueInfo.name}
               className="league-info__league-logo"
             />
-            <h2 className="table-title">{leagueInfo.name}</h2>
+            <h2 className="title title--fs24">{leagueInfo.name}</h2>
           </div>
           <div className="country-info">
             <img
@@ -129,7 +129,7 @@ export const TeamTable = ({ leagueId, season }: TeamTableProps) => {
                       alt={team.team.name}
                       className="team-column__team-logo"
                     />
-                    <span className="team-column__team-name">{team.team.name}</span>
+                    <span className="team-column">{team.team.name}</span>
                   </div>
                   <div className="stat-column">{team.all.played}</div>
                   <div className="stat-column">{team.all.win}</div>

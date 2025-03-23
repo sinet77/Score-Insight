@@ -1,14 +1,6 @@
-@use "../../styles/variables" as vars;
+@use "@styles/variables" as vars;
 
 $border-radius: 12px;
-
-body {
-    background-color: #121418;
-    margin: 0;
-    padding: 16px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
-        "Helvetica Neue", sans-serif;
-}
 
 .countries-container {
     background-color: vars.$background-dark;
@@ -17,7 +9,6 @@ body {
     color: vars.$white_text-color;
     width: 350px;
     max-width: 400px;
-    margin: 0 auto;
 
     &__countries-title {
         font-size: 1.25rem;
@@ -115,6 +106,7 @@ body {
     &::-webkit-scrollbar-thumb {
         background: rgba(255, 255, 255, 0.2);
         border-radius: 3px;
+        cursor: pointer;
     }
 }
 
@@ -131,6 +123,7 @@ body {
     transition: vars.$transition;
     text-align: left;
     box-sizing: border-box;
+    font-size: 0.95rem;
 
     &:hover {
         background-color: vars.$item-hover;
@@ -146,13 +139,8 @@ body {
 
     &--league-item {
         margin-bottom: 10px;
-        padding: 0.3rem 1rem;
+        padding: 0.4rem 1rem;
         background-color: #111111;
-    }
-
-    &__country-name {
-        flex: 1;
-        font-size: 0.95rem;
     }
 
     &__chevron-icon {
@@ -160,6 +148,7 @@ body {
         height: 1.25rem;
         transition: transform 0.2s ease;
         color: vars.$grey_text-color-secondary;
+        margin-left: auto;
 
         &--expanded {
             transform: rotate(180deg);
@@ -173,7 +162,6 @@ body {
     border-radius: 50%;
     overflow: hidden;
     margin-right: 0.75rem;
-    flex-shrink: 0;
     background-color: rgba(255, 255, 255, 0.1);
 
     img {
@@ -194,7 +182,8 @@ body {
 
     &__league-logo {
         width: 20px;
-        height: 20px;
+        max-height: 25px;
+        object-fit: contain;
         margin-right: 10px;
     }
 }

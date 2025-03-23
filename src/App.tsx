@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./App.css";
 import CountriesList from "./api/countries and leagues/CountriesAndLeagues";
 import LeagueTeams from "./api/teams/LeagueTeams";
 
@@ -12,7 +11,7 @@ function App() {
   };
 
   return (
-    <div style={{ display: "flex", gap: "50px" }}>
+    <div style={{ display: "flex",justifyContent:"center",gap: "50px", width: "100%" }}>
       <CountriesList
         onLeagueSelect={setSelectedLeagueId}
         onSeasonSelect={handleSeasonSelect}
@@ -21,7 +20,7 @@ function App() {
         <LeagueTeams
           key={`${selectedLeagueId}-${selectedSeason}`}
           leagueId={selectedLeagueId}
-          season={selectedSeason}
+          season={selectedSeason || "2023"}
         />
       )}
     </div>

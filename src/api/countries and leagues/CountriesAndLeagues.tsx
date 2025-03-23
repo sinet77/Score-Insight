@@ -68,7 +68,7 @@ const CountriesList = ({ onLeagueSelect, onSeasonSelect }: LeagueSelect) => {
 
   return (
     <div className="countries-container">
-      <h2 className="countries-container__countries-title">All competitions</h2>
+      <h2 className={"title title--fs24"}>All competitions</h2>
       <div className="countries-container__season-choose">
         <label htmlFor="year">Season: </label>
         <select
@@ -76,8 +76,8 @@ const CountriesList = ({ onLeagueSelect, onSeasonSelect }: LeagueSelect) => {
           name="year"
           className="year-select"
           onChange={(event) => onSeasonSelect(event.target.value)}
+          value={"2023"}
         >
-          <option value="">Season</option>
           <option value="2021">2021</option>
           <option value="2022">2022</option>
           <option value="2023">2023</option>
@@ -130,7 +130,7 @@ const CountriesList = ({ onLeagueSelect, onSeasonSelect }: LeagueSelect) => {
                       <div className="country-flag__flag-placeholder"></div>
                     )}
                   </div>
-                  <span className="country-item__country-name">
+                  <span>
                     {country.name}
                   </span>
                   <svg
@@ -155,7 +155,7 @@ const CountriesList = ({ onLeagueSelect, onSeasonSelect }: LeagueSelect) => {
                 {expandedCountries.includes(countryId) && (
                   <div className="country-leagues">
                     {country.leagues.map((league) => (
-                      <div
+                      <button
                         key={league.id}
                         className="country-item country-item--league-item"
                         onClick={() => handleLeagueClick(league.id)}
@@ -166,7 +166,7 @@ const CountriesList = ({ onLeagueSelect, onSeasonSelect }: LeagueSelect) => {
                           className="country-leagues__league-logo"
                         />
                         <span>{league.name}</span>
-                      </div>
+                      </button>
                     ))}
                   </div>
                 )}
