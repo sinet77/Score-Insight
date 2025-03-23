@@ -53,4 +53,16 @@ export interface MatchStats {
     for: number;
     against: number;
   };
+  home: TeamStats; 
+  away: TeamStats;
+}
+
+export interface TeamStats {
+  [key: string]: string; 
+}
+export type Side = 'home' | 'away';
+
+export interface RenderTeamStatsProps {
+  side: Side;
+  team: TeamStanding;
 }

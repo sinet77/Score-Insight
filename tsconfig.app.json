@@ -27,6 +27,7 @@
         "src/styles/*"
       ],
     },
+    "types": ["node", "@types/css-modules"]
   },
   "include": ["src"]
 }
