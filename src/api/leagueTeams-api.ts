@@ -1,4 +1,4 @@
-import type { StandingsResponse } from "../components/Teams/standings-types";
+import type { StandingsResponse } from "@components/Teams/standings-types";
 
 const get = async (leagueId: number, season:string): Promise<StandingsResponse> => {
   try {

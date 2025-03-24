@@ -1,0 +1,55 @@
+@use "@styles/variables" as vars;
+
+.player-details {
+    display: flex;
+    flex-direction: column;
+    color:vars.$color-black;
+    gap: 1rem;
+    padding: 0.8rem;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    
+    .player-header {
+      display: flex;
+      gap: 1rem;
+      
+      .player-photo {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid vars.$blue_light-accent;
+      }
+      
+      .player-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        
+        h3 {
+          font-size: 1.25rem;
+          font-weight: 600;
+          margin: 0 0 0.5rem 0;
+        }
+        
+        p {
+          margin: 0.25rem 0;
+          font-size: 0.9rem;
+        }
+      }
+    }
+    
+    .player-physical {
+      display: flex;
+      gap: 2rem;
+      
+      p {
+        margin: 0;
+        font-size: 0.9rem;
+      }
+    }
+  }
+  
+  

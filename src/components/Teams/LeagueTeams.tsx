@@ -3,6 +3,9 @@ import styles from "./leagueTeams.module.scss";
 import { leagueTeamsApi } from "../../api/leagueTeams-api";
 import type { TeamStanding, LeagueStanding } from "./standings-types";
 import { RenderTeamStats } from "./RenderTeamStats";
+import { playersApi } from "../../api/players-api";
+import { PlayerDetails } from "@components/PlayerDetails/PlayerDetails";
+import { PlayerGrid } from "@components/PlayerDetails/PlayerGrid";
 
 interface TeamTableProps {
   leagueId: number;
@@ -19,6 +22,7 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
     flag: string;
   } | null>(null);
   const [expandedTeams, setExpandedTeams] = useState<number[]>([]);
+  const [players, setPlayers] = useState<Record<number, any[]>>({});
 
   useEffect(() => {
     const fetchStandings = async () => {
@@ -46,20 +50,44 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
     fetchStandings();
   }, [leagueId, season]);
 
+  const fetchTeamPlayers = async (teamId: number) => {
+    try {
+      const teamPlayers = await playersApi.get(teamId, season);
+      setPlayers((prevPlayers) => ({
+        ...prevPlayers,
+        [teamId]: teamPlayers,
+      }));
+      console.log("Fetching players for team", teamPlayers);
+    } catch (error) {
+      console.error("Error fetching players:", error);
+    }
+  };
+
   const handleTeamClick = (teamId: number) => {
     setExpandedTeams((prev) => {
-      if (prev.includes(teamId)) {
+      const isExpanded = prev.includes(teamId);
+
+      // Jeśli drużyna jest już rozwinięta, to ją zwijamy
+      if (isExpanded) {
         return prev.filter((id) => id !== teamId);
-      } else {
-        return [...prev, teamId];
       }
+
+      // Jeśli drużyna nie była rozwinięta, to ją rozwijamy
+      const updatedExpandedTeams = [...prev, teamId];
+
+      // Pobierz piłkarzy tylko jeśli drużyna została rozwinięta
+      if (!players[teamId]) {
+        fetchTeamPlayers(teamId);
+      }
+
+      return updatedExpandedTeams;
     });
   };
 
   const getFormClass = (result: string) => {
     switch (result) {
       case "W":
-        return styles.win; 
+        return styles.win;
       case "D":
         return styles.draw;
       case "L":
@@ -164,6 +192,15 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
                   <div className={styles["team-details"]}>
                     <RenderTeamStats side="home" team={team} />
                     <RenderTeamStats side="away" team={team} />
+
+                    {players[team.team.id] &&
+                    players[team.team.id].length > 0 ? (
+                      <PlayerGrid
+                        players={players[team.team.id].map((p) => p.player)}
+                      />
+                    ) : (
+                      <p>Loading players...</p>
+                    )}
                   </div>
                 )}
               </div>
