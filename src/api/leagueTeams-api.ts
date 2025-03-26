@@ -1,12 +1,17 @@
 import type { StandingsResponse } from "@components/Teams/standings-types";
+import premierLeagueData from "../data/premierLeagueTeams2023.json"
+
+const isDevelop = import.meta.env.DEV;
 
 const get = async (leagueId: number, season:string): Promise<StandingsResponse> => {
+  if(isDevelop){
+    return premierLeagueData as unknown as StandingsResponse;}
   try {
     const response = await fetch(
       `https://v3.football.api-sports.io/standings?league=${leagueId}&season=${season}`,
       {
         headers: {
-          "x-rapidapi-key": "b9ac7d19dbd4a2c43f42264d1e9f1626",
+          "x-rapidapi-key": "6266f2d70eed3758d548a5e2451b04cf",
         },
       }
     );

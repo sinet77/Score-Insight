@@ -13,7 +13,7 @@ const get = async (): Promise<CountriesResponse> => {
       "https://v3.football.api-sports.io/leagues",
       {
         headers: {
-          "x-rapidapi-key": "b9ac7d19dbd4a2c43f42264d1e9f1626",
+          "x-rapidapi-key": "6266f2d70eed3758d548a5e2451b04cf",
         },
       }
     );

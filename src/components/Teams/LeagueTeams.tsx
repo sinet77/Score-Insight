@@ -4,8 +4,11 @@ import { leagueTeamsApi } from "../../api/leagueTeams-api";
 import type { TeamStanding, LeagueStanding } from "./standings-types";
 import { RenderTeamStats } from "./RenderTeamStats";
 import { playersApi } from "../../api/players-api";
-import { PlayerDetails } from "@components/PlayerDetails/PlayerDetails";
 import { PlayerGrid } from "@components/PlayerDetails/PlayerGrid";
+import {
+  Player,
+  PlayerMainResponse,
+} from "@components/PlayerDetails/player-types";
 
 interface TeamTableProps {
   leagueId: number;
@@ -22,7 +25,7 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
     flag: string;
   } | null>(null);
   const [expandedTeams, setExpandedTeams] = useState<number[]>([]);
-  const [players, setPlayers] = useState<Record<number, any[]>>({});
+  const [players, setPlayers] = useState<Record<number, Player[]>>({});
 
   useEffect(() => {
     const fetchStandings = async () => {
@@ -52,16 +55,27 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
 
   const fetchTeamPlayers = async (teamId: number) => {
     try {
-      const teamPlayers = await playersApi.get(teamId, season);
-      setPlayers((prevPlayers) => ({
-        ...prevPlayers,
-        [teamId]: teamPlayers,
-      }));
-      console.log("Fetching players for team", teamPlayers);
+      const response = await playersApi.get(teamId, season);
+
+      if ("response" in response) {
+        const teamPlayers: PlayerMainResponse = response;
+        console.log("Fetched players for team:", teamId, teamPlayers);
+
+        setPlayers((prevPlayers) => ({
+          ...prevPlayers,
+          [teamId]: teamPlayers.response,
+        }));
+      } else {
+        console.error("Unexpected response format:", response);
+      }
     } catch (error) {
       console.error("Error fetching players:", error);
     }
   };
+
+  useEffect(() => {
+    console.log("Updated players state:", players);
+  }, [players]);
 
   const handleTeamClick = (teamId: number) => {
     setExpandedTeams((prev) => {
@@ -195,9 +209,7 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
 
                     {players[team.team.id] &&
                     players[team.team.id].length > 0 ? (
-                      <PlayerGrid
-                        players={players[team.team.id].map((p) => p.player)}
-                      />
+                      <PlayerGrid players={players[team.team.id]} />
                     ) : (
                       <p>Loading players...</p>
                     )}
