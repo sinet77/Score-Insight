@@ -9,6 +9,7 @@ import {
   Player,
   PlayerMainResponse,
 } from "@components/PlayerDetails/player-types";
+import { useNavigate } from "react-router-dom";
 
 interface TeamTableProps {
   leagueId: number;
@@ -26,6 +27,12 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
   } | null>(null);
   const [expandedTeams, setExpandedTeams] = useState<number[]>([]);
   const [players, setPlayers] = useState<Record<number, Player[]>>({});
+
+  const navigate = useNavigate();
+
+  const handleReadMore = (teamName: string, teamId: number) => {
+    navigate(`/team/${teamName}/${teamId}`);
+  };
 
   useEffect(() => {
     const fetchStandings = async () => {
@@ -213,6 +220,14 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
                     ) : (
                       <p>Loading players...</p>
                     )}
+                    <button
+                      className={styles["read-more-button"]}
+                      onClick={() =>
+                        handleReadMore(team.team.name, team.team.id)
+                      }
+                    >
+                      Read More
+                    </button>
                   </div>
                 )}
               </div>

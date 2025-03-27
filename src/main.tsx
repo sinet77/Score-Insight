@@ -1,18 +1,29 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ReactDOM from "react-dom/client";
+import {
+  Route,
+  createHashRouter,
+  createRoutesFromElements,
+  RouterProvider,
+} from "react-router-dom";
 import "./styles/global.scss";
 import App from "./App.tsx";
 import Layout from "./Layout/Layout.tsx";
+import { routes } from "./routes.ts";
+import { TeamView } from "@components/TeamView/TeamView.tsx";
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route index element={<App />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  </StrictMode>
+const router = createHashRouter(
+  createRoutesFromElements(
+    <Route path="/">
+      <Route element={<Layout />}>
+        <Route index element={<App />} />
+        <Route path={routes.team} element={<TeamView />} />
+      </Route>
+    </Route>
+  )
 );
+
+const rootElement = document.getElementById("root");
+
+if (rootElement) {
+  ReactDOM.createRoot(rootElement).render(<RouterProvider router={router} />);
+}

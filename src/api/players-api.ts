@@ -4,9 +4,9 @@ import playersData from "../data/playersLiverpool2023.json"
 const isDevelop = import.meta.env.DEV;
 
 const get = async (teamId: number, season: string) => {
-  if(isDevelop){
-    return playersData as PlayerMainResponse;
-  }
+if(isDevelop){
+  return playersData as PlayerMainResponse;
+}
   try {
     let allPlayers: Player[] = [];
     let totalPages = 1;
@@ -33,7 +33,7 @@ const get = async (teamId: number, season: string) => {
       }
     }
 
-    return allPlayers;
+    return { response: allPlayers };
   } catch (error) {
     console.error(`Error fetching players for team ${teamId}:`, error);
     return [];
