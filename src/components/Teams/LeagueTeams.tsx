@@ -3,12 +3,6 @@ import styles from "./leagueTeams.module.scss";
 import { leagueTeamsApi } from "../../api/leagueTeams-api";
 import type { TeamStanding, LeagueStanding } from "./standings-types";
 import { RenderTeamStats } from "./RenderTeamStats";
-import { playersApi } from "../../api/players-api";
-import { PlayerGrid } from "@components/PlayerDetails/PlayerGrid";
-import {
-  Player,
-  PlayerMainResponse,
-} from "@components/PlayerDetails/player-types";
 import { useNavigate } from "react-router-dom";
 
 interface TeamTableProps {
@@ -26,7 +20,6 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
     flag: string;
   } | null>(null);
   const [expandedTeams, setExpandedTeams] = useState<number[]>([]);
-  const [players, setPlayers] = useState<Record<number, Player[]>>({});
 
   const navigate = useNavigate();
 
@@ -60,30 +53,6 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
     fetchStandings();
   }, [leagueId, season]);
 
-  const fetchTeamPlayers = async (teamId: number) => {
-    try {
-      const response = await playersApi.get(teamId, season);
-
-      if ("response" in response) {
-        const teamPlayers: PlayerMainResponse = response;
-        console.log("Fetched players for team:", teamId, teamPlayers);
-
-        setPlayers((prevPlayers) => ({
-          ...prevPlayers,
-          [teamId]: teamPlayers.response,
-        }));
-      } else {
-        console.error("Unexpected response format:", response);
-      }
-    } catch (error) {
-      console.error("Error fetching players:", error);
-    }
-  };
-
-  useEffect(() => {
-    console.log("Updated players state:", players);
-  }, [players]);
-
   const handleTeamClick = (teamId: number) => {
     setExpandedTeams((prev) => {
       const isExpanded = prev.includes(teamId);
@@ -95,11 +64,6 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
 
       // Jeśli drużyna nie była rozwinięta, to ją rozwijamy
       const updatedExpandedTeams = [...prev, teamId];
-
-      // Pobierz piłkarzy tylko jeśli drużyna została rozwinięta
-      if (!players[teamId]) {
-        fetchTeamPlayers(teamId);
-      }
 
       return updatedExpandedTeams;
     });
@@ -214,12 +178,6 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
                     <RenderTeamStats side="home" team={team} />
                     <RenderTeamStats side="away" team={team} />
 
-                    {players[team.team.id] &&
-                    players[team.team.id].length > 0 ? (
-                      <PlayerGrid players={players[team.team.id]} />
-                    ) : (
-                      <p>Loading players...</p>
-                    )}
                     <button
                       className={styles["read-more-button"]}
                       onClick={() =>

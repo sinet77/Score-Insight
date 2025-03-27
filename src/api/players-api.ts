@@ -1,12 +1,15 @@
-import { Player, PlayerMainResponse } from "@components/PlayerDetails/player-types";
-import playersData from "../data/playersLiverpool2023.json"
+import {
+  Player,
+  PlayerMainResponse,
+} from "@components/PlayerDetails/player-types";
+import playersData from "../data/playersLiverpool2023.json";
 
 const isDevelop = import.meta.env.DEV;
 
 const get = async (teamId: number, season: string) => {
-if(isDevelop){
-  return playersData as PlayerMainResponse;
-}
+  if (isDevelop) {
+    return playersData as PlayerMainResponse;
+  }
   try {
     let allPlayers: Player[] = [];
     let totalPages = 1;
@@ -40,8 +43,6 @@ if(isDevelop){
   }
 };
 
-  
-  export const playersApi = {
-    get,
-  };
-  
+export const playersApi = {
+  get,
+};
