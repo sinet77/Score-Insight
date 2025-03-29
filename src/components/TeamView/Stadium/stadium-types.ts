@@ -1,4 +1,4 @@
-export interface Stadium  {
+export interface StadiumProps  {
     id: number;
     name: string;
     address: string;

@@ -3,14 +3,16 @@ import { useState, useEffect } from "react";
 import { playersAndStadiumApi } from "../../api/playersAndStadium-api";
 import { PlayerGrid } from "@components/PlayerDetails/PlayerGrid";
 import { Player } from "@components/PlayerDetails/player-types";
-import { Stadium } from "./stadium-types";
+import { StadiumProps } from "./Stadium/stadium-types";
+import styles from "./TeamView.module.scss";
+import StadiumCard from "./Stadium/StadiumCard";
 
 export const TeamView = () => {
   const { teamId } = useParams<{ teamId: string }>();
   const [players, setPlayers] = useState<Player[]>([]);
-  const [stadium, setStadium] = useState<Stadium | null>(null);
+  const [stadium, setStadium] = useState<StadiumProps | null>(null);
   const [loading, setLoading] = useState(true);
-  const season = "2023"; 
+  const season = "2023";
 
   useEffect(() => {
     const fetchTeamPlayers = async () => {
@@ -19,14 +21,9 @@ export const TeamView = () => {
       try {
         setLoading(true);
         const response = await playersAndStadiumApi.get(Number(teamId), season);
-        console.log("API Response:", response); 
 
-        if ("response" in response) {
-          setPlayers(response.response);
-          setStadium(response.stadium);
-        } else {
-          console.error("Unexpected response format:", response);
-        }
+        setPlayers(response.response);
+        setStadium(response.stadium);
       } catch (error) {
         console.error("Error fetching players:", error);
       } finally {
@@ -39,19 +36,13 @@ export const TeamView = () => {
 
   return (
     <div>
-      <h1>Team Roster</h1>
+      
       {loading ? (
         <p>Loading players...</p>
       ) : (
         <div>
-          {stadium && (
-            <div>
-              <h2>{stadium.name}</h2>
-              <p>{stadium.address}, {stadium.city}, {stadium.country}</p>
-              <p>Capacity: {stadium.capacity}</p>
-              <img src={stadium.image} alt={stadium.name} />
-            </div>
-          )}
+          {stadium && <StadiumCard stadium={stadium} />}
+          <h1>Team Roster</h1>
           <PlayerGrid players={players} />
         </div>
       )}

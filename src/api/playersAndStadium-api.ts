@@ -1,14 +1,14 @@
 import {
   Player,
 } from "@components/PlayerDetails/player-types";
-import playersData from "../data/playersLiverpool2023.json";
-import { Stadium } from "@components/TeamView/stadium-types";
+import playersData from "../data/playersAndStadiumLiverpool2023.json";
+import { StadiumProps } from "@components/TeamView/Stadium/stadium-types";
 
 const isDevelop = import.meta.env.DEV;
 
 type ApiResponse = {
   response: Player[];
-  stadium: Stadium | null;
+  stadium: StadiumProps | null;
 };
 
 const get = async (teamId: number, season: string): Promise<ApiResponse> => {
@@ -17,7 +17,7 @@ const get = async (teamId: number, season: string): Promise<ApiResponse> => {
   }
 
   try {
-    let stadium: Stadium | null = null;
+    let stadium: StadiumProps | null = null;
     let allPlayers: Player[] = [];
     let totalPages = 1;
 

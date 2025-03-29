@@ -1,0 +1,7 @@
+@use "@styles/variables" as vars;
+
+.stadium-container{
+    display: flex;
+    background-color: vars.$item-light-background;
+    max-width: 500px;
+}
