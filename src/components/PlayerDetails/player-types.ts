@@ -1,15 +1,3 @@
-// export type Player = {
-//   player: {
-//     id: number;
-//     name: string;
-//     age: number;
-//     nationality: string;
-//     height: string | null;
-//     weight: string | null;
-//     photo: string;
-//     position: string;
-//   };
-// };
 export type PlayerMainResponse = {
   get: string;
   parameters: {
@@ -24,6 +12,7 @@ export type PlayerMainResponse = {
     total: number;
   };
   response: Player[]; 
+  
 };
 
 export type Player = {
@@ -35,7 +24,7 @@ export type Player = {
     age: number;
     birth: {
       date: string;
-      place: string;
+      place: string | null;
       country: string;
     };
     nationality: string;

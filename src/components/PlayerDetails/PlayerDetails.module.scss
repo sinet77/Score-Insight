@@ -1,55 +1,78 @@
 @use "@styles/variables" as vars;
 
-.player-details {
+.player-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: vars.$item-light-background;
+  border-radius: 0.75rem;
+  padding: 1rem 0.8rem;
+  width: 130px;
+  height: 160px;
+
+  .player-image {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    border: 2px solid rgba(34, 34, 38, 0.15);
+  }
+
+  .player-name {
+    font-size: 0.9rem;
+    text-align: center;
+    font-weight: 600;
+    color: #0f172a;
+  }
+
+  .player-details {
     display: flex;
-    flex-direction: column;
-    color:vars.$color-black;
-    gap: 1rem;
-    padding: 0.8rem;
-    border-radius: 8px;
-    background-color: #f8f8f8;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
-    
-    .player-header {
-      display: flex;
-      gap: 1rem;
-      
-      .player-photo {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid vars.$blue_light-accent;
-      }
-      
-      .player-info {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        
-        h3 {
-          font-size: 1.25rem;
-          font-weight: 600;
-          margin: 0 0 0.5rem 0;
-        }
-        
-        p {
-          margin: 0.25rem 0;
-          font-size: 0.9rem;
-        }
-      }
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 0.75rem;
+
+    .position-letter {
+      color: vars.$white_text-color;
+      padding: 0.1rem 0.3rem;
+      border-radius: 0.25rem;
+      font-weight: 600;
+      font-size: 0.7rem;
     }
-    
-    .player-physical {
+    .attacker {
+      background-color: rgb(203, 24, 24);
+    }
+
+    .midfielder {
+      background-color: rgb(11, 179, 42);
+    }
+
+    .defender {
+      background-color: rgb(55, 77, 245);
+    }
+
+    .goalkeeper {
+      background-color: orange;
+    }
+
+    .country-info {
       display: flex;
-      gap: 2rem;
-      
-      p {
-        margin: 0;
-        font-size: 0.9rem;
+      align-items: center;
+      gap: 0.25rem;
+
+      .country-flag {
+        width: 16px;
+        height: 12px;
+        display: inline-block;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      .country-code {
+        color: #64748b;
+        font-weight: 500;
       }
     }
   }
-  
-  
+}

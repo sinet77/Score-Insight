@@ -6,7 +6,7 @@ export default function Layout() {
   return (
     <div>
       <Navbar />
-      <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1500px", margin: "0 auto" }}>
         <Outlet />
       </div>
       {/* <Footer /> */}

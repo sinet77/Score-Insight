@@ -1,41 +1,46 @@
 .player-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+
+  .grid-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .position-section {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
+    gap: 1rem;
+    margin-bottom: 2rem;
 
-    
-    .grid-title {
-      font-size: 1.75rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
+    .position-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0;
+    }
+    .attacker {
+      color: rgb(203, 24, 24)
     }
     
-    .position-section {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      
-      .position-title {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: #00ff00;
-        margin: 0;
-      }
-      
-      .players-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 1.5rem;
-        
-        @media (min-width: 768px) {
-          grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        }
-      }
+    .midfielder {
+      color: rgb(11, 179, 42)
+    }
+    
+    .defender {
+      color: rgb(55, 77, 245);
+    }
+    
+    .goalkeeper {
+      color: orange;
+    }
+
+    .players-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 140px));
+      gap: 1.5rem;
     }
   }
-  
-  
+}
