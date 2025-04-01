@@ -28,6 +28,8 @@ const StadiumCard = ({ stadium }: StadiumCardProps) => {
         <div className={styles["map-link"]}>
           <a
             href={`https://maps.google.com/?q=${stadium.address},${stadium.city},${stadium.country}`}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Map view
           </a>

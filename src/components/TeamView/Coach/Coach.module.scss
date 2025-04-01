@@ -1,0 +1,81 @@
+@use "@styles/variables" as vars;
+
+.coachContainer {
+  padding: 20px;
+  background-color: vars.$item-light-background;
+  border-radius: 12px;
+  box-shadow: vars.$item-light-box-shadow;
+  max-width: 900px;
+  min-height: 390px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.coachDetails {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  gap: 60px;
+}
+
+.coachInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.coachPhoto {
+  width: 150px;
+  height: 150px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+}
+
+.coachName {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.coachCareer {
+  margin-top: 20px;
+  display: flex;
+  text-align: center;
+  gap: 10px;
+}
+
+.jobDetails {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: vars.$item-light-box-shadow;
+  justify-content: center;
+  align-items: center;
+}
+
+.jobDetails h3 {
+  margin-bottom: 5px;
+}
+
+.teamLogo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-top: 10px;
+}
+
+p {
+  margin: 5px 0;
+}

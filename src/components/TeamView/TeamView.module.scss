@@ -5,3 +5,10 @@
     background-color: vars.$item-light-background;
     max-width: 500px;
 }
+
+.wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+}

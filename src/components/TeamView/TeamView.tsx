@@ -7,6 +7,7 @@ import { StadiumProps } from "./Stadium/stadium-types";
 import styles from "./TeamView.module.scss";
 import StadiumCard from "./Stadium/StadiumCard";
 import { LogoAndName } from "./LogoAndName/LogoAndName";
+import { Coach } from "./Coach/Coach";
 
 export const TeamView = () => {
   const { teamId } = useParams<{ teamId: string }>();
@@ -39,13 +40,15 @@ export const TeamView = () => {
 
   return (
     <div>
-      
       {loading ? (
         <p>Loading players...</p>
       ) : (
         <div>
-          <LogoAndName data={players}/>
-          {stadium && <StadiumCard stadium={stadium} />}
+          <LogoAndName data={players} />
+          <div className={styles["wrapper"]}>
+            {teamId && <Coach teamId={Number(teamId)} season={season} />}
+            {stadium && <StadiumCard stadium={stadium} />}
+          </div>
           <h1>Team Roster</h1>
           <PlayerGrid players={players} />
         </div>

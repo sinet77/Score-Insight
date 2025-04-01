@@ -4,12 +4,16 @@
   font-size: 50px;
   font-weight: 600;
   color: vars.$color-black;
-  margin: 0;
 
   &--fs24 {
     font-size: 24px;
     text-align: center;
     color:vars.$white_text-color
+  }
+
+  &--fs24black {
+    font-size: 24px;
+    text-align: center;
   }
 
 }
