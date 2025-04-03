@@ -52,17 +52,21 @@
   display: flex;
   text-align: center;
   gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .jobDetails {
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 8px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: vars.$item-light-box-shadow;
   justify-content: center;
   align-items: center;
+  width: 180px;
+  height: 180px;
 }
 
 .jobDetails h3 {

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { coachsApi } from "@api/coach-api";
 import { Coach as CoachType, CoachApiResponse } from "./coach-types";
 import styles from "./Coach.module.scss"; // Import modułu SCSS
+import LoadingSpinner from "@components/ui/LoadingSpinner/LoadingSpinner";
 
 interface CoachProps {
   teamId: number;
@@ -51,7 +52,7 @@ export const Coach = ({ teamId, season }: CoachProps) => {
     fetchCoach();
   }, [teamId, season]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingSpinner />;
 
   const currentJob = coach?.career.find((job) => job.end === null);
   const pastJobs = coach?.career.filter((job) => job.end !== null) || [];

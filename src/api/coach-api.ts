@@ -4,9 +4,9 @@ import coachLiverpool from "../data/coachLiverpool.json";
 const isDevelop = import.meta.env.DEV;
 
 const get = async (teamId: number): Promise<CoachApiResponse> => {
-    // if (isDevelop) {
-    //     return coachLiverpool as CoachApiResponse;
-    //   }
+    if (isDevelop) {
+        return coachLiverpool as CoachApiResponse;
+      }
   try {
     const response = await fetch(
       `https://v3.football.api-sports.io/coachs?team=${teamId}`,
