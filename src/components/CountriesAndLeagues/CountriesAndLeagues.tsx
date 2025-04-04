@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { countriesApi } from "../../api/countries-api";
 import type { LeagueSelect, CountryWithLeagues } from "./countries-types";
 import styles from "./countries-list.module.scss";
+import LoadingSpinner from "@components/ui/LoadingSpinner/LoadingSpinner";
 
 const CountriesList = ({ onLeagueSelect, onSeasonSelect }: LeagueSelect) => {
   const [countries, setCountries] = useState<CountryWithLeagues[]>([]);
@@ -98,7 +99,7 @@ const CountriesList = ({ onLeagueSelect, onSeasonSelect }: LeagueSelect) => {
       </div>
 
       {loading ? (
-        <div className={styles.loading}>Loading...</div>
+        <LoadingSpinner />
       ) : (
         <div className={styles["countries-list"]}>
           {filteredCountries.map((country) => {

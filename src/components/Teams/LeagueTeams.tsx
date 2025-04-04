@@ -4,6 +4,7 @@ import { leagueTeamsApi } from "../../api/leagueTeams-api";
 import type { TeamStanding, LeagueStanding } from "./standings-types";
 import { RenderTeamStats } from "./RenderTeamStats";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "@components/ui/LoadingSpinner/LoadingSpinner";
 
 interface TeamTableProps {
   leagueId: number;
@@ -107,8 +108,7 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
 
       {loading ? (
         <div className={styles["loading-container"]}>
-          <div className={styles["loading-container__loading-spinner"]}></div>
-          <span>Loading...</span>
+          <LoadingSpinner />
         </div>
       ) : (
         <>

@@ -8,6 +8,7 @@ import styles from "./TeamView.module.scss";
 import StadiumCard from "./Stadium/StadiumCard";
 import { LogoAndName } from "./LogoAndName/LogoAndName";
 import { Coach } from "./Coach/Coach";
+import LoadingSpinner from "@components/ui/LoadingSpinner/LoadingSpinner";
 
 export const TeamView = () => {
   const { teamId } = useParams<{ teamId: string }>();
@@ -38,10 +39,29 @@ export const TeamView = () => {
 
   console.log("Players:", players);
 
+  const averageAge =
+    players.length > 0
+      ? players.reduce((sum, player) => sum + player.player.age, 0) /
+        players.length
+      : null;
+
+  const leagueCountry =
+    players.length > 0
+      ? players[0].statistics?.[0]?.league?.country ?? null
+      : null;
+
+  const domesticPlayers = players.filter(
+    (player) => player.player.nationality === leagueCountry
+  ).length;
+
+  const foreignPlayers = players.length - domesticPlayers;
+
+  const allPlayers = players.length;
+
   return (
     <div>
       {loading ? (
-        <p>Loading players...</p>
+        <LoadingSpinner />
       ) : (
         <div>
           <LogoAndName data={players} />
@@ -49,6 +69,10 @@ export const TeamView = () => {
             {teamId && <Coach teamId={Number(teamId)} season={season} />}
             {stadium && <StadiumCard stadium={stadium} />}
           </div>
+          <p>Number of players: {allPlayers}</p>
+          <p>Domestic players: {domesticPlayers}</p>
+          <p>Foreign players: {foreignPlayers}</p>
+          {averageAge !== null && <p>Average Age: {averageAge.toFixed(1)}</p>}
           <h1>Team Roster</h1>
           <PlayerGrid players={players} />
         </div>
