@@ -1,8 +1,10 @@
+const apiKey = import.meta.env.VITE_API_FOOTBALL_KEY;
+
 const get = async (endpoint: string, headers?: HeadersInit) => {
     try {
       const response = await fetch(endpoint, {
         headers: {
-          "x-apisports-key": "6266f2d70eed3758d548a5e2451b04cf",
+          "x-apisports-key": apiKey,
           ...headers,
         },
       });
