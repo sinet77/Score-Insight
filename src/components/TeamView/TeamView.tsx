@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { playersAndStadiumApi } from "../../api/playersAndStadium-api";
 import { PlayerGrid } from "@components/PlayerDetails/PlayerGrid";
 import { Player } from "@components/PlayerDetails/player-types";
 import { StadiumProps } from "./Stadium/stadium-types";
@@ -9,6 +8,8 @@ import StadiumCard from "./Stadium/StadiumCard";
 import { LogoAndName } from "./LogoAndName/LogoAndName";
 import { Coach } from "./Coach/Coach";
 import LoadingSpinner from "@components/ui/LoadingSpinner/LoadingSpinner";
+import { getPlayers } from "@api/players_api";
+import { getStadium } from "@api/stadium_api";
 
 export const TeamView = () => {
   const { teamId } = useParams<{ teamId: string }>();
@@ -18,26 +19,29 @@ export const TeamView = () => {
   const season = "2023";
 
   useEffect(() => {
-    const fetchTeamPlayers = async () => {
+    const fetchData = async () => {
       if (!teamId) return;
-
+  
+      setLoading(true);
+  
       try {
-        setLoading(true);
-        const response = await playersAndStadiumApi.get(Number(teamId), season);
-
-        setPlayers(response.response);
-        setStadium(response.stadium);
+        const [playersRes, stadiumRes] = await Promise.all([
+          getPlayers(Number(teamId), season),
+          getStadium(Number(teamId)),
+        ]);
+  
+        setPlayers(playersRes);
+        setStadium(stadiumRes);
       } catch (error) {
-        console.error("Error fetching players:", error);
+        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
     };
-
-    fetchTeamPlayers();
+  
+    fetchData();
   }, [teamId]);
-
-  console.log("Players:", players);
+  
 
   const averageAge =
     players.length > 0

@@ -4728,17 +4728,7 @@
     
         }
 
-    ],
-        "stadium": 
-        {
-            "id": 550,
-            "name": "Anfield",
-            "address": "Anfield Road",
-            "city": "Liverpool",
-            "country": "England",
-            "capacity": 55212,
-            "surface": "grass",
-            "image": "https:\/\/media.api-sports.io\/football\/venues\/550.png"
-        }
+    ]
+
 }
 
