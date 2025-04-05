@@ -8,7 +8,6 @@
     flex-direction: column;
     font-family: "Lato", sans-serif;
     color: white;
-
 }
 
 .error {
@@ -95,7 +94,7 @@
     border-radius: 50%;
     background-color: #293b49;
     animation-name: eye;
-    animation-duration: 4s;
+    animation-duration: 2s;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
 }
@@ -109,26 +108,14 @@
 }
 
 @keyframes eye {
-    0% {
-        height: 0.8rem;
+    0%, 10%, 20%, 30%, 100% {
+      height: 0.8rem;
     }
-
-    50% {
-        height: 0.8rem;
+  
+    12%, 22% {
+      height: 0.1rem;
     }
-
-    52% {
-        height: 0.1rem;
-    }
-
-    54% {
-        height: 0.8rem;
-    }
-
-    100% {
-        height: 0.8rem;
-    }
-}
+  }
 
 .cheeks {
     top: 1.6rem;
@@ -159,20 +146,10 @@
 .text {
     margin-top: 5rem;
     font-weight: 300;
-
 }
 
-.button {
-    margin-top: 4rem;
+.backHomeBtn {
+    margin-top: 3rem;
     padding: 1.2rem 3rem;
-    color: white;
-    background-color: #1f7965;
     text-decoration: none;
-    cursor: pointer;
-    transition: vars.$transition;
-}
-
-.button:hover {
-    background-color: #01ac88;
-
 }

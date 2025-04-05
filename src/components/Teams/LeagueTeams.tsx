@@ -179,9 +179,9 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
                     <RenderTeamStats side="away" team={team} />
 
                     <button
-                      className={styles["read-more-button"]}
+                      className={`button ${styles["read-more-button"]}`}
                       onClick={() =>
-                        handleReadMore(team.team.name, team.team.id)
+                      handleReadMore(team.team.name, team.team.id)
                       }
                     >
                       Read More

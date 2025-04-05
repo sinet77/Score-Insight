@@ -1,9 +1,16 @@
+@use "@styles/variables" as vars;
+
 .button{
+    align-self: center;
     border-radius: 8px;
     border: 1px solid transparent;
-    padding: 0.6em 1.2em;
-    font-size: 1em;
+    padding: 0.8rem 1.6rem;
     font-weight: 500;
-    font-family: inherit;
-    background-color: #1a1a1a;
+    background-color: vars.$green_dark-accent;
+    cursor: pointer;
+    transition: vars.$transition;
+}
+
+.button:hover {
+    background-color: vars.$green_light-accent;
 }

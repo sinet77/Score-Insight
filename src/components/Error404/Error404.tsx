@@ -30,9 +30,10 @@ export const Error404 = () => {
       <div className={styles.text}>
         Oops. The page you're looking for doesn't exist.
       </div>
-      <button className={styles.button} onClick={()=> navigate(routes.home)}>
-        Back Home
-      </button>
+      <button className={`button ${styles.backHomeBtn}`} onClick={() => navigate(routes.home)}>
+  Back Home
+</button>
+
     </div>
   );
 };
