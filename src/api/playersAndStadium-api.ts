@@ -62,8 +62,8 @@ const get = async (teamId: number, season: string): Promise<ApiResponse> => {
         )
     );
 
-    const allPlayers: Player[] = await Promise.all(allPagesPromises);
-
+    const allResponses = await Promise.all(allPagesPromises);
+    const allPlayers: Player[] = allResponses.flatMap(response => response.response);
     return { response: allPlayers, stadium };
   } catch (error) {
     console.error(`Error fetching players for team ${teamId}:`, error);
