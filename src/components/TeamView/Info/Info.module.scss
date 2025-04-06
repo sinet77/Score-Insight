@@ -1,0 +1,97 @@
+@use "@styles/variables" as vars;
+
+.wrapper {
+    background-color: vars.$item-light-background;
+    border-radius: vars.$border-radius;
+    box-shadow: vars.$item-light-box-shadow;
+    padding: 20px;
+
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+  
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 16px;
+  }
+  
+  .icon {
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .value {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin: 4px 0;
+  }
+  
+  .label {
+    font-size: 14px;
+    color: #888;
+    margin-top: 4px;
+  }
+  
+  .progressContainer {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin-bottom: 8px;
+  }
+  
+  .progressCircle {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+  
+  .progressBg {
+    fill: none;
+    stroke: #e6e6e6;
+    stroke-width: 2.8;
+  }
+  
+  .progressBar {
+    fill: none;
+    stroke: vars.$green-dark-accent;
+    stroke-width: 2.8;
+    stroke-linecap: round;
+  }
+  
+  .progressContent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .infoIcon {
+    color: vars.$green-dark-accent;
+    margin-top: 2px;
+  }
+  
+  

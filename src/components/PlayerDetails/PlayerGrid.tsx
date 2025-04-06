@@ -6,7 +6,7 @@ export const PlayerGrid = ({ players }: { players: Player[] }) => {
   const positionOrder = ["Attacker", "Midfielder", "Defender", "Goalkeeper"];
 
   const groupedPlayers = players.reduce((groups, player) => {
-    const position = player.statistics?.[0]?.games?.position || "Unknown";
+    const position = player.statistics?.[0]?.games?.position ?? "Unknown";
     if (!groups[position]) {
       groups[position] = [];
     }
@@ -20,7 +20,7 @@ export const PlayerGrid = ({ players }: { players: Player[] }) => {
         .filter((position) => groupedPlayers[position])
         .map((position) => (
           <div key={position} className={styles["position-section"]}>
-            <h3 className={`${styles["position-title"]} ${styles[position.toLowerCase()]}`}>{position}</h3>
+            <h2 className={`${styles["position-title"]} ${styles[position.toLowerCase()]}`}>{position}</h2>
             <div className={styles["players-list"]}>
               {groupedPlayers[position].map((player, index) => (
                 <PlayerDetails

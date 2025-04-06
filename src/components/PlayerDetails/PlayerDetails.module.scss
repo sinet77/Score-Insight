@@ -6,7 +6,8 @@
   justify-content: space-between;
   align-items: center;
   background-color: vars.$item-light-background;
-  border-radius: 0.75rem;
+  box-shadow: vars.$item-light-box-shadow;
+  border-radius: 12px;
   padding: 1rem 0.8rem;
   width: 130px;
   height: 160px;

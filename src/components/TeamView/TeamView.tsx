@@ -10,6 +10,7 @@ import { Coach } from "./Coach/Coach";
 import LoadingSpinner from "@components/ui/LoadingSpinner/LoadingSpinner";
 import { getPlayers } from "@api/players_api";
 import { getStadium } from "@api/stadium_api";
+import { Info } from "./Info/Info";
 
 export const TeamView = () => {
   const { teamId } = useParams<{ teamId: string }>();
@@ -21,15 +22,15 @@ export const TeamView = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!teamId) return;
-  
+
       setLoading(true);
-  
+
       try {
         const [playersRes, stadiumRes] = await Promise.all([
           getPlayers(Number(teamId), season),
           getStadium(Number(teamId)),
         ]);
-  
+
         setPlayers(playersRes);
         setStadium(stadiumRes);
       } catch (error) {
@@ -38,46 +39,24 @@ export const TeamView = () => {
         setLoading(false);
       }
     };
-  
+
     fetchData();
   }, [teamId]);
-  
-
-  const averageAge =
-    players.length > 0
-      ? players.reduce((sum, player) => sum + player.player.age, 0) /
-        players.length
-      : null;
-
-  const leagueCountry =
-    players.length > 0
-      ? players[0].statistics?.[0]?.league?.country ?? null
-      : null;
-
-  const domesticPlayers = players.filter(
-    (player) => player.player.nationality === leagueCountry
-  ).length;
-
-  const foreignPlayers = players.length - domesticPlayers;
-
-  const allPlayers = players.length;
 
   return (
     <div>
       {loading ? (
         <LoadingSpinner />
       ) : (
-        <div>
+        <div style={{maxWidth:"1500px"}}>
           <LogoAndName data={players} />
-          <div className={styles["wrapper"]}>
+          <div className={styles["main"]}>
             {teamId && <Coach teamId={Number(teamId)} season={season} />}
-            {stadium && <StadiumCard stadium={stadium} />}
+            <div className={styles["wrapper"]}>
+              {stadium && <StadiumCard stadium={stadium} />}
+              <Info players={players} />
+            </div>
           </div>
-          <p>Number of players: {allPlayers}</p>
-          <p>Domestic players: {domesticPlayers}</p>
-          <p>Foreign players: {foreignPlayers}</p>
-          {averageAge !== null && <p>Average Age: {averageAge.toFixed(1)}</p>}
-          <h1>Team Roster</h1>
           <PlayerGrid players={players} />
         </div>
       )}

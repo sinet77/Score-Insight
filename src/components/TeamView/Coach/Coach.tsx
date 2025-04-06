@@ -68,17 +68,20 @@ export const Coach = ({ teamId, season }: CoachProps) => {
                 alt={coach.name}
                 className={styles["coachPhoto"]}
               />
-              <p className={styles["coachName"]}>
-                {coach.name}
-              </p>
-              <p>
-                <strong>Age:</strong> {coach.age}
-              </p>
-              <p>
-                <strong>Birth Date:</strong> {coach.birth.date} (
-                {coach.birth.place}, {coach.birth.country})
-              </p>
-              <p><strong>Nationality:</strong> {coach.nationality}</p>
+              <p className={styles["coachName"]}>{coach.name}</p>
+              <div>
+                {" "}
+                <p>
+                  <strong>Age:</strong> {coach.age}
+                </p>
+                <p>
+                  <strong>Birth Date:</strong> {coach.birth.date} (
+                  {coach.birth.place}, {coach.birth.country})
+                </p>
+                <p>
+                  <strong>Nationality:</strong> {coach.nationality}
+                </p>
+              </div>
             </div>
 
             {currentJob && (

@@ -1,14 +1,21 @@
 @use "@styles/variables" as vars;
 
-.stadium-container{
-    display: flex;
-    background-color: vars.$item-light-background;
-    max-width: 500px;
-}
-
-.wrapper{
+.main {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 60px;
+    background-color: vars.$white-text-color;
+    box-shadow: vars.$item-light-box-shadow;
+    border-radius: vars.$border-radius;
+    padding: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.wrapper {
+    flex: 1;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
 }

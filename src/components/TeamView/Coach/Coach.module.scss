@@ -3,7 +3,7 @@
 .coachContainer {
   padding: 20px;
   background-color: vars.$item-light-background;
-  border-radius: 12px;
+  border-radius: vars.$border-radius;
   box-shadow: vars.$item-light-box-shadow;
   max-width: 900px;
   min-height: 390px;
