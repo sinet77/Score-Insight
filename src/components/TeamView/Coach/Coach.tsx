@@ -88,7 +88,7 @@ export const Coach = ({ teamId, season }: CoachProps) => {
               <div className={styles["currentJob"]}>
                 <h2 className="title title--fs24black">Currently Coaching</h2>
                 <div className={styles["jobDetails"]}>
-                  <h3>{currentJob.team.name}</h3>
+                  <h4>{currentJob.team.name}</h4>
                   <p>
                     <strong>Start:</strong> {currentJob.start}
                   </p>
@@ -111,7 +111,7 @@ export const Coach = ({ teamId, season }: CoachProps) => {
               <div className={styles["coachCareer"]}>
                 {pastJobs?.map((job) => (
                   <div key={job.team.id} className={styles["jobDetails"]}>
-                    <h3>{job.team.name}</h3>
+                    <h4>{job.team.name}</h4>
                     <p>
                       <strong>Start:</strong> {job.start}
                     </p>

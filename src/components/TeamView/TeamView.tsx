@@ -48,7 +48,7 @@ export const TeamView = () => {
       {loading ? (
         <LoadingSpinner />
       ) : (
-        <div style={{maxWidth:"1500px"}}>
+        <div className={styles["container"]}>
           <LogoAndName data={players} />
           <div className={styles["main"]}>
             {teamId && <Coach teamId={Number(teamId)} season={season} />}

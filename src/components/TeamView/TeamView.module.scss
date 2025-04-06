@@ -12,9 +12,12 @@
     width: 100%;
     margin-bottom: 20px;
 }
-
+.container {
+    max-width: 1500px; // Maksymalna szerokość
+    margin: 0 auto; // Wyśrodkowanie
+    padding: 0 1rem; // Opcjonalne odstępy wewnętrzne
+  }
 .wrapper {
-    flex: 1;
     gap: 10px;
     display: flex;
     flex-direction: column;
