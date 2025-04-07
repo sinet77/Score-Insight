@@ -8,9 +8,13 @@
   background-color: vars.$item-light-background;
   box-shadow: vars.$item-light-box-shadow;
   border-radius: 12px;
-  padding: 1rem 0.8rem;
-  width: 130px;
-  height: 160px;
+  padding: 0.5rem 0.8rem;
+  width: 150px;
+
+
+  box-sizing: border-box;
+  height: 180px;
+
 
   .player-image {
     width: 75px;
