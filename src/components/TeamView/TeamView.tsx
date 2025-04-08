@@ -13,6 +13,7 @@ import { getStadium } from "@api/stadium_api";
 import { Info } from "./Info/Info";
 import { getFixturesForTeam } from "@api/fixturesForTeam_api";
 import { FixturesResponse } from "./Matches/matches_types";
+import { FixturesData } from "./Matches/Matches";
 
 export const TeamView = () => {
   const { teamId } = useParams<{ teamId: string }>();
@@ -20,12 +21,8 @@ export const TeamView = () => {
   const [stadium, setStadium] = useState<StadiumProps | null>(null);
   const [loading, setLoading] = useState(true);
   const season = "2023";
-  const [fixtures, setFixtures] = useState<
-    {
-      fixture: { id: number; date: string };
-      teams: { home: { name: string }; away: { name: string } };
-    }[]
-  >([]);
+  const [fixtures, setFixtures] = useState<FixturesResponse | []>([]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,17 +69,7 @@ export const TeamView = () => {
               <Info players={players} />
             </div>
           </div>
-          <div className={styles["fixtures"]}>
-            <h2>Fixtures</h2>
-            <ul>
-              {fixtures?.map((fixture) => (
-                <li key={fixture.fixture.id}>
-                  {fixture.teams.home.name} vs {fixture.teams.away.name} -{" "}
-                  {new Date(fixture.fixture.date).toLocaleDateString()}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <FixturesData fixtures={fixtures} />
           <PlayerGrid players={players} />
         </div>
       )}
