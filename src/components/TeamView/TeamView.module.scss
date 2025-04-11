@@ -1,24 +1,25 @@
 @use "@styles/variables" as vars;
 
-.main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 60px;
-    background-color: vars.$white-text-color;
-    box-shadow: vars.$item-light-box-shadow;
-    border-radius: vars.$border-radius;
-    padding: 20px;
-    width: 100%;
-    margin-bottom: 20px;
-}
 .container {
-    max-width: 1500px; // Maksymalna szerokość
-    margin: 0 auto; // Wyśrodkowanie
-    padding: 0 1rem; // Opcjonalne odstępy wewnętrzne
+    max-width: 1500px; 
+    margin: 0 auto; 
+    padding: 0 1rem; 
   }
 .wrapper {
     gap: 10px;
     display: flex;
     flex-direction: column;
 }
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto ;
+    gap: 20px;
+    background-color: vars.$white-text-color;
+    box-shadow: vars.$item-light-box-shadow;
+    border-radius: vars.$border-radius;
+    padding: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+  }

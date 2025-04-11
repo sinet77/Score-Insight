@@ -126,6 +126,7 @@ export const Coach = ({ teamId, season }: CoachProps) => {
                   </div>
                 ))}
               </div>
+              
             </div>
           )}
         </div>

@@ -1,9 +1,9 @@
 @use "@styles/variables" as vars;
 
 .viewer {
-    max-width: 600px;
+    max-height: 400px;
     padding: 20px;
-    background-color: vars.$white-text-color;
+    background-color: vars.$item-light-background;
     border-radius: vars.$border-radius;
     box-shadow: vars.$item-light-box-shadow;
 }
