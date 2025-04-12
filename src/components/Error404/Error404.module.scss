@@ -7,7 +7,7 @@
     justify-content: center;
     flex-direction: column;
     font-family: "Lato", sans-serif;
-    color: white;
+    color: #293b49;
 }
 
 .error {
@@ -61,18 +61,6 @@
     border: 0.3rem solid #293b49;
     background-color: white;
     border-radius: 0.8rem;
-}
-
-.paper::before {
-    content: "";
-    position: absolute;
-    top: -0.7rem;
-    right: -0.7rem;
-    width: 1.4rem;
-    height: 1rem;
-    background-color: white;
-    border-bottom: 0.3rem solid #293b49;
-    transform: rotate(45deg);
 }
 
 .face {
@@ -158,4 +146,5 @@
     margin-top: 3rem;
     padding: 1.2rem 3rem;
     text-decoration: none;
+    color: vars.$white_text-color;
 }
