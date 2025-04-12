@@ -4,7 +4,7 @@ import type { LeagueSelect, CountryWithLeagues } from "./countries-types";
 import styles from "./countries-list.module.scss";
 import LoadingSpinner from "@components/ui/LoadingSpinner/LoadingSpinner";
 
-const CountriesList = ({ onLeagueSelect, onSeasonSelect }: LeagueSelect) => {
+const CountriesList = ({ onLeagueSelect, onSeasonSelect, selectedSeason }: LeagueSelect) => {
   const [countries, setCountries] = useState<CountryWithLeagues[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -77,7 +77,7 @@ const CountriesList = ({ onLeagueSelect, onSeasonSelect }: LeagueSelect) => {
           name="year"
           className={styles["year-select"]}
           onChange={(event) => onSeasonSelect(event.target.value)}
-          value={"2023"}
+          value={selectedSeason || "2023"}
         >
           <option value="2021">2021</option>
           <option value="2022">2022</option>

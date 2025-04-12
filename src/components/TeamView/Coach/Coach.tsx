@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { coachsApi } from "@api/coach-api";
 import { Coach as CoachType, CoachApiResponse } from "./coach-types";
-import styles from "./Coach.module.scss"; // Import modułu SCSS
+import styles from "./Coach.module.scss"; 
 import LoadingSpinner from "@components/ui/LoadingSpinner/LoadingSpinner";
 
 interface CoachProps {

@@ -1,5 +1,5 @@
 export const routes ={
     home:"/",
-    team:"/team/:teamName/:teamId",
+    team:"/team/:leagueId/:season/:teamName/:teamId",
     player:"/player/:playerName/:playerId"
 }
