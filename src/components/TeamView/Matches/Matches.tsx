@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./Matches.module.scss";
 import { FixturesResponse } from "./matches_types";
-import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
+import { ArrowBigLeft, ArrowBigRight, ArrowRightCircle } from "lucide-react";
 
 type FixturesResponseProps = {
   fixtures: FixturesResponse;
@@ -9,6 +9,7 @@ type FixturesResponseProps = {
 
 export const FixturesData = ({ fixtures }: FixturesResponseProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [inputValue, setInputValue] = useState("");
 
   if (!fixtures || fixtures.length === 0) {
     return <div>No data for matches</div>;
@@ -28,6 +29,19 @@ export const FixturesData = ({ fixtures }: FixturesResponseProps) => {
     }
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+  };
+
+  const handleGoToMatch = () => {
+    const number = parseInt(inputValue);
+    if (number >= 1 && number <= fixtures.length) {
+      setCurrentIndex(number - 1);
+      setInputValue("");
+    }
+  };
+
   const formatDate = (isoDate: string) => {
     const date = new Date(isoDate);
     return `${date.toLocaleDateString()} ${date.toLocaleTimeString([], {
@@ -43,12 +57,28 @@ export const FixturesData = ({ fixtures }: FixturesResponseProps) => {
           <ArrowBigLeft className={styles["arrow"]} size={50} />
         </button>
         <span>{`Match ${currentIndex + 1} of ${fixtures.length}`}</span>
+
         <button
           onClick={handleNext}
           disabled={currentIndex === fixtures.length - 1}
         >
           <ArrowBigRight className={styles["arrow"]} size={50} />
         </button>
+
+        <div className={styles["jump-to"]}>
+          <input
+            type="number"
+            min={1}
+            max={fixtures.length}
+            value={inputValue}
+            onChange={handleInputChange}
+            placeholder="Go to..."
+            className={styles["jump-input"]}
+          />
+          <button onClick={handleGoToMatch} >
+            <ArrowRightCircle className={styles["jump-button"]} size={35} />
+          </button>
+        </div>
       </div>
 
       <div className={styles["fixtureBox"]}>
