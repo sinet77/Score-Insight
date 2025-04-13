@@ -2,14 +2,16 @@ import { useState } from "react";
 import styles from "./Matches.module.scss";
 import { FixturesResponse } from "./matches_types";
 import { ArrowBigLeft, ArrowBigRight, ArrowRightCircle } from "lucide-react";
+import { Statistics } from "./Statistics/Statistics";
 
 type FixturesResponseProps = {
   fixtures: FixturesResponse;
 };
 
-export const FixturesData = ({ fixtures }: FixturesResponseProps) => {
+export const MatchData = ({ fixtures }: FixturesResponseProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [inputValue, setInputValue] = useState("");
+  const [showStats, setShowStats] = useState(false);
 
   if (!fixtures || fixtures.length === 0) {
     return <div>No data for matches</div>;
@@ -50,6 +52,13 @@ export const FixturesData = ({ fixtures }: FixturesResponseProps) => {
     })}`;
   };
 
+  const toggleStats = () => {
+    setShowStats(!showStats);
+  };
+
+  console.log("currentFixture ID:", currentFixture.fixture.id);
+
+
   return (
     <div className={styles["viewer"]}>
       <div className={styles["nav"]}>
@@ -64,21 +73,6 @@ export const FixturesData = ({ fixtures }: FixturesResponseProps) => {
         >
           <ArrowBigRight className={styles["arrow"]} size={50} />
         </button>
-
-        <div className={styles["jump-to"]}>
-          <input
-            type="number"
-            min={1}
-            max={fixtures.length}
-            value={inputValue}
-            onChange={handleInputChange}
-            placeholder="Go to..."
-            className={styles["jump-input"]}
-          />
-          <button onClick={handleGoToMatch} >
-            <ArrowRightCircle className={styles["jump-button"]} size={35} />
-          </button>
-        </div>
       </div>
 
       <div className={styles["fixtureBox"]}>
@@ -120,6 +114,36 @@ export const FixturesData = ({ fixtures }: FixturesResponseProps) => {
           </p>
         </div>
       </div>
+      <div className={styles["footer"]}>
+        <button onClick={toggleStats} className={styles["toggle-stats-button"]}>
+          {showStats ? "Hide Stats" : "Show Stats"}
+        </button>
+        <div className={styles["jump-to"]}>
+          <input
+            type="number"
+            min={1}
+            max={fixtures.length}
+            value={inputValue}
+            onChange={handleInputChange}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleGoToMatch();
+              }
+            }}
+            placeholder="Go to..."
+            className={styles["jump-input"]}
+          />
+          <button onClick={handleGoToMatch}>
+            <ArrowRightCircle className={styles["jump-button"]} size={35} />
+          </button>
+        </div>
+      </div>
+
+      {showStats && (
+        <div className={styles["stats-container"]}>
+          <Statistics currentFixture={currentFixture} />
+        </div>
+      )}
     </div>
   );
 };

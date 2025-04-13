@@ -13,16 +13,19 @@ import { getStadium } from "@api/stadium_api";
 import { Info } from "./Info/Info";
 import { getFixturesForTeam } from "@api/fixturesForTeam_api";
 import { FixturesResponse } from "./Matches/matches_types";
-import { FixturesData } from "./Matches/Matches";
+import { MatchData } from "./Matches/Matches";
 import { ClubHistory } from "@components/ClubHistory/ClubHistory";
 
 export const TeamView = () => {
-  const { teamId, season, leagueId } = useParams<{ teamId: string; season: string; leagueId: string }>();
+  const { teamId, season, leagueId } = useParams<{
+    teamId: string;
+    season: string;
+    leagueId: string;
+  }>();
 
   const [players, setPlayers] = useState<Player[]>([]);
   const [stadium, setStadium] = useState<StadiumProps | null>(null);
   const [loading, setLoading] = useState(true);
-
   const [fixtures, setFixtures] = useState<FixturesResponse | []>([]);
 
   useEffect(() => {
@@ -46,6 +49,7 @@ export const TeamView = () => {
         setPlayers(playersRes);
         setStadium(stadiumRes);
         setFixtures(fixturesRes);
+        console.log("Fixtures:", fixturesRes);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -54,7 +58,7 @@ export const TeamView = () => {
     };
 
     fetchData();
-  }, [teamId]);
+  }, [teamId, season, leagueId, fixtures]);
 
   return (
     <div>
@@ -64,16 +68,24 @@ export const TeamView = () => {
         <div className={styles["container"]}>
           <LogoAndName data={players} />
           <div className={styles["grid"]}>
-            {teamId && <Coach teamId={Number(teamId)} season={season ?? "2023"} />}
-            <div>
-              <FixturesData fixtures={fixtures} />
-              <Info players={players} />
+            <div className={styles["left"]}>
+              {teamId && (
+                <Coach teamId={Number(teamId)} season={season ?? "2023"} />
+              )}
+              <ClubHistory
+                clubName={
+                  players[0]?.statistics?.[0]?.team?.name ?? "Unknown Club"
+                }
+              />
+              
             </div>
-            {players.length > 0 && players[0]?.statistics?.[0]?.team?.name && (
-              <ClubHistory clubName={players[0].statistics[0].team.name} />
-            )}
-            {stadium && <StadiumCard stadium={stadium} />}
+            <div className={styles["right"]}>
+              <MatchData fixtures={fixtures} />
+              <Info players={players} />
+              {stadium && <StadiumCard stadium={stadium} />}
+            </div>
           </div>
+
           <PlayerGrid players={players} />
         </div>
       )}
