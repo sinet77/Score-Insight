@@ -60,13 +60,13 @@ export const ClubHistory = ({ clubName }: Props) => {
         const foundedMatch = summaryData.extract?.match(
           /[Ff]ounded in (\d{4})/
         );
-        if (foundedMatch ?? foundedMatch[1]) {
+        if (foundedMatch && foundedMatch[1]) {
           setFoundedYear(foundedMatch[1]);
         }
         const stadiumMatch = summaryData.extract?.match(
           /home (?:games|matches) at ([A-Za-z\s]+)/
         );
-        if (stadiumMatch ?? stadiumMatch[1]) {
+        if (stadiumMatch && stadiumMatch[1]) {
           setStadium(stadiumMatch[1].trim());
         }
       } catch (error) {
