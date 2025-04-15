@@ -4,7 +4,11 @@ import type { LeagueSelect, CountryWithLeagues } from "./countries-types";
 import styles from "./countries-list.module.scss";
 import LoadingSpinner from "@components/ui/LoadingSpinner/LoadingSpinner";
 
-const CountriesList = ({ onLeagueSelect, onSeasonSelect, selectedSeason }: LeagueSelect) => {
+const CountriesList = ({
+  onLeagueSelect,
+  onSeasonSelect,
+  selectedSeason,
+}: LeagueSelect) => {
   const [countries, setCountries] = useState<CountryWithLeagues[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,27 +19,28 @@ const CountriesList = ({ onLeagueSelect, onSeasonSelect, selectedSeason }: Leagu
       try {
         setLoading(true);
         const data = await countriesApi.get();
-        if (data) {
-          const countriesWithLeagues: CountryWithLeagues[] = data.response.map(
-            ({ country, league }) => ({
-              ...country,
-              leagues: league ? [league] : [],
-            })
-          );
-
-          // Sprawdzenie, czy istnieje więcej niż jedna liga w danym kraju
-          const countriesMap = new Map<string, CountryWithLeagues>();
-          countriesWithLeagues.forEach((country) => {
-            const countryId = country.code || country.name; // Jeśli country.code jest null, użyj country.name
-            if (countriesMap.has(countryId)) {
-              countriesMap.get(countryId)!.leagues.push(...country.leagues); // Dodanie kolejnej ligi do istniejącego kraju
-            } else {
-              countriesMap.set(countryId, country); // Dodanie nowego kraju z ligą
-            }
-          });
-
-          setCountries(Array.from(countriesMap.values())); // Ustawienie unikalnych krajów
+        if (!data) {
+          return;
         }
+        const countriesWithLeagues: CountryWithLeagues[] = data.response.map(
+          ({ country, league }) => ({
+            ...country,
+            leagues: league ? [league] : [],
+          })
+        );
+
+        // Sprawdzenie, czy istnieje więcej niż jedna liga w danym kraju
+        const countriesMap = new Map<string, CountryWithLeagues>();
+        countriesWithLeagues.forEach((country) => {
+          const countryId = country.code || country.name; // Jeśli country.code jest null, użyj country.name
+          if (countriesMap.has(countryId)) {
+            countriesMap.get(countryId)!.leagues.push(...country.leagues); // Dodanie kolejnej ligi do istniejącego kraju
+          } else {
+            countriesMap.set(countryId, country); // Dodanie nowego kraju z ligą
+          }
+        });
+
+        setCountries(Array.from(countriesMap.values())); // Ustawienie unikalnych krajów
       } catch (err) {
         console.error("Error fetching countries:", err);
       } finally {
@@ -69,7 +74,7 @@ const CountriesList = ({ onLeagueSelect, onSeasonSelect, selectedSeason }: Leagu
 
   return (
     <div className={styles["countries-container"]}>
-      <h2 className={'title title--fs24'}>All competitions</h2>
+      <h2 className={"title title--fs24"}>All competitions</h2>
       <div className={styles["countries-container__season-choose"]}>
         <label htmlFor="year">Season: </label>
         <select
@@ -86,8 +91,18 @@ const CountriesList = ({ onLeagueSelect, onSeasonSelect, selectedSeason }: Leagu
       </div>
 
       <div className={styles["search-container"]}>
-        <svg className={styles["search-container__search-icon"]} viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        <svg
+          className={styles["search-container__search-icon"]}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
         </svg>
         <input
           type="text"
@@ -108,27 +123,42 @@ const CountriesList = ({ onLeagueSelect, onSeasonSelect, selectedSeason }: Leagu
               <div key={countryId}>
                 <button
                   className={`${styles["country-item"]} ${
-                    expandedCountries.includes(countryId) ? styles["country-item--expanded"] : ""
-                  } ${expandedCountries.includes(countryId) ? styles["country-item--active"] : ""}`}
+                    expandedCountries.includes(countryId)
+                      ? styles["country-item--expanded"]
+                      : ""
+                  } ${
+                    expandedCountries.includes(countryId)
+                      ? styles["country-item--active"]
+                      : ""
+                  }`}
                   onClick={() => handleCountryClick(countryId)}
                 >
                   <div className={styles["country-flag"]}>
                     {country.flag ? (
                       <img src={country.flag} alt={`${country.name} flag`} />
                     ) : (
-                      <div className={styles["country-flag__flag-placeholder"]}></div>
+                      <div
+                        className={styles["country-flag__flag-placeholder"]}
+                      ></div>
                     )}
                   </div>
                   <span>{country.name}</span>
                   <svg
                     className={`${styles["country-item__chevron-icon"]} ${
-                      expandedCountries.includes(countryId) ? styles["country-item__chevron-icon--expanded"] : ""
+                      expandedCountries.includes(countryId)
+                        ? styles["country-item__chevron-icon--expanded"]
+                        : ""
                     }`}
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
                   </svg>
                 </button>
 
@@ -140,7 +170,11 @@ const CountriesList = ({ onLeagueSelect, onSeasonSelect, selectedSeason }: Leagu
                         className={`${styles["country-item"]} ${styles["country-item--league-item"]}`}
                         onClick={() => handleLeagueClick(league.id)}
                       >
-                        <img src={league.logo} alt={league.name} className={styles["country-leagues__league-logo"]} />
+                        <img
+                          src={league.logo}
+                          alt={league.name}
+                          className={styles["country-leagues__league-logo"]}
+                        />
                         <span>{league.name}</span>
                       </button>
                     ))}

@@ -22,8 +22,10 @@ export const Info = ({ players }: { players: Player[] }) => {
 
   const allPlayers = players.length;
 
-  const domesticPercentage = Math.round((domesticPlayers / allPlayers) * 100);
-  const foreignPercentage = Math.round((foreignPlayers / allPlayers) * 100);
+  const domesticPercentage =  
+    allPlayers > 0 ? Math.round((domesticPlayers / allPlayers) * 100) : 0;  
+  const foreignPercentage =  
+    allPlayers > 0 ? Math.round((foreignPlayers / allPlayers) * 100) : 0;  
 
   return (
     <div className={styles.wrapper}>

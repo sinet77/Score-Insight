@@ -10,15 +10,14 @@ export const getFixturesForTeam = async (
     season: string
   ) => {
     if (isDevelop) {
-      return fixtureData.response as FixturesResponse; 
+      return fixtureData.response; 
     }
     try {
-      const response = await baseApi.get(
+      const response = await baseApi.get<FixturesResponse>(
         `https://v3.football.api-sports.io/fixtures?season=${season}&team=${teamId}&league=${leagueId}`
       );
-      console.log("Fixtures for team:", response.response)
 
-      return response.response; 
+      return response; 
     } catch (error) {
       console.error("Error fetching fixtures:", error);
       return [];

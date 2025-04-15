@@ -58,7 +58,6 @@ export const MatchData = ({ fixtures }: FixturesResponseProps) => {
 
   console.log("currentFixture ID:", currentFixture.fixture.id);
 
-
   return (
     <div className={styles["viewer"]}>
       <div className={styles["nav"]}>
@@ -119,7 +118,11 @@ export const MatchData = ({ fixtures }: FixturesResponseProps) => {
           {showStats ? "Hide Stats" : "Show Stats"}
         </button>
         <div className={styles["jump-to"]}>
+          <label htmlFor="jump-to-match" className={styles["input-label"]}>
+            Jump to match:
+          </label>
           <input
+            id="jump-to-match"
             type="number"
             min={1}
             max={fixtures.length}

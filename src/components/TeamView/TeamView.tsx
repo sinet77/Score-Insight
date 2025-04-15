@@ -14,7 +14,7 @@ import { Info } from "./Info/Info";
 import { getFixturesForTeam } from "@api/fixturesForTeam_api";
 import { FixturesResponse } from "./Matches/matches_types";
 import { MatchData } from "./Matches/Matches";
-import { ClubHistory } from "@components/ClubHistory/ClubHistory";
+
 
 export const TeamView = () => {
   const { teamId, season, leagueId } = useParams<{
@@ -40,7 +40,7 @@ export const TeamView = () => {
           getStadium(Number(teamId)),
         ]);
 
-        const fixturesRes: FixturesResponse = await getFixturesForTeam(
+        const fixturesRes = await getFixturesForTeam(
           Number(teamId),
           Number(leagueId),
           season ?? "2023"
@@ -58,7 +58,7 @@ export const TeamView = () => {
     };
 
     fetchData();
-  }, [teamId, season, leagueId, fixtures]);
+  }, [teamId, season, leagueId]);
 
   return (
     <div>
@@ -72,16 +72,11 @@ export const TeamView = () => {
               {teamId && (
                 <Coach teamId={Number(teamId)} season={season ?? "2023"} />
               )}
-              <ClubHistory
-                clubName={
-                  players[0]?.statistics?.[0]?.team?.name ?? "Unknown Club"
-                }
-              />
-              
+              <Info players={players} />
             </div>
             <div className={styles["right"]}>
               <MatchData fixtures={fixtures} />
-              <Info players={players} />
+              
               {stadium && <StadiumCard stadium={stadium} />}
             </div>
           </div>

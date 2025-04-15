@@ -15,9 +15,8 @@ export const getFixtureStats  = async (
       const response = await baseApi.get(
         `https://v3.football.api-sports.io/fixtures/statistics?fixture=${fixtureId}`
       );
-      console.log("Fixtures for team:", response.response)
 
-      return response.response; 
+      return response; 
     } catch (error) {
       console.error("Error fetching fixture statistics:", error);
       return null;

@@ -64,6 +64,11 @@
     }
 }
 
+.input-label{
+    font-size: 14px;
+    font-weight: 600;
+}
+
 .toggle-stats-button {
     @extend .button;
     color: vars.$white_text-color;

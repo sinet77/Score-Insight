@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { coachsApi } from "@api/coach-api";
-import { Coach as CoachType, CoachApiResponse } from "./coach-types";
+import { Coach as CoachType } from "./coach-types";
 import styles from "./Coach.module.scss"; 
 import LoadingSpinner from "@components/ui/LoadingSpinner/LoadingSpinner";
 
@@ -17,7 +17,7 @@ export const Coach = ({ teamId, season }: CoachProps) => {
     coaches: CoachType[],
     teamId: number,
     season: string
-  ): CoachType | undefined => {
+  )=> {
     return coaches.find((coach) =>
       coach.career.some(
         (job) =>
@@ -34,7 +34,7 @@ export const Coach = ({ teamId, season }: CoachProps) => {
 
       try {
         setLoading(true);
-        const response: CoachApiResponse = await coachsApi.get(teamId);
+        const response = await coachsApi.get(teamId);
 
         const selectedCoach = getCoachForSeason(
           response.response,
