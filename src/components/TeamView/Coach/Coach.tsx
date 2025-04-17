@@ -110,7 +110,7 @@ export const Coach = ({ teamId, season }: CoachProps) => {
               <h2 className="title title--fs24black">Previous Clubs</h2>
               <div className={styles["coachCareer"]}>
                 {pastJobs?.map((job) => (
-                  <div key={job.team.id} className={styles["jobDetails"]}>
+                    <div key={`${job.team.id}-${job.start}`} className={styles["jobDetails"]}>
                     <h4>{job.team.name}</h4>
                     <p>
                       <strong>Start:</strong> {job.start}
@@ -123,7 +123,7 @@ export const Coach = ({ teamId, season }: CoachProps) => {
                       alt={job.team.name}
                       className={styles["teamLogo"]}
                     />
-                  </div>
+                    </div>
                 ))}
               </div>
               

@@ -6,11 +6,15 @@ export interface Fixture {
 
 export interface Statistic {
   type: string;
-  value: string;
+  value: string | number | null;
 }
 
 export interface TeamStatistics {
   statistics: Statistic[];
+}
+
+export interface FixtureStatisticsApiResponse {
+  response: TeamStatistics[];
 }
 
 export type StatisticsBarProps = {

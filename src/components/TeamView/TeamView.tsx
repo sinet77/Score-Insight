@@ -12,7 +12,7 @@ import { getPlayers } from "@api/players_api";
 import { getStadium } from "@api/stadium_api";
 import { Info } from "./Info/Info";
 import { getFixturesForTeam } from "@api/fixturesForTeam_api";
-import { FixturesResponse } from "./Matches/matches_types";
+import { Fixture } from "./Matches/matches_types";
 import { MatchData } from "./Matches/Matches";
 
 
@@ -26,7 +26,7 @@ export const TeamView = () => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [stadium, setStadium] = useState<StadiumProps | null>(null);
   const [loading, setLoading] = useState(true);
-  const [fixtures, setFixtures] = useState<FixturesResponse | []>([]);
+  const [fixtures, setFixtures] = useState<Fixture[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,7 +49,6 @@ export const TeamView = () => {
         setPlayers(playersRes);
         setStadium(stadiumRes);
         setFixtures(fixturesRes);
-        console.log("Fixtures:", fixturesRes);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -75,7 +74,7 @@ export const TeamView = () => {
               <Info players={players} />
             </div>
             <div className={styles["right"]}>
-              <MatchData fixtures={fixtures} />
+            {fixtures.length > 0 && <MatchData fixtures={fixtures} />}
               
               {stadium && <StadiumCard stadium={stadium} />}
             </div>

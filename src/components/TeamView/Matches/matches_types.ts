@@ -1,78 +1,77 @@
 type FixtureStatus = {
-    long: string;
-    short: string;
-    elapsed: number;
-    extra: string | null;
+  long: string;
+  short: string;
+  elapsed: number;
+  extra: string | null;
+};
+
+type Venue = {
+  id: number;
+  name: string;
+  city: string;
+};
+
+type Score = {
+  halftime: {
+    home: number;
+    away: number;
   };
-  
-  type Venue = {
+  fulltime: {
+    home: number;
+    away: number;
+  };
+  extratime: {
+    home: number | null;
+    away: number | null;
+  };
+  penalty: {
+    home: number | null;
+    away: number | null;
+  };
+};
+
+type Team = {
+  id: number;
+  name: string;
+  logo: string;
+  winner: boolean | null;
+};
+
+type League = {
+  id: number;
+  name: string;
+  country: string;
+  logo: string;
+  flag: string;
+  season: number;
+  round: string;
+  standings: boolean;
+};
+
+export type Fixture = {
+  fixture: {
     id: number;
-    name: string;
-    city: string;
+    referee: string;
+    timezone: string;
+    date: string;
+    timestamp: number;
+    periods: {
+      first: number;
+      second: number;
+    };
+    venue: Venue;
+    status: FixtureStatus;
   };
-  
-  type Score = {
-    halftime: {
-      home: number;
-      away: number;
-    };
-    fulltime: {
-      home: number;
-      away: number;
-    };
-    extratime: {
-      home: number | null;
-      away: number | null;
-    };
-    penalty: {
-      home: number | null;
-      away: number | null;
-    };
+  league: League;
+  teams: {
+    home: Team;
+    away: Team;
   };
-  
-  type Team = {
-    id: number;
-    name: string;
-    logo: string;
-    winner: boolean | null;
+  goals: {
+    home: number;
+    away: number;
   };
-  
-  type League = {
-    id: number;
-    name: string;
-    country: string;
-    logo: string;
-    flag: string;
-    season: number;
-    round: string;
-    standings: boolean;
-  };
-  
-  type Fixture = {
-    fixture: {
-      id: number;
-      referee: string;
-      timezone: string;
-      date: string;
-      timestamp: number;
-      periods: {
-        first: number;
-        second: number;
-      };
-      venue: Venue;
-      status: FixtureStatus;
-    };
-    league: League;
-    teams: {
-      home: Team;
-      away: Team;
-    };
-    goals: {
-      home: number;
-      away: number;
-    };
-    score: Score;
-  };
-  
-  export type FixturesResponse = Fixture[];
-  
+  score: Score;
+};
+
+export type FixturesResponse = { response: Fixture[] };

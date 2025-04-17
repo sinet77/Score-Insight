@@ -18,7 +18,6 @@ export const Statistics = ({ currentFixture }: { currentFixture: Fixture }) => {
       if (!currentFixture) return;
 
       const fixtureId = currentFixture.fixture.id;
-      console.log("Fetching stats for fixture:", fixtureId);
       const fixtureStats = await getFixtureStats(fixtureId);
 
       if (fixtureStats && isMounted) {
@@ -31,23 +30,28 @@ export const Statistics = ({ currentFixture }: { currentFixture: Fixture }) => {
     };
 
     fetchStats();
-
     return () => {
       isMounted = false;
     };
   }, [currentFixture]);
 
-  console.log("Current fixture ID:", currentFixture.fixture.id);
-  console.log("Fetched stats:", stats);
+  const parseValue = (value: string | number | null): number => {
+    if (value === null) return 0; 
+    if (typeof value === "string") {
+      const numericValue = value.includes('%') ? parseFloat(value.replace('%', '')) : parseFloat(value);
+      return isNaN(numericValue) ? 0 : numericValue; 
+    }
+    return value; 
+  };
 
-  const team1Stats = stats[0]?.statistics || [];
-  const team2Stats = stats[1]?.statistics || [];
+  const team1Stats = stats[0]?.statistics ?? [];
+  const team2Stats = stats[1]?.statistics ?? [];
 
   // Map stat by type for sorting
   const combinedStats = team1Stats.map((stat, index) => ({
     label: stat.type,
-    team1Value: parseFloat(stat.value) || 0,
-    team2Value: parseFloat(team2Stats[index]?.value) || 0,
+    team1Value: parseValue(stat.value),
+    team2Value: parseValue(team2Stats[index].value),
   }));
 
   // Sort: Ball Possession always first
@@ -68,7 +72,7 @@ export const Statistics = ({ currentFixture }: { currentFixture: Fixture }) => {
             <div>
               {sortedStats.map((stat) => (
                 <StatisticsBar
-                  key={`${stat.label}-${currentFixture.fixture.id}`}
+                  key={`${stat.label}-${currentFixture?.fixture?.id}`}
                   label={stat.label}
                   team1Value={stat.team1Value}
                   team2Value={stat.team2Value}

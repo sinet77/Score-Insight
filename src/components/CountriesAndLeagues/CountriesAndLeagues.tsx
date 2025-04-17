@@ -32,7 +32,7 @@ const CountriesList = ({
         // Sprawdzenie, czy istnieje więcej niż jedna liga w danym kraju
         const countriesMap = new Map<string, CountryWithLeagues>();
         countriesWithLeagues.forEach((country) => {
-          const countryId = country.code || country.name; // Jeśli country.code jest null, użyj country.name
+          const countryId = country.code ?? country.name; // Jeśli country.code jest null, użyj country.name
           if (countriesMap.has(countryId)) {
             countriesMap.get(countryId)!.leagues.push(...country.leagues); // Dodanie kolejnej ligi do istniejącego kraju
           } else {
@@ -118,7 +118,7 @@ const CountriesList = ({
       ) : (
         <div className={styles["countries-list"]}>
           {filteredCountries.map((country) => {
-            const countryId = country.code || country.name;
+            const countryId = country.code ?? country.name;
             return (
               <div key={countryId}>
                 <button
