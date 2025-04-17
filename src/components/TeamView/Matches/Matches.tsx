@@ -118,24 +118,26 @@ export const MatchData = ({ fixtures }: FixturesResponseProps) => {
           <label htmlFor="jump-to-match" className={styles["input-label"]}>
             Jump to match:
           </label>
-          <input
-            id="jump-to-match"
-            type="number"
-            min={1}
-            max={fixtures.length}
-            value={inputValue}
-            onChange={handleInputChange}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleGoToMatch();
-              }
-            }}
-            placeholder="Go to..."
-            className={styles["jump-input"]}
-          />
-          <button onClick={handleGoToMatch}>
-            <ArrowRightCircle className={styles["jump-button"]} size={35} />
-          </button>
+          <div className={styles["input-container"]}>
+            <input
+              id="jump-to-match"
+              type="number"
+              min={1}
+              max={fixtures.length}
+              value={inputValue}
+              onChange={handleInputChange}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleGoToMatch();
+                }
+              }}
+              placeholder="Go to..."
+              className={styles["jump-input"]}
+            />
+            <button onClick={handleGoToMatch}>
+              <ArrowRightCircle className={styles["jump-button"]} size={35} />
+            </button>
+          </div>
         </div>
       </div>
 
