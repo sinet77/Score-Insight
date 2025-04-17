@@ -1,4 +1,5 @@
 @use "@styles/_index.scss";
+@use "@styles/variables" as vars;
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
 
 body {
@@ -6,6 +7,10 @@ body {
   padding: 0;
   padding-bottom: 1rem;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  background-color: #121418;
+  background-color: vars.$item-light-background;
   min-height: 100vh;
+
+}
+* {
+  box-sizing: border-box;
 }

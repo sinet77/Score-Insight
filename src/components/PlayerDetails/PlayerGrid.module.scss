@@ -1,14 +1,13 @@
+@use "@styles/variables" as vars;
+
 .player-grid {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
   width: 100%;
-
-  .grid-title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-  }
+  background-color: vars.$white_text-color;
+  border-radius: vars.$border-radius;
+  box-shadow: vars.$item-light-box-shadow;
+  padding: 20px;
 
   .position-section {
     display: flex;
@@ -17,7 +16,7 @@
     margin-bottom: 2rem;
 
     .position-title {
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       font-weight: 600;
       margin: 0;
     }

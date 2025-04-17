@@ -1,4 +1,4 @@
-export interface StadiumProps  {
+export type StadiumProps = {
     id: number;
     name: string;
     address: string;
@@ -7,4 +7,16 @@ export interface StadiumProps  {
     capacity: number;
     surface: string;
     image: string;
+  };
+
+  export type TeamVenueApiResponse = {
+    response: {
+      venue: {
+        id: number;
+      };
+    }[];
+  };
+  
+  export type VenueApiResponse = {
+    response: StadiumProps[];
   };

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { coachsApi } from "@api/coach-api";
-import { Coach as CoachType, CoachApiResponse } from "./coach-types";
-import styles from "./Coach.module.scss"; // Import modułu SCSS
+import { Coach as CoachType } from "./coach-types";
+import styles from "./Coach.module.scss"; 
 import LoadingSpinner from "@components/ui/LoadingSpinner/LoadingSpinner";
 
 interface CoachProps {
@@ -17,7 +17,7 @@ export const Coach = ({ teamId, season }: CoachProps) => {
     coaches: CoachType[],
     teamId: number,
     season: string
-  ): CoachType | undefined => {
+  )=> {
     return coaches.find((coach) =>
       coach.career.some(
         (job) =>
@@ -34,7 +34,7 @@ export const Coach = ({ teamId, season }: CoachProps) => {
 
       try {
         setLoading(true);
-        const response: CoachApiResponse = await coachsApi.get(teamId);
+        const response = await coachsApi.get(teamId);
 
         const selectedCoach = getCoachForSeason(
           response.response,
@@ -68,24 +68,27 @@ export const Coach = ({ teamId, season }: CoachProps) => {
                 alt={coach.name}
                 className={styles["coachPhoto"]}
               />
-              <p className={styles["coachName"]}>
-                {coach.name}
-              </p>
-              <p>
-                <strong>Age:</strong> {coach.age}
-              </p>
-              <p>
-                <strong>Birth Date:</strong> {coach.birth.date} (
-                {coach.birth.place}, {coach.birth.country})
-              </p>
-              <p><strong>Nationality:</strong> {coach.nationality}</p>
+              <p className={styles["coachName"]}>{coach.name}</p>
+              <div>
+                {" "}
+                <p>
+                  <strong>Age:</strong> {coach.age}
+                </p>
+                <p>
+                  <strong>Birth Date:</strong> {coach.birth.date} (
+                  {coach.birth.place}, {coach.birth.country})
+                </p>
+                <p>
+                  <strong>Nationality:</strong> {coach.nationality}
+                </p>
+              </div>
             </div>
 
             {currentJob && (
               <div className={styles["currentJob"]}>
                 <h2 className="title title--fs24black">Currently Coaching</h2>
                 <div className={styles["jobDetails"]}>
-                  <h3>{currentJob.team.name}</h3>
+                  <h4>{currentJob.team.name}</h4>
                   <p>
                     <strong>Start:</strong> {currentJob.start}
                   </p>
@@ -107,8 +110,8 @@ export const Coach = ({ teamId, season }: CoachProps) => {
               <h2 className="title title--fs24black">Previous Clubs</h2>
               <div className={styles["coachCareer"]}>
                 {pastJobs?.map((job) => (
-                  <div key={job.team.id} className={styles["jobDetails"]}>
-                    <h3>{job.team.name}</h3>
+                    <div key={`${job.team.id}-${job.start}`} className={styles["jobDetails"]}>
+                    <h4>{job.team.name}</h4>
                     <p>
                       <strong>Start:</strong> {job.start}
                     </p>
@@ -120,9 +123,10 @@ export const Coach = ({ teamId, season }: CoachProps) => {
                       alt={job.team.name}
                       className={styles["teamLogo"]}
                     />
-                  </div>
+                    </div>
                 ))}
               </div>
+              
             </div>
           )}
         </div>

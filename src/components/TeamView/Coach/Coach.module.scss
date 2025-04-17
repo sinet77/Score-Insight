@@ -3,7 +3,7 @@
 .coachContainer {
   padding: 20px;
   background-color: vars.$item-light-background;
-  border-radius: 12px;
+  border-radius: vars.$border-radius;
   box-shadow: vars.$item-light-box-shadow;
   max-width: 900px;
   min-height: 390px;
@@ -17,7 +17,6 @@
   align-content: center;
   justify-content: center;
   flex-direction: column;
-
 }
 
 .wrapper {
@@ -42,7 +41,7 @@
 }
 
 .coachName {
-  font-size: 1.5em;
+  font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -60,17 +59,20 @@
   display: flex;
   flex-direction: column;
   padding: 8px;
-  background-color: #fff;
+  background-color: vars.$white-text-color;
   border-radius: 8px;
   box-shadow: vars.$item-light-box-shadow;
   justify-content: center;
   align-items: center;
   width: 180px;
-  height: 180px;
+  height: 200px;
 }
 
-.jobDetails h3 {
-  margin-bottom: 5px;
+.jobDetails h4 {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-size: 1.1rem;
+  margin: 0;
 }
 
 .teamLogo {
@@ -83,3 +85,55 @@
 p {
   margin: 5px 0;
 }
+
+/* Mobile View */
+@media (max-width: 900px) {
+  .coachContainer {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .wrapper {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .coachInfo {
+    align-items: center;
+  }
+
+  .coachPhoto {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 15px;
+  }
+
+  .coachName {
+    font-size: 1.25rem;
+  }
+  .currentJob {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .coachCareer {
+    gap: 15px;
+  }
+
+  .jobDetails {
+    width: 160px;
+    height: 180px;
+    padding: 12px;
+  }
+
+  .jobDetails h4 {
+    font-size: 1rem;
+  }
+
+  .teamLogo {
+    width: 40px;
+    height: 40px;
+  }
+}
+

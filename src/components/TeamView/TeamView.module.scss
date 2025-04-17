@@ -1,14 +1,47 @@
 @use "@styles/variables" as vars;
 
-.stadium-container{
-    display: flex;
-    background-color: vars.$item-light-background;
-    max-width: 500px;
+.container {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+.wrapper {
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
-.wrapper{
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  background-color: vars.$white-text-color;
+  box-shadow: vars.$item-light-box-shadow;
+  border-radius: vars.$border-radius;
+  padding: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+
+  .left {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 60px;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+/* Mobile View */
+@media (max-width: 760px) {
+  .grid {
+    display: flex;
+    flex-direction: column;
+  }
+
 }

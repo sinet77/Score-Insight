@@ -25,7 +25,8 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
   const navigate = useNavigate();
 
   const handleReadMore = (teamName: string, teamId: number) => {
-    navigate(`/team/${teamName}/${teamId}`);
+    navigate(`/team/${leagueId}/${season}/${teamName}/${teamId}`);
+
   };
 
   useEffect(() => {

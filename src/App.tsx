@@ -23,6 +23,7 @@ function App() {
         <CountriesList
           onLeagueSelect={setSelectedLeagueId}
           onSeasonSelect={handleSeasonSelect}
+          selectedSeason={selectedSeason}
         />
       </div>
       {selectedLeagueId && (
