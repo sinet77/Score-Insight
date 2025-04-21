@@ -1,21 +1,29 @@
 import { useEffect, useState } from "react";
 import styles from "./H2HTeams.module.scss";
-import { Shield, ShieldUser, Trophy } from "lucide-react";
+import { Flag, Shield, ShieldUser, Trophy } from "lucide-react";
+import countryData from "../../../../data/countriesData.json";
+import { SelectInput } from "./SelectInput/SelectInput";
 
 interface Team {
   id: string;
   name: string;
 }
 
+const countryOptions = countryData.response.map((c) => ({
+  label: c.name,
+  value: c.code ?? "",
+  image: c.flag ?? "",
+}));
+
 export function TeamSelection() {
   const [teams, setTeams] = useState<Team[]>([]);
-  const [inputValue1, setInputValue1] = useState("");
-  const [inputValue2, setInputValue2] = useState("");
-  const [leagueInputValue1, setLeagueInputValue1] = useState("");
-  const [leagueInputValue2, setLeagueInputValue2] = useState("");
+  
   const [countryInputValue1, setCountryInputValue1] = useState("");
   const [countryInputValue2, setCountryInputValue2] = useState("");
-
+  const [leagueInputValue1, setLeagueInputValue1] = useState("");
+  const [leagueInputValue2, setLeagueInputValue2] = useState("");
+  const [inputValue1, setInputValue1] = useState("");
+  const [inputValue2, setInputValue2] = useState("");
 
   useEffect(() => {
     setTeams([
@@ -33,68 +41,35 @@ export function TeamSelection() {
 
   return (
     <div className={styles["team-selection-container"]}>
-      {/* LEAGUE 1 */}
+      {/* 1 kafelek */}
       <div className={styles["team-card"]}>
-      <div className={styles["team-header"]}>
-          <div className={styles["team-icon"]}>
-            <Shield size={30} strokeWidth={1.5} />
-          </div>
-          <div className={styles["input-wrapper"]}>
-            <input
-              className={styles["input"]}
-              placeholder="Select league"
-              type="text"
-              value={leagueInputValue1}
-              onChange={(e) => setLeagueInputValue1(e.target.value)}
-
-            />
-            {leagueInputValue1 && (
-              <ul className={styles["dropdown"]}>
-                {filterItems(teams, inputValue1).map((team) => (
-                  <button
-                    key={team.id}
-                    className={styles["team-option"]}
-                    onClick={() => {
-                      setLeagueInputValue1(team.name);
-                    }}
-                  >
-                    {team.name}
-                  </button>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
-        <div className={styles["team-header"]}>
-          <div className={styles["team-icon"]}>
-            <ShieldUser size={30} strokeWidth={1.5} />
-          </div>
-          <div className={styles["input-wrapper"]}>
-            <input
-              className={styles["input"]}
-              placeholder="Select team"
-              type="text"
-              value={inputValue1}
-              onChange={(e) => setInputValue1(e.target.value)}
-
-            />
-            {inputValue1 && (
-              <ul className={styles["dropdown"]}>
-                {filterItems(teams, inputValue1).map((team) => (
-                  <button
-                    key={team.id}
-                    className={styles["team-option"]}
-                    onClick={() => {
-                      setInputValue1(team.name);
-                    }}
-                  >
-                    {team.name}
-                  </button>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
+        <SelectInput
+          icon={<Flag size={30} strokeWidth={1.5} />}
+          placeholder="Select country"
+          value={countryInputValue1}
+          onChange={setCountryInputValue1}
+          options={countryOptions}
+        />
+        <SelectInput
+          icon={<Shield size={30} strokeWidth={1.5} />}
+          placeholder="Select league"
+          value={leagueInputValue1}
+          onChange={setLeagueInputValue1}
+          options={filterItems(teams, leagueInputValue1).map((team) => ({
+            label: team.name,
+            value: team.id,
+          }))}
+        />
+        <SelectInput
+          icon={<ShieldUser size={30} strokeWidth={1.5} />}
+          placeholder="Select team"
+          value={inputValue1}
+          onChange={setInputValue1}
+          options={filterItems(teams, inputValue1).map((team) => ({
+            label: team.name,
+            value: team.id,
+          }))}
+        />
         <div className={styles["items"]}>
           <div className={`${styles["item"]} ${styles["wider"]}`}>
             <div className={styles["trophy-icon"]}>
@@ -108,37 +83,35 @@ export function TeamSelection() {
         </div>
       </div>
 
-      {/* TEAM 2 */}
+      {/* 2 kafelek */}
       <div className={styles["team-card"]}>
-        <div className={styles["team-header"]}>
-          <div className={styles["team-icon"]}>
-            <ShieldUser size={30} strokeWidth={1.5} />
-          </div>
-          <div className={styles["input-wrapper"]}>
-            <input
-              className={styles["input"]}
-              placeholder="Select team"
-              type="text"
-              value={inputValue2}
-              onChange={(e) => setInputValue2(e.target.value)}
-            />
-            {inputValue2 && (
-              <ul className={styles["dropdown"]}>
-                {filterItems(teams, inputValue2).map((team) => (
-                  <button
-                  key={team.id}
-                  className={styles["team-option"]}
-                  onClick={() => {
-                    setInputValue2(team.name);
-                  }}
-                >
-                  {team.name}
-                </button>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
+        <SelectInput
+          icon={<Flag size={30} strokeWidth={1.5} />}
+          placeholder="Select country"
+          value={countryInputValue2}
+          onChange={setCountryInputValue2}
+          options={countryOptions}
+        />
+        <SelectInput
+          icon={<Shield size={30} strokeWidth={1.5} />}
+          placeholder="Select league"
+          value={leagueInputValue2}
+          onChange={setLeagueInputValue2}
+          options={filterItems(teams, leagueInputValue2).map((team) => ({
+            label: team.name,
+            value: team.id,
+          }))}
+        />
+        <SelectInput
+          icon={<ShieldUser size={30} strokeWidth={1.5} />}
+          placeholder="Select team"
+          value={inputValue2}
+          onChange={setInputValue2}
+          options={filterItems(teams, inputValue2).map((team) => ({
+            label: team.name,
+            value: team.id,
+          }))}
+        />
         <div className={styles["items"]}>
           <div className={`${styles["item"]} ${styles["wider"]}`}>
             <div className={styles["trophy-icon"]}>
