@@ -3,6 +3,9 @@ import styles from "./H2HTeams.module.scss";
 import { Flag, Shield, ShieldUser, Trophy } from "lucide-react";
 import countryData from "../../../../data/countriesData.json";
 import { SelectInput } from "./SelectInput/SelectInput";
+import { countriesApi } from "@api/countries-api";
+import { leagueTeamsApi } from "@api/leagueTeams-api";
+import { TeamStanding } from "@components/Teams/standings-types";
 
 interface Team {
   id: string;
@@ -16,23 +19,61 @@ const countryOptions = countryData.response.map((c) => ({
 }));
 
 export function TeamSelection() {
-  const [teams, setTeams] = useState<Team[]>([]);
-  
+  const [teams, setTeams] = useState<TeamStanding[]>([]);
+  const [leagues, setLeagues] = useState<any[]>([]);
+
   const [countryInputValue1, setCountryInputValue1] = useState("");
   const [countryInputValue2, setCountryInputValue2] = useState("");
   const [leagueInputValue1, setLeagueInputValue1] = useState("");
   const [leagueInputValue2, setLeagueInputValue2] = useState("");
-  const [inputValue1, setInputValue1] = useState("");
-  const [inputValue2, setInputValue2] = useState("");
+  const [teamValue1, setTeamValue1] = useState("");
+  const [teamValue2, setTeamValue2] = useState("");
+
+  const leagueOptions1 = leagues
+    .filter((item) => item.country?.name === countryInputValue1)
+    .map((item) => ({
+      label: item.league.name,
+      value: item.league.id,
+      image: item.league.logo,
+    }));
+
+  const leagueOptions2 = leagues
+    .filter((item) => item.country?.name === countryInputValue2)
+    .map((item) => ({
+      label: item.league.name,
+      value: item.league.id,
+      image: item.league.logo,
+    }));
 
   useEffect(() => {
-    setTeams([
-      { id: "1", name: "Barcelona" },
-      { id: "2", name: "Real Madrid" },
-      { id: "3", name: "Bayern Munich" },
-      { id: "4", name: "Borussia Dortmund" },
-    ]);
+    const fetchLeagues = async () => {
+      try {
+        const data = await countriesApi.get();
+        if (!data) {
+          return;
+        }
+        setLeagues(data.response);
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+      }
+    };
+
+    fetchLeagues();
   }, []);
+
+  // useEffect(() => {
+  //   const fetchStandings = async () => {
+  //     try {
+  //       const data = await leagueTeamsApi.get(39, "2023");
+  //       setTeams(data.response);
+  //       console.log("data", data);
+  //     } catch (error) {
+  //       console.error("Error fetching standings:", error);
+  //     }
+  //   };
+
+  //   fetchStandings();
+  // }, []);
 
   const filterItems = (items: Team[], input: string) =>
     items.filter((item) =>
@@ -55,17 +96,15 @@ export function TeamSelection() {
           placeholder="Select league"
           value={leagueInputValue1}
           onChange={setLeagueInputValue1}
-          options={filterItems(teams, leagueInputValue1).map((team) => ({
-            label: team.name,
-            value: team.id,
-          }))}
+          options={leagueOptions1}
         />
+
         <SelectInput
           icon={<ShieldUser size={30} strokeWidth={1.5} />}
           placeholder="Select team"
-          value={inputValue1}
-          onChange={setInputValue1}
-          options={filterItems(teams, inputValue1).map((team) => ({
+          value={teamValue1}
+          onChange={setTeamValue1}
+          options={filterItems(teams, teamValue1).map((team) => ({
             label: team.name,
             value: team.id,
           }))}
@@ -97,17 +136,14 @@ export function TeamSelection() {
           placeholder="Select league"
           value={leagueInputValue2}
           onChange={setLeagueInputValue2}
-          options={filterItems(teams, leagueInputValue2).map((team) => ({
-            label: team.name,
-            value: team.id,
-          }))}
+          options={leagueOptions2}
         />
         <SelectInput
           icon={<ShieldUser size={30} strokeWidth={1.5} />}
           placeholder="Select team"
-          value={inputValue2}
-          onChange={setInputValue2}
-          options={filterItems(teams, inputValue2).map((team) => ({
+          value={teamValue2}
+          onChange={setTeamValue2}
+          options={filterItems(teams, teamValue2).map((team) => ({
             label: team.name,
             value: team.id,
           }))}
