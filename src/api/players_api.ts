@@ -13,7 +13,7 @@ export const getPlayers = async (
   }
 
   try {
-    const firstPage = await baseApi.get(
+    const firstPage = await baseApi.get<{ response: Player[]; paging?: { total: number } }>(
       `https://v3.football.api-sports.io/players?team=${teamId}&season=${season}&page=1`
     );
 
@@ -22,7 +22,7 @@ export const getPlayers = async (
     const allPages = Array.from({ length: totalPages }).map((_, i) =>
       i === 0
         ? Promise.resolve(firstPage)
-        : baseApi.get(
+        : baseApi.get<{ response: Player[] }>(
             `https://v3.football.api-sports.io/players?team=${teamId}&season=${season}&page=${
               i + 1
             }`
@@ -31,7 +31,7 @@ export const getPlayers = async (
 
     const allResponses = await Promise.all(allPages);
 
-    return allResponses.flatMap((res) => res.response);
+    return allResponses.flatMap((res) => (res as { response: Player[] }).response);
   } catch (err) {
     console.error("Error fetching players:", err);
     return [];

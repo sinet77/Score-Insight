@@ -10,74 +10,76 @@ import { Coach } from "./Coach/Coach";
 import LoadingSpinner from "@components/ui/LoadingSpinner/LoadingSpinner";
 import { getPlayers } from "@api/players_api";
 import { getStadium } from "@api/stadium_api";
+import { Info } from "./Info/Info";
+import { getFixturesForTeam } from "@api/fixturesForTeam_api";
+import { Fixture } from "./Matches/matches_types";
+import { MatchData } from "./Matches/Matches";
+
 
 export const TeamView = () => {
-  const { teamId } = useParams<{ teamId: string }>();
+  const { teamId, season, leagueId } = useParams<{
+    teamId: string;
+    season: string;
+    leagueId: string;
+  }>();
+
   const [players, setPlayers] = useState<Player[]>([]);
   const [stadium, setStadium] = useState<StadiumProps | null>(null);
   const [loading, setLoading] = useState(true);
-  const season = "2023";
+  const [fixtures, setFixtures] = useState<Fixture[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       if (!teamId) return;
-  
+
       setLoading(true);
-  
+
       try {
         const [playersRes, stadiumRes] = await Promise.all([
-          getPlayers(Number(teamId), season),
+          getPlayers(Number(teamId), season ?? "2023"),
           getStadium(Number(teamId)),
         ]);
-  
+
+        const fixturesRes = await getFixturesForTeam(
+          Number(teamId),
+          Number(leagueId),
+          season ?? "2023"
+        );
+
         setPlayers(playersRes);
         setStadium(stadiumRes);
+        setFixtures(fixturesRes);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
     };
-  
+
     fetchData();
-  }, [teamId]);
-  
-
-  const averageAge =
-    players.length > 0
-      ? players.reduce((sum, player) => sum + player.player.age, 0) /
-        players.length
-      : null;
-
-  const leagueCountry =
-    players.length > 0
-      ? players[0].statistics?.[0]?.league?.country ?? null
-      : null;
-
-  const domesticPlayers = players.filter(
-    (player) => player.player.nationality === leagueCountry
-  ).length;
-
-  const foreignPlayers = players.length - domesticPlayers;
-
-  const allPlayers = players.length;
+  }, [teamId, season, leagueId]);
 
   return (
     <div>
       {loading ? (
         <LoadingSpinner />
       ) : (
-        <div>
+        <div className={styles["container"]}>
           <LogoAndName data={players} />
-          <div className={styles["wrapper"]}>
-            {teamId && <Coach teamId={Number(teamId)} season={season} />}
-            {stadium && <StadiumCard stadium={stadium} />}
+          <div className={styles["grid"]}>
+            <div className={styles["left"]}>
+              {teamId && (
+                <Coach teamId={Number(teamId)} season={season ?? "2023"} />
+              )}
+              <Info players={players} />
+            </div>
+            <div className={styles["right"]}>
+            {fixtures.length > 0 && <MatchData fixtures={fixtures} />}
+              
+              {stadium && <StadiumCard stadium={stadium} />}
+            </div>
           </div>
-          <p>Number of players: {allPlayers}</p>
-          <p>Domestic players: {domesticPlayers}</p>
-          <p>Foreign players: {foreignPlayers}</p>
-          {averageAge !== null && <p>Average Age: {averageAge.toFixed(1)}</p>}
-          <h1>Team Roster</h1>
+
           <PlayerGrid players={players} />
         </div>
       )}

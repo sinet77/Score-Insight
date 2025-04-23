@@ -1,11 +1,9 @@
 @use "@styles/variables" as vars;
 
-$border-radius: 12px;
-
 .countries-container {
     background-color: vars.$background-dark;
     padding: 1.5rem;
-    border-radius: $border-radius;
+    border-radius: vars.$border-radius;
     color: vars.$white_text-color;
     width: 350px;
     max-width: 400px;
@@ -50,7 +48,7 @@ $border-radius: 12px;
     align-items: center;
     width: 100%;
     background-color: #00000080;
-    border-radius: $border-radius;
+    border-radius: vars.$border-radius;
     padding: 0.75rem 1rem;
     box-sizing: border-box;
     margin-bottom: 10px;
@@ -117,7 +115,7 @@ $border-radius: 12px;
     padding: 0.75rem 1rem;
     background-color: vars.$item-background;
     border: none;
-    border-radius: $border-radius;
+    border-radius: vars.$border-radius;
     color: vars.$white_text-color;
     cursor: pointer;
     transition: vars.$transition;

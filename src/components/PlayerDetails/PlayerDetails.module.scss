@@ -6,10 +6,15 @@
   justify-content: space-between;
   align-items: center;
   background-color: vars.$item-light-background;
-  border-radius: 0.75rem;
-  padding: 1rem 0.8rem;
-  width: 130px;
-  height: 160px;
+  box-shadow: vars.$item-light-box-shadow;
+  border-radius: 12px;
+  padding: 0.5rem 0.8rem;
+  width: 150px;
+
+
+  box-sizing: border-box;
+  height: 180px;
+
 
   .player-image {
     width: 75px;
@@ -23,6 +28,12 @@
     text-align: center;
     font-weight: 600;
     color: #0f172a;
+    display: -webkit-box;
+    max-width: 200px;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .player-details {

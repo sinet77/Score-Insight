@@ -1,5 +1,6 @@
 import type { StandingsResponse } from "@components/Teams/standings-types";
 import premierLeagueData from "../data/premierLeagueTeams2023.json";
+import { baseApi } from "./baseApi";
 
 const isDevelop = import.meta.env.DEV;
 
@@ -11,21 +12,12 @@ const get = async (
     return premierLeagueData as unknown as StandingsResponse;
   }
   try {
-    const response = await fetch(
+    const response = await baseApi.get<StandingsResponse>(
       `https://v3.football.api-sports.io/standings?league=${leagueId}&season=${season}`,
-      {
-        headers: {
-          "x-rapidapi-key": "6266f2d70eed3758d548a5e2451b04cf",
-        },
-      }
+
     );
 
-    if (!response.ok) {
-      throw new Error(`API request failed with status ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data as StandingsResponse;
+    return response;
   } catch (error) {
     console.error("Error fetching countries:", error);
     throw error;
