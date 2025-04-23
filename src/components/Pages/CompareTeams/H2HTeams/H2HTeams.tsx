@@ -7,20 +7,30 @@ import { countriesApi } from "@api/countries-api";
 import { leagueTeamsApi } from "@api/leagueTeams-api";
 import { TeamStanding } from "@components/Teams/standings-types";
 
-interface Team {
-  id: string;
-  name: string;
+interface League {
+  league: {
+    id: number;
+    name: string;
+    logo: string;
+  };
+  country?: {
+    name: string;
+  };
 }
 
 const countryOptions = countryData.response.map((c) => ({
   label: c.name,
-  value: c.code ?? "",
+  value: Number(c.code) || 0,
   image: c.flag ?? "",
 }));
 
 export function TeamSelection() {
-  const [teams, setTeams] = useState<TeamStanding[]>([]);
-  const [leagues, setLeagues] = useState<any[]>([]);
+  const [leagues, setLeagues] = useState<League[]>([]);
+  const [teams1, setTeams1] = useState<TeamStanding[]>([]);
+  const [teams2, setTeams2] = useState<TeamStanding[]>([]);
+
+  const [selectedSeason1, setSelectedSeason1] = useState<string>("2023");
+  const [selectedSeason2, setSelectedSeason2] = useState<string>("2023");
 
   const [countryInputValue1, setCountryInputValue1] = useState("");
   const [countryInputValue2, setCountryInputValue2] = useState("");
@@ -45,40 +55,90 @@ export function TeamSelection() {
       image: item.league.logo,
     }));
 
+  const teamOptions1 = teams1.map((item) => ({
+    label: item.team.name,
+    value: item.team.id,
+  }));
+
+  const teamOptions2 = teams2.map((item) => ({
+    label: item.team.name,
+    value: item.team.id,
+  }));
+
   useEffect(() => {
-    const fetchLeagues = async () => {
+    const fetchLeaguesByCountry = async (countryName: string) => {
       try {
         const data = await countriesApi.get();
-        if (!data) {
-          return;
-        }
-        setLeagues(data.response);
+        if (!data) return;
+
+        const leaguesForCountry = data.response.filter(
+          (league: League) => league.country?.name === countryName
+        );
+        setLeagues(leaguesForCountry);
       } catch (error) {
-        console.error("Error fetching countries:", error);
+        console.error("Error fetching leagues:", error);
       }
     };
 
-    fetchLeagues();
-  }, []);
+    if (countryInputValue1) {
+      fetchLeaguesByCountry(countryInputValue1);
+    }
+    if (countryInputValue2) {
+      fetchLeaguesByCountry(countryInputValue2);
+    }
+  }, [countryInputValue1, countryInputValue2]);
 
-  // useEffect(() => {
-  //   const fetchStandings = async () => {
-  //     try {
-  //       const data = await leagueTeamsApi.get(39, "2023");
-  //       setTeams(data.response);
-  //       console.log("data", data);
-  //     } catch (error) {
-  //       console.error("Error fetching standings:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchStandings1 = async () => {
+      if (!leagueInputValue1 || !selectedSeason1) return;
 
-  //   fetchStandings();
-  // }, []);
+      const selectedLeague = leagues.find(
+        (league) => league.league.name === leagueInputValue1
+      );
+      const selectedLeagueId = selectedLeague?.league.id;
 
-  const filterItems = (items: Team[], input: string) =>
-    items.filter((item) =>
-      item.name.toLowerCase().includes(input.toLowerCase())
-    );
+      if (!selectedLeagueId) return;
+
+      try {
+        const data = await leagueTeamsApi.get(
+          selectedLeagueId,
+          selectedSeason1
+        );
+        const teamsList = data.response?.[0]?.league?.standings?.[0] || [];
+        setTeams1(teamsList);
+      } catch (error) {
+        console.error("Error fetching standings 1:", error);
+      }
+    };
+
+    fetchStandings1();
+  }, [leagueInputValue1, selectedSeason1, leagues]);
+
+  useEffect(() => {
+    const fetchStandings2 = async () => {
+      if (!leagueInputValue2 || !selectedSeason2) return;
+
+      const selectedLeague = leagues.find(
+        (league) => league.league.name === leagueInputValue2
+      );
+      const selectedLeagueId = selectedLeague?.league.id;
+
+      if (!selectedLeagueId) return;
+
+      try {
+        const data = await leagueTeamsApi.get(
+          selectedLeagueId,
+          selectedSeason2
+        );
+        const teamsList = data.response?.[0]?.league?.standings?.[0] || [];
+        setTeams2(teamsList);
+      } catch (error) {
+        console.error("Error fetching standings 2:", error);
+      }
+    };
+
+    fetchStandings2();
+  }, [leagueInputValue2, selectedSeason2, leagues]);
 
   return (
     <div className={styles["team-selection-container"]}>
@@ -104,21 +164,35 @@ export function TeamSelection() {
           placeholder="Select team"
           value={teamValue1}
           onChange={setTeamValue1}
-          options={filterItems(teams, teamValue1).map((team) => ({
-            label: team.name,
-            value: team.id,
-          }))}
+          options={teamOptions1}
         />
         <div className={styles["items"]}>
           <div className={`${styles["item"]} ${styles["wider"]}`}>
             <div className={styles["trophy-icon"]}>
               <Trophy />
             </div>
-            <span className={styles["empty-placeholder"]}>-</span>
+            <span className={styles["team-position"]}>
+              {(() => {
+                const team = teams1.find(
+                  (team) => team.team.name === teamValue1
+                );
+                return team
+                  ? `Finished in #${team.rank} place`
+                  : "Position unknown";
+              })()}
+            </span>
           </div>
-          <div className={styles["item"]}>
-            <span className={styles["empty-placeholder"]}>-</span>
-          </div>
+          <select
+            id="year"
+            name="year"
+            className={styles["item"]}
+            onChange={(event) => setSelectedSeason1(event.target.value)}
+            value={selectedSeason1 || "2023"}
+          >
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+          </select>
         </div>
       </div>
 
@@ -143,21 +217,35 @@ export function TeamSelection() {
           placeholder="Select team"
           value={teamValue2}
           onChange={setTeamValue2}
-          options={filterItems(teams, teamValue2).map((team) => ({
-            label: team.name,
-            value: team.id,
-          }))}
+          options={teamOptions2}
         />
         <div className={styles["items"]}>
           <div className={`${styles["item"]} ${styles["wider"]}`}>
             <div className={styles["trophy-icon"]}>
               <Trophy />
             </div>
-            <span className={styles["empty-placeholder"]}>-</span>
+            <span className={styles["team-position"]}>
+              {(() => {
+                const team = teams2.find(
+                  (team) => team.team.name === teamValue2
+                );
+                return team
+                  ? `Finished in #${team.rank} place`
+                  : "Position unknown";
+              })()}
+            </span>
           </div>
-          <div className={styles["item"]}>
-            <span className={styles["empty-placeholder"]}>-</span>
-          </div>
+          <select
+            id="year"
+            name="year"
+            className={styles["item"]}
+            onChange={(event) => setSelectedSeason2(event.target.value)}
+            value={selectedSeason2 || "2023"}
+          >
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+          </select>
         </div>
       </div>
     </div>

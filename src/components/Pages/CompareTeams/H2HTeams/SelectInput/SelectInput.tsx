@@ -6,7 +6,7 @@ interface SelectInputProps {
   placeholder: string;
   value: string;
   onChange: (value: string) => void;
-  options: { label: string; value: string; image?: string }[];
+  options: { label: string; value: number; image?: string }[];
 }
 
 export function SelectInput({

@@ -52,11 +52,13 @@
     .item {
         display: flex;
         align-items: center;
-        gap: 8px;
+        border: 1px solid #e0e0e5;
         padding: 12px;
+        gap: 12px;
         background-color: vars.$item-light-background;
         border-radius: 6px;
         flex: 1;
+        font-size: 15px;
 
         &.wider {
             flex: 3;
@@ -68,9 +70,8 @@
         color: vars.$green_dark-accent;
     }
 
-    .empty-placeholder {
-        color: #666;
-        font-size: 14px;
+    .team-position {
+        font-size: 15px;
     }
 }
 
@@ -93,7 +94,6 @@
     list-style: none;
     padding: 0;
     margin: 4px 0 0;
-    
 
     .team-option {
         padding: 8px 12px;
