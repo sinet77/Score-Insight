@@ -140,6 +140,20 @@ export function TeamSelection() {
     fetchStandings2();
   }, [leagueInputValue2, selectedSeason2, leagues]);
 
+  const resetTeamSelection1 = () => {
+    setLeagueInputValue1("");
+    setTeamValue1("");
+    setSelectedSeason1("2023");
+    setTeams1([]);
+  };
+  
+  const resetTeamSelection2 = () => {
+    setLeagueInputValue2("");
+    setTeamValue2("");
+    setSelectedSeason2("2023");
+    setTeams2([]);
+  };
+
   return (
     <div className={styles["team-selection-container"]}>
       {/* 1 kafelek */}
@@ -148,7 +162,10 @@ export function TeamSelection() {
           icon={<Flag size={30} strokeWidth={1.5} />}
           placeholder="Select country"
           value={countryInputValue1}
-          onChange={setCountryInputValue1}
+          onChange={(value) => {
+            setCountryInputValue1(value);
+            resetTeamSelection1();
+          }}
           options={countryOptions}
         />
         <SelectInput
@@ -202,7 +219,10 @@ export function TeamSelection() {
           icon={<Flag size={30} strokeWidth={1.5} />}
           placeholder="Select country"
           value={countryInputValue2}
-          onChange={setCountryInputValue2}
+          onChange={(value) => {
+            setCountryInputValue2(value);
+            resetTeamSelection2();
+          }}
           options={countryOptions}
         />
         <SelectInput
