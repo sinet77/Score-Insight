@@ -6,6 +6,7 @@ import { SelectInput } from "./SelectInput/SelectInput";
 import { countriesApi } from "@api/countries-api";
 import { leagueTeamsApi } from "@api/leagueTeams-api";
 import { TeamStanding } from "@components/Teams/standings-types";
+import { Comparision } from "./Comparision/Comparision";
 
 interface League {
   league: {
@@ -155,6 +156,8 @@ export function TeamSelection() {
   };
 
   return (
+    <div className={styles["wrapper"]}>
+
     <div className={styles["team-selection-container"]}>
       {/* 1 kafelek */}
       <div className={styles["team-card"]}>
@@ -268,6 +271,8 @@ export function TeamSelection() {
           </select>
         </div>
       </div>
+      </div>
+      <Comparision />
     </div>
   );
 }
