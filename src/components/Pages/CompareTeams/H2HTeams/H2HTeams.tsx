@@ -147,7 +147,7 @@ export function TeamSelection() {
     setSelectedSeason1("2023");
     setTeams1([]);
   };
-  
+
   const resetTeamSelection2 = () => {
     setLeagueInputValue2("");
     setTeamValue2("");
@@ -157,122 +157,128 @@ export function TeamSelection() {
 
   return (
     <div className={styles["wrapper"]}>
+      <div className={styles["team-selection-container"]}>
+        {/* 1 kafelek */}
+        <div className={styles["team-card"]}>
+          <SelectInput
+            icon={<Flag size={30} strokeWidth={1.5} />}
+            placeholder="Select country"
+            value={countryInputValue1}
+            onChange={(value) => {
+              setCountryInputValue1(value);
+              resetTeamSelection1();
+            }}
+            options={countryOptions}
+          />
+          <SelectInput
+            icon={<Shield size={30} strokeWidth={1.5} />}
+            placeholder="Select league"
+            value={leagueInputValue1}
+            onChange={setLeagueInputValue1}
+            options={leagueOptions1}
+          />
 
-    <div className={styles["team-selection-container"]}>
-      {/* 1 kafelek */}
-      <div className={styles["team-card"]}>
-        <SelectInput
-          icon={<Flag size={30} strokeWidth={1.5} />}
-          placeholder="Select country"
-          value={countryInputValue1}
-          onChange={(value) => {
-            setCountryInputValue1(value);
-            resetTeamSelection1();
-          }}
-          options={countryOptions}
-        />
-        <SelectInput
-          icon={<Shield size={30} strokeWidth={1.5} />}
-          placeholder="Select league"
-          value={leagueInputValue1}
-          onChange={setLeagueInputValue1}
-          options={leagueOptions1}
-        />
-
-        <SelectInput
-          icon={<ShieldUser size={30} strokeWidth={1.5} />}
-          placeholder="Select team"
-          value={teamValue1}
-          onChange={setTeamValue1}
-          options={teamOptions1}
-        />
-        <div className={styles["items"]}>
-          <div className={`${styles["item"]} ${styles["wider"]}`}>
-            <div className={styles["trophy-icon"]}>
-              <Trophy />
+          <SelectInput
+            icon={<ShieldUser size={30} strokeWidth={1.5} />}
+            placeholder="Select team"
+            value={teamValue1}
+            onChange={setTeamValue1}
+            options={teamOptions1}
+          />
+          <div className={styles["items"]}>
+            <div className={`${styles["item"]} ${styles["wider"]}`}>
+              <div className={styles["trophy-icon"]}>
+                <Trophy />
+              </div>
+              <span className={styles["team-position"]}>
+                {(() => {
+                  const team = teams1.find(
+                    (team) => team.team.name === teamValue1
+                  );
+                  return team
+                    ? `Finished in #${team.rank} place`
+                    : "Position unknown";
+                })()}
+              </span>
             </div>
-            <span className={styles["team-position"]}>
-              {(() => {
-                const team = teams1.find(
-                  (team) => team.team.name === teamValue1
-                );
-                return team
-                  ? `Finished in #${team.rank} place`
-                  : "Position unknown";
-              })()}
-            </span>
+            <select
+              id="year"
+              name="year"
+              className={styles["item"]}
+              onChange={(event) => setSelectedSeason1(event.target.value)}
+              value={selectedSeason1 || "2023"}
+            >
+              <option value="2021">2021</option>
+              <option value="2022">2022</option>
+              <option value="2023">2023</option>
+            </select>
           </div>
-          <select
-            id="year"
-            name="year"
-            className={styles["item"]}
-            onChange={(event) => setSelectedSeason1(event.target.value)}
-            value={selectedSeason1 || "2023"}
-          >
-            <option value="2021">2021</option>
-            <option value="2022">2022</option>
-            <option value="2023">2023</option>
-          </select>
+        </div>
+
+        {/* 2 kafelek */}
+        <div className={styles["team-card"]}>
+          <SelectInput
+            icon={<Flag size={30} strokeWidth={1.5} />}
+            placeholder="Select country"
+            value={countryInputValue2}
+            onChange={(value) => {
+              setCountryInputValue2(value);
+              resetTeamSelection2();
+            }}
+            options={countryOptions}
+          />
+          <SelectInput
+            icon={<Shield size={30} strokeWidth={1.5} />}
+            placeholder="Select league"
+            value={leagueInputValue2}
+            onChange={setLeagueInputValue2}
+            options={leagueOptions2}
+          />
+          <SelectInput
+            icon={<ShieldUser size={30} strokeWidth={1.5} />}
+            placeholder="Select team"
+            value={teamValue2}
+            onChange={setTeamValue2}
+            options={teamOptions2}
+          />
+          <div className={styles["items"]}>
+            <div className={`${styles["item"]} ${styles["wider"]}`}>
+              <div className={styles["trophy-icon"]}>
+                <Trophy />
+              </div>
+              <span className={styles["team-position"]}>
+                {(() => {
+                  const team = teams2.find(
+                    (team) => team.team.name === teamValue2
+                  );
+                  return team
+                    ? `Finished in #${team.rank} place`
+                    : "Position unknown";
+                })()}
+              </span>
+            </div>
+            <select
+              id="year"
+              name="year"
+              className={styles["item"]}
+              onChange={(event) => setSelectedSeason2(event.target.value)}
+              value={selectedSeason2 || "2023"}
+            >
+              <option value="2021">2021</option>
+              <option value="2022">2022</option>
+              <option value="2023">2023</option>
+            </select>
+          </div>
         </div>
       </div>
-
-      {/* 2 kafelek */}
-      <div className={styles["team-card"]}>
-        <SelectInput
-          icon={<Flag size={30} strokeWidth={1.5} />}
-          placeholder="Select country"
-          value={countryInputValue2}
-          onChange={(value) => {
-            setCountryInputValue2(value);
-            resetTeamSelection2();
-          }}
-          options={countryOptions}
-        />
-        <SelectInput
-          icon={<Shield size={30} strokeWidth={1.5} />}
-          placeholder="Select league"
-          value={leagueInputValue2}
-          onChange={setLeagueInputValue2}
-          options={leagueOptions2}
-        />
-        <SelectInput
-          icon={<ShieldUser size={30} strokeWidth={1.5} />}
-          placeholder="Select team"
-          value={teamValue2}
-          onChange={setTeamValue2}
-          options={teamOptions2}
-        />
-        <div className={styles["items"]}>
-          <div className={`${styles["item"]} ${styles["wider"]}`}>
-            <div className={styles["trophy-icon"]}>
-              <Trophy />
-            </div>
-            <span className={styles["team-position"]}>
-              {(() => {
-                const team = teams2.find(
-                  (team) => team.team.name === teamValue2
-                );
-                return team
-                  ? `Finished in #${team.rank} place`
-                  : "Position unknown";
-              })()}
-            </span>
-          </div>
-          <select
-            id="year"
-            name="year"
-            className={styles["item"]}
-            onChange={(event) => setSelectedSeason2(event.target.value)}
-            value={selectedSeason2 || "2023"}
-          >
-            <option value="2021">2021</option>
-            <option value="2022">2022</option>
-            <option value="2023">2023</option>
-          </select>
-        </div>
-      </div>
-      </div>
-      <Comparision />
+      <Comparision
+        teamOneName={teamValue1}
+        teamTwoName={teamValue2}
+        leagueOneId={leagueInputValue1}
+        leagueTwoId={leagueInputValue2}
+        seasonOne={selectedSeason1}
+        seasonTwo={selectedSeason2}
+      />
     </div>
   );
 }

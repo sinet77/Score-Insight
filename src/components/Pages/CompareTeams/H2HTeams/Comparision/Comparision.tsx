@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { leagueTeamsApi } from "@api/leagueTeams-api";
-import styles from "./Comparision.module.scss";
-import { Stats } from "fs";
-import {StatsData} from "./StatsData/StatsData";
+import { StatsData } from "./StatsData/StatsData";
 import LoadingSpinner from "@components/ui/LoadingSpinner/LoadingSpinner";
+import {
+  LeagueStanding,
+  TeamStanding,
+} from "@components/Teams/standings-types";
 
-export const Comparision = () => {
+export const Comparision = ({ teamOneName, teamTwoName, leagueOneId, leagueTwoId, seasonOne, seasonTwo }) => {
   const [loading, setLoading] = useState(true);
   const [standings, setStandings] = useState<TeamStanding[]>([]);
-
-  const [teamOneName, setTeamOneName] = useState("Manchester City");
-  const [teamTwoName, setTeamTwoName] = useState("Arsenal");
 
   const [teamOneStanding, setTeamOneStanding] = useState<TeamStanding | null>(
     null
@@ -35,7 +34,7 @@ export const Comparision = () => {
         setLoading(false);
       }
     };
-
+    console.log(standings);
     fetchStandings();
   }, []);
 
@@ -57,24 +56,18 @@ export const Comparision = () => {
     }
   }, [teamTwoName, standings]);
 
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
   return (
-<>
-    <div className={styles.comparision}>
-      {loading && <LoadingSpinner />}
-      {!loading && (
-          <div>
-          <div>
-            <h2>Team 1: {teamOneStanding?.team.name}</h2>
-            <p>Points: {teamOneStanding?.points}</p>
-          </div>
-          <div>
-            <h2>Team 2: {teamTwoStanding?.team.name}</h2>
-            <p>Points: {teamTwoStanding?.points}</p>
-          </div>
-        </div>
-      )}
-    </div>
-    <StatsData />
-      </>
+    <>
+
+        <StatsData
+          teamOneStanding={teamOneStanding}
+          teamTwoStanding={teamTwoStanding}
+        />
+
+    </>
   );
 };
