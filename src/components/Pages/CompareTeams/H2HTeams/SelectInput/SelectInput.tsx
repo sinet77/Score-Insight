@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import Select, { SingleValue, StylesConfig } from "react-select";
 import styles from "./SelectInput.module.scss";
 
 interface SelectInputProps {
@@ -16,79 +16,63 @@ export function SelectInput({
   onChange,
   options,
 }: SelectInputProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const wrapperRef = useRef<HTMLDivElement>(null);
+  //StylesConfig<Option, IsMulti, Group>
+  const customStyles: StylesConfig<
+    { label: string; value: number; image?: string },
+    false
+  > = {
+    control: (baseStyles, state) => ({
+      ...baseStyles,
+      boxShadow: "none",
+      borderColor: state.isFocused ? "#01ac88" : "#e0e0e5",
+      "&:hover": {
+        borderColor: "#2ecc71",
+      },
+    }),
 
-  const filteredOptions = options.filter((option) =>
-    option.label.toLowerCase().includes(value.toLowerCase())
+    option: (baseStyles, state) => ({
+      ...baseStyles,
+      backgroundColor: state.isFocused ? "#eee" : "white",
+      color: "black",
+    }),
+  };
+
+  const selectedOption = options.find((opt) => opt.label === value) || null;
+
+  const handleChange = (
+    selected: SingleValue<{ label: string; value: number; image?: string }>
+  ) => {
+    if (selected) {
+      onChange(selected.label);
+    }
+  };
+
+  const formatOptionLabel = (option: {
+    label: string;
+    value: number;
+    image?: string;
+  }) => (
+    <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
+      {option.image && (
+        <img src={option.image} alt={option.label} className={styles["flag"]} />
+      )}
+      {option.label}
+    </div>
   );
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value);
-    setIsOpen(true);
-  };
-
-  const handleOptionClick = (label: string) => {
-    onChange(label);
-    setIsOpen(false);
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
   return (
-    <div className={styles["team-header"]} ref={wrapperRef}>
+    <div className={styles["team-header"]}>
       <div className={styles["team-icon"]}>{icon}</div>
       <div className={styles["input-wrapper"]}>
-        <input
-          className={styles["input"]}
+        <Select
+          options={options}
+          value={selectedOption}
+          onChange={handleChange}
           placeholder={placeholder}
-          value={value}
-          onChange={handleInputChange}
-          onFocus={() => setIsOpen(true)}
+          styles={customStyles}
+          formatOptionLabel={formatOptionLabel}
+          isSearchable
         />
-        {isOpen && filteredOptions.length > 0 && (
-          <ul className={styles["dropdown"]}>
-            {filteredOptions.map((option, index) => (
-              <button
-                key={index}
-                className={styles["team-option"]}
-                onClick={() => handleOptionClick(option.label)}
-              >
-                {option.image && (
-                  <img
-                    src={option.image}
-                    alt={option.label}
-                    className={styles["flag"]}
-                  />
-                )}
-                {option.label}
-              </button>
-            ))}
-          </ul>
-        )}
       </div>
     </div>
   );

@@ -67,7 +67,7 @@ export const Comparision = ({ teamOneName, teamTwoName, leagueOneId, leagueTwoId
           teamOneStanding={teamOneStanding}
           teamTwoStanding={teamTwoStanding}
         />
-
+    
     </>
   );
 };

@@ -5,65 +5,18 @@
     align-items: center;
     gap: 14px;
     margin-bottom: 16px;
-    position: relative;
-    
+
     .team-icon {
         color: vars.$green_dark-accent;
         margin-left: 8px;
     }
-
-    .input {
-        padding: 15px;
-        width: 100%;
-        border: 1px solid #e0e0e5;
-        border-radius: 6px;
-        background-color: vars.$item-light-background;
-        color: #666;
-        font-size: 16px;
-        transition: vars.$transition;
-
-        &:focus {
-            outline: none;
-            border-color: vars.$green_dark-accent;
-        }
-    }
 }
 .input-wrapper {
-    position: relative;
     flex: 1;
-}
-
-.dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    z-index: 10;
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    max-height: 150px;
-    overflow-y: auto;
-    list-style: none;
-    padding: 0;
-    margin: 4px 0 0;
-    
-
-    .team-option {
-        padding: 8px 12px;
-        cursor: pointer;
-        width: 100%;
-        display: flex;
-        box-sizing: border-box;
-
-        &:hover {
-            background-color: #f0f0f0;
-        }
-    }
 }
 
 .flag {
     width: 25px;
     height: auto;
     margin-right: 10px;
-  }
+}
