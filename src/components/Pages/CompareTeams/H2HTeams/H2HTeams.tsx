@@ -7,7 +7,8 @@ import { countriesApi } from "@api/countries-api";
 import { leagueTeamsApi } from "@api/leagueTeams-api";
 import { TeamStanding } from "@components/Teams/standings-types";
 import { Comparision } from "./Comparision/Comparision";
-
+import Select, { SingleValue } from "react-select";
+import { customSelectStyles } from "./SelectInput/selectStyles";
 interface League {
   league: {
     id: number;
@@ -65,6 +66,12 @@ export function TeamSelection() {
     label: item.team.name,
     value: item.team.id,
   }));
+
+  const seasonOptions = [
+    { value: 2021, label: "2021" },
+    { value: 2022, label: "2022" },
+    { value: 2023, label: "2023" },
+  ];
 
   useEffect(() => {
     const fetchLeaguesByCountry = async (countryName: string) => {
@@ -155,6 +162,15 @@ export function TeamSelection() {
     setTeams2([]);
   };
 
+  const handleSeasonChange = (
+    selected: SingleValue<{ value: number; label: string }>,
+    setter: (value: string) => void
+  ) => {
+    if (selected) {
+      setter(selected.value.toString());
+    }
+  };
+
   return (
     <div className={styles["wrapper"]}>
       <div className={styles["team-selection-container"]}>
@@ -201,17 +217,18 @@ export function TeamSelection() {
                 })()}
               </span>
             </div>
-            <select
-              id="year"
-              name="year"
-              className={styles["item"]}
-              onChange={(event) => setSelectedSeason1(event.target.value)}
-              value={selectedSeason1 || "2023"}
-            >
-              <option value="2021">2021</option>
-              <option value="2022">2022</option>
-              <option value="2023">2023</option>
-            </select>
+            <Select
+              options={seasonOptions}
+              value={
+                seasonOptions.find(
+                  (opt) => opt.value === Number(selectedSeason1)
+                ) || seasonOptions[2]
+              } // default 2023
+              onChange={(selected) =>
+                handleSeasonChange(selected, setSelectedSeason1)
+              }
+              styles={customSelectStyles}
+            />
           </div>
         </div>
 
@@ -257,17 +274,18 @@ export function TeamSelection() {
                 })()}
               </span>
             </div>
-            <select
-              id="year"
-              name="year"
-              className={styles["item"]}
-              onChange={(event) => setSelectedSeason2(event.target.value)}
-              value={selectedSeason2 || "2023"}
-            >
-              <option value="2021">2021</option>
-              <option value="2022">2022</option>
-              <option value="2023">2023</option>
-            </select>
+            <Select
+              options={seasonOptions}
+              value={
+                seasonOptions.find(
+                  (opt) => opt.value === Number(selectedSeason2)
+                ) || seasonOptions[2]
+              } // default 2023
+              onChange={(selected) =>
+                handleSeasonChange(selected, setSelectedSeason2)
+              }
+              styles={customSelectStyles}
+            />
           </div>
         </div>
       </div>

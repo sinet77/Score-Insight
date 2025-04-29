@@ -1,5 +1,6 @@
-import Select, { SingleValue, StylesConfig } from "react-select";
+import Select, { SingleValue } from "react-select";
 import styles from "./SelectInput.module.scss";
+import { customSelectStyles } from "./selectStyles";
 
 interface SelectInputProps {
   icon: React.ReactNode;
@@ -16,26 +17,6 @@ export function SelectInput({
   onChange,
   options,
 }: SelectInputProps) {
-  //StylesConfig<Option, IsMulti, Group>
-  const customStyles: StylesConfig<
-    { label: string; value: number; image?: string },
-    false
-  > = {
-    control: (baseStyles, state) => ({
-      ...baseStyles,
-      boxShadow: "none",
-      borderColor: state.isFocused ? "#01ac88" : "#e0e0e5",
-      "&:hover": {
-        borderColor: "#2ecc71",
-      },
-    }),
-
-    option: (baseStyles, state) => ({
-      ...baseStyles,
-      backgroundColor: state.isFocused ? "#eee" : "white",
-      color: "black",
-    }),
-  };
 
   const selectedOption = options.find((opt) => opt.label === value) || null;
 
@@ -69,9 +50,8 @@ export function SelectInput({
           value={selectedOption}
           onChange={handleChange}
           placeholder={placeholder}
-          styles={customStyles}
+          styles={customSelectStyles}
           formatOptionLabel={formatOptionLabel}
-          isSearchable
         />
       </div>
     </div>
