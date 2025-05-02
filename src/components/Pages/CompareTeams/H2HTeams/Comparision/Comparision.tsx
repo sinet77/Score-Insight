@@ -7,9 +7,27 @@ import {
   TeamStanding,
 } from "@components/Teams/standings-types";
 
-export const Comparision = ({ teamOneName, teamTwoName, leagueOneId, leagueTwoId, seasonOne, seasonTwo }) => {
+type Props = {
+  teamOneName: string;
+  teamTwoName: string;
+  leagueOneId: number;
+  leagueTwoId: number;
+  seasonOne: string;
+  seasonTwo: string;
+};
+
+export const Comparision = ({
+  teamOneName,
+  teamTwoName,
+  leagueOneId,
+  leagueTwoId,
+  seasonOne,
+  seasonTwo,
+}: Props) => {
   const [loading, setLoading] = useState(true);
-  const [standings, setStandings] = useState<TeamStanding[]>([]);
+
+  const [standingsOne, setStandingsOne] = useState<TeamStanding[]>([]);
+  const [standingsTwo, setStandingsTwo] = useState<TeamStanding[]>([]);
 
   const [teamOneStanding, setTeamOneStanding] = useState<TeamStanding | null>(
     null
@@ -22,39 +40,49 @@ export const Comparision = ({ teamOneName, teamTwoName, leagueOneId, leagueTwoId
     const fetchStandings = async () => {
       try {
         setLoading(true);
-        const data = await leagueTeamsApi.get(39, "2023");
 
-        if (data && data.response.length > 0) {
-          const leagueStanding: LeagueStanding = data.response[0];
-          setStandings(leagueStanding.league.standings[0]);
+        const [dataOne, dataTwo] = await Promise.all([
+          leagueTeamsApi.get(leagueOneId, seasonOne),
+          leagueTeamsApi.get(leagueTwoId, seasonTwo),
+        ]);
+
+        if (dataOne?.response.length > 0) {
+          const leagueStandingOne: LeagueStanding = dataOne.response[0];
+          setStandingsOne(leagueStandingOne.league.standings[0]);
         }
+
+        if (dataTwo?.response.length > 0) {
+          const leagueStandingTwo: LeagueStanding = dataTwo.response[0];
+          setStandingsTwo(leagueStandingTwo.league.standings[0]);
+        }
+
       } catch (error) {
-        console.error("Error fetching standings:", error);
+        console.error("Error fetching one or both standings:", error);
       } finally {
         setLoading(false);
       }
     };
-    console.log(standings);
+
     fetchStandings();
-  }, []);
+  }, [leagueOneId, leagueTwoId, seasonOne, seasonTwo]);
 
   useEffect(() => {
-    if (standings.length > 0) {
-      const foundTeam = standings.find(
-        (team) => team.team.name === teamOneName
+    if (standingsOne.length > 0) {
+      const foundTeam = standingsOne.find(
+        (team) => team.team.name.toLowerCase() === teamOneName.toLowerCase()
       );
       setTeamOneStanding(foundTeam ?? null);
     }
-  }, [teamOneName, standings]);
+  }, [teamOneName, standingsOne]);
 
   useEffect(() => {
-    if (standings.length > 0) {
-      const foundTeam = standings.find(
-        (team) => team.team.name === teamTwoName
+    if (standingsTwo.length > 0) {
+      const foundTeam = standingsTwo.find(
+        (team) => team.team.name.toLowerCase() === teamTwoName.toLowerCase()
       );
       setTeamTwoStanding(foundTeam ?? null);
     }
-  }, [teamTwoName, standings]);
+  }, [teamTwoName, standingsTwo]);
 
   if (loading) {
     return <LoadingSpinner />;
@@ -62,12 +90,10 @@ export const Comparision = ({ teamOneName, teamTwoName, leagueOneId, leagueTwoId
 
   return (
     <>
-
-        <StatsData
-          teamOneStanding={teamOneStanding}
-          teamTwoStanding={teamTwoStanding}
-        />
-    
+      <StatsData
+        teamOneStanding={teamOneStanding}
+        teamTwoStanding={teamTwoStanding}
+      />
     </>
   );
 };

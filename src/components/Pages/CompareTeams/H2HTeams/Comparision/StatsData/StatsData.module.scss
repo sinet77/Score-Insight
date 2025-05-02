@@ -38,45 +38,6 @@
   font-weight: 500;
 }
 
-.stat-section {
-  padding: 10px;
-  margin-bottom: 2px;
-  background-color: vars.$item-light-background;
-  border-radius: vars.$border-radius;
-}
-
-.section-title {
-  text-align: center;
-  font-size: 16px;
-  font-weight: 600;
-  color: vars.$color-black;
-  margin: 8px 0 12px;
-}
-
-.stat-row {
-  display: flex;
-  padding: 8px 16px;
-  align-items: center;
-  border-bottom: 1px solid vars.$item-active;
-
-  &:last-child {
-    border-bottom: none;
-  }
-}
-
-.stat-value {
-  font-weight: 500;
-  color: vars.$color-black;
-  text-align: left;
-}
-
-.stat-label {
-  flex: 1;
-  text-align: center;
-  color: #555;
-  font-size: 14px;
-}
-
 .stat-comparison {
   text-align: right;
   color: #666;

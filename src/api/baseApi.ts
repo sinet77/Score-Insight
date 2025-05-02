@@ -1,5 +1,7 @@
 const apiKey = import.meta.env.VITE_API_FOOTBALL_KEY;
 
+export const isDevelopApi = import.meta.env.DEV && import.meta.env.VITE_API_IS_DEV_API === "true";
+
 const get = async <T>(endpoint: string, headers?: HeadersInit): Promise<T> => {
     try {
       const response = await fetch(endpoint, {

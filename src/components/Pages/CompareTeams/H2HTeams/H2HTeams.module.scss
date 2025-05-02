@@ -6,6 +6,7 @@
     align-items: center;
     justify-content: center;
     width: 800px;
+    gap: 16px;
 }
 
 .team-selection-container {
@@ -53,6 +54,7 @@
 
 .items {
     display: flex;
+    align-items: center;
     gap: 8px;
 
     .item {

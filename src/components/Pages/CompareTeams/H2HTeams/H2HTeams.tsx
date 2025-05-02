@@ -27,30 +27,37 @@ const countryOptions = countryData.response.map((c) => ({
 }));
 
 export function TeamSelection() {
-  const [leagues, setLeagues] = useState<League[]>([]);
+  const [leftSide, setLeftSide] = useState({
+    country: "",
+    league: "",
+    leagueId: 0,
+    team: "",
+    season: "2023",
+  });
+  const [rightSide, setRightSide] = useState({
+    country: "",
+    league: "",
+    leagueId: 0,
+    team: "",
+    season: "2023",
+  });
+  const [leagues1, setLeagues1] = useState<League[]>([]);
+  const [leagues2, setLeagues2] = useState<League[]>([]);
   const [teams1, setTeams1] = useState<TeamStanding[]>([]);
   const [teams2, setTeams2] = useState<TeamStanding[]>([]);
 
-  const [selectedSeason1, setSelectedSeason1] = useState<string>("2023");
-  const [selectedSeason2, setSelectedSeason2] = useState<string>("2023");
+  const [league1Id, setLeague1Id] = useState<number>(0);
 
-  const [countryInputValue1, setCountryInputValue1] = useState("");
-  const [countryInputValue2, setCountryInputValue2] = useState("");
-  const [leagueInputValue1, setLeagueInputValue1] = useState("");
-  const [leagueInputValue2, setLeagueInputValue2] = useState("");
-  const [teamValue1, setTeamValue1] = useState("");
-  const [teamValue2, setTeamValue2] = useState("");
-
-  const leagueOptions1 = leagues
-    .filter((item) => item.country?.name === countryInputValue1)
+  const leagueOptions1 = leagues1
+    .filter((item) => item.country?.name === leftSide.country)
     .map((item) => ({
       label: item.league.name,
       value: item.league.id,
       image: item.league.logo,
     }));
 
-  const leagueOptions2 = leagues
-    .filter((item) => item.country?.name === countryInputValue2)
+  const leagueOptions2 = leagues2
+    .filter((item) => item.country?.name === rightSide.country)
     .map((item) => ({
       label: item.league.name,
       value: item.league.id,
@@ -60,11 +67,13 @@ export function TeamSelection() {
   const teamOptions1 = teams1.map((item) => ({
     label: item.team.name,
     value: item.team.id,
+    image: item.team.logo,
   }));
 
   const teamOptions2 = teams2.map((item) => ({
     label: item.team.name,
     value: item.team.id,
+    image: item.team.logo,
   }));
 
   const seasonOptions = [
@@ -74,7 +83,10 @@ export function TeamSelection() {
   ];
 
   useEffect(() => {
-    const fetchLeaguesByCountry = async (countryName: string) => {
+    const fetchLeaguesByCountry = async (
+      countryName: string,
+      setter: (leagues: League[]) => void
+    ) => {
       try {
         const data = await countriesApi.get();
         if (!data) return;
@@ -82,35 +94,41 @@ export function TeamSelection() {
         const leaguesForCountry = data.response.filter(
           (league: League) => league.country?.name === countryName
         );
-        setLeagues(leaguesForCountry);
+        setter(leaguesForCountry);
       } catch (error) {
         console.error("Error fetching leagues:", error);
       }
     };
 
-    if (countryInputValue1) {
-      fetchLeaguesByCountry(countryInputValue1);
+    if (leftSide.country) {
+      fetchLeaguesByCountry(leftSide.country, setLeagues1);
     }
-    if (countryInputValue2) {
-      fetchLeaguesByCountry(countryInputValue2);
+    if (rightSide.country) {
+      fetchLeaguesByCountry(rightSide.country, setLeagues2);
     }
-  }, [countryInputValue1, countryInputValue2]);
+  }, [leftSide.country, rightSide.country]);
 
   useEffect(() => {
     const fetchStandings1 = async () => {
-      if (!leagueInputValue1 || !selectedSeason1) return;
+      if (!leftSide.league || !leftSide.season) return;
 
-      const selectedLeague = leagues.find(
-        (league) => league.league.name === leagueInputValue1
+      const selectedLeague = leagues1.find(
+        (league) => league.league.name === leftSide.league
       );
       const selectedLeagueId = selectedLeague?.league.id;
 
       if (!selectedLeagueId) return;
+      else {
+        setLeftSide((prev) => ({
+          ...prev,
+          leagueId: selectedLeagueId,
+        }));
+      }
 
       try {
         const data = await leagueTeamsApi.get(
           selectedLeagueId,
-          selectedSeason1
+          leftSide.season
         );
         const teamsList = data.response?.[0]?.league?.standings?.[0] || [];
         setTeams1(teamsList);
@@ -120,23 +138,29 @@ export function TeamSelection() {
     };
 
     fetchStandings1();
-  }, [leagueInputValue1, selectedSeason1, leagues]);
+  }, [leftSide.league, leftSide.season, leagues1]);
 
   useEffect(() => {
     const fetchStandings2 = async () => {
-      if (!leagueInputValue2 || !selectedSeason2) return;
+      if (!rightSide.league || !rightSide.season) return;
 
-      const selectedLeague = leagues.find(
-        (league) => league.league.name === leagueInputValue2
+      const selectedLeague = leagues2.find(
+        (league) => league.league.name === rightSide.league
       );
       const selectedLeagueId = selectedLeague?.league.id;
 
       if (!selectedLeagueId) return;
+      else {
+        setRightSide((prev) => ({
+          ...prev,
+          leagueId: selectedLeagueId,
+        }));
+      }
 
       try {
         const data = await leagueTeamsApi.get(
           selectedLeagueId,
-          selectedSeason2
+          rightSide.season
         );
         const teamsList = data.response?.[0]?.league?.standings?.[0] || [];
         setTeams2(teamsList);
@@ -146,29 +170,36 @@ export function TeamSelection() {
     };
 
     fetchStandings2();
-  }, [leagueInputValue2, selectedSeason2, leagues]);
+  }, [rightSide.league, rightSide.season, leagues2]);
 
   const resetTeamSelection1 = () => {
-    setLeagueInputValue1("");
-    setTeamValue1("");
-    setSelectedSeason1("2023");
+    setLeftSide((prev) => ({
+      ...prev,
+      league: "",
+      team: "",
+      season: "2023",
+    }));
     setTeams1([]);
   };
 
   const resetTeamSelection2 = () => {
-    setLeagueInputValue2("");
-    setTeamValue2("");
-    setSelectedSeason2("2023");
+    setRightSide((prev) => ({
+      ...prev,
+      league: "",
+      team: "",
+      season: "2023",
+    }));
     setTeams2([]);
   };
 
   const handleSeasonChange = (
     selected: SingleValue<{ value: number; label: string }>,
-    setter: (value: string) => void
+    side: "left" | "right"
   ) => {
-    if (selected) {
-      setter(selected.value.toString());
-    }
+    if (!selected) return;
+
+    const setter = side === "left" ? setLeftSide : setRightSide;
+    setter((prev) => ({ ...prev, season: selected.value.toString() }));
   };
 
   return (
@@ -179,26 +210,29 @@ export function TeamSelection() {
           <SelectInput
             icon={<Flag size={30} strokeWidth={1.5} />}
             placeholder="Select country"
-            value={countryInputValue1}
+            value={leftSide.country}
             onChange={(value) => {
-              setCountryInputValue1(value);
+              setLeftSide((prev) => ({ ...prev, country: value }));
               resetTeamSelection1();
             }}
             options={countryOptions}
           />
           <SelectInput
-            icon={<Shield size={30} strokeWidth={1.5} />}
+            icon={<Shield />}
             placeholder="Select league"
-            value={leagueInputValue1}
-            onChange={setLeagueInputValue1}
+            value={leftSide.league}
+            onChange={(value) =>
+              setLeftSide((prev) => ({ ...prev, league: value }))
+            }
             options={leagueOptions1}
           />
-
           <SelectInput
-            icon={<ShieldUser size={30} strokeWidth={1.5} />}
+            icon={<ShieldUser />}
             placeholder="Select team"
-            value={teamValue1}
-            onChange={setTeamValue1}
+            value={leftSide.team}
+            onChange={(value) =>
+              setLeftSide((prev) => ({ ...prev, team: value }))
+            }
             options={teamOptions1}
           />
           <div className={styles["items"]}>
@@ -209,7 +243,7 @@ export function TeamSelection() {
               <span className={styles["team-position"]}>
                 {(() => {
                   const team = teams1.find(
-                    (team) => team.team.name === teamValue1
+                    (team) => team.team.name === leftSide.team
                   );
                   return team
                     ? `Finished in #${team.rank} place`
@@ -221,12 +255,10 @@ export function TeamSelection() {
               options={seasonOptions}
               value={
                 seasonOptions.find(
-                  (opt) => opt.value === Number(selectedSeason1)
+                  (opt) => opt.value === Number(leftSide.season)
                 ) || seasonOptions[2]
               } // default 2023
-              onChange={(selected) =>
-                handleSeasonChange(selected, setSelectedSeason1)
-              }
+              onChange={(selected) => handleSeasonChange(selected, "left")}
               styles={customSelectStyles}
             />
           </div>
@@ -237,9 +269,9 @@ export function TeamSelection() {
           <SelectInput
             icon={<Flag size={30} strokeWidth={1.5} />}
             placeholder="Select country"
-            value={countryInputValue2}
+            value={rightSide.country}
             onChange={(value) => {
-              setCountryInputValue2(value);
+              setRightSide((prev) => ({ ...prev, country: value }));
               resetTeamSelection2();
             }}
             options={countryOptions}
@@ -247,15 +279,19 @@ export function TeamSelection() {
           <SelectInput
             icon={<Shield size={30} strokeWidth={1.5} />}
             placeholder="Select league"
-            value={leagueInputValue2}
-            onChange={setLeagueInputValue2}
+            value={rightSide.league}
+            onChange={(value) =>
+              setRightSide((prev) => ({ ...prev, league: value }))
+            }
             options={leagueOptions2}
           />
           <SelectInput
             icon={<ShieldUser size={30} strokeWidth={1.5} />}
             placeholder="Select team"
-            value={teamValue2}
-            onChange={setTeamValue2}
+            value={rightSide.team}
+            onChange={(value) =>
+              setRightSide((prev) => ({ ...prev, team: value }))
+            }
             options={teamOptions2}
           />
           <div className={styles["items"]}>
@@ -266,7 +302,7 @@ export function TeamSelection() {
               <span className={styles["team-position"]}>
                 {(() => {
                   const team = teams2.find(
-                    (team) => team.team.name === teamValue2
+                    (team) => team.team.name === rightSide.team
                   );
                   return team
                     ? `Finished in #${team.rank} place`
@@ -278,24 +314,22 @@ export function TeamSelection() {
               options={seasonOptions}
               value={
                 seasonOptions.find(
-                  (opt) => opt.value === Number(selectedSeason2)
+                  (opt) => opt.value === Number(rightSide.season)
                 ) || seasonOptions[2]
               } // default 2023
-              onChange={(selected) =>
-                handleSeasonChange(selected, setSelectedSeason2)
-              }
+              onChange={(selected) => handleSeasonChange(selected, "right")}
               styles={customSelectStyles}
             />
           </div>
         </div>
       </div>
       <Comparision
-        teamOneName={teamValue1}
-        teamTwoName={teamValue2}
-        leagueOneId={leagueInputValue1}
-        leagueTwoId={leagueInputValue2}
-        seasonOne={selectedSeason1}
-        seasonTwo={selectedSeason2}
+        teamOneName={leftSide.team}
+        teamTwoName={rightSide.team}
+        leagueOneId={leftSide.leagueId}
+        leagueTwoId={rightSide.leagueId}
+        seasonOne={leftSide.season}
+        seasonTwo={rightSide.season}
       />
     </div>
   );

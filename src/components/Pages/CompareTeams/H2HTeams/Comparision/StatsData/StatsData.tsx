@@ -1,25 +1,12 @@
-import type React from "react";
 import styles from "./StatsData.module.scss";
-import { StatItemProps, StatsDataProps } from "./StatsData-types";
 import { TeamStanding } from "@components/Teams/standings-types";
+import { StatItem } from "./StatItem/StatItem";
+import { StatSection } from "./StatSection/StatSection";
 
-const StatItem = ({ leftValue, rightValue, label }: StatItemProps) => (
-  <div className={styles["stat-row"]}>
-    <div className={styles["stat-value"]}>{leftValue}</div>
-    <div className={styles["stat-label"]}>{label}</div>
-    <div className={styles["stat-value"]}>{rightValue}</div>
-  </div>
-);
-
-const StatSection: React.FC<{ title: string; children: React.ReactNode }> = ({
-  title,
-  children,
-}) => (
-  <div className={styles["stat-section"]}>
-    <h3 className={styles["section-title"]}>{title}</h3>
-    {children}
-  </div>
-);
+type StatsDataProps = {
+  teamOneStanding: TeamStanding | null;
+  teamTwoStanding: TeamStanding | null;
+};
 
 const calculateAverageScore = (team: TeamStanding) => {
   const played = team.all.played;
@@ -45,6 +32,24 @@ const calculateAverageScore = (team: TeamStanding) => {
   const finalScore = Math.min(Math.max(score, 1), 10);
 
   return finalScore.toFixed(2);
+};
+
+const goalsConcededPerMatch = (team: TeamStanding) => {
+  const played = team.all.played;
+  const goalsAgainst = team.all.goals.against;
+
+  if (played === 0 || goalsAgainst === 0) return "0.00";
+
+  return (goalsAgainst / played).toFixed(2);
+};
+
+const goalsPerMatch = (team: TeamStanding) => {
+  const played = team.all.played;
+  const goalsFor = team.all.goals.for;
+
+  if (played === 0 || goalsFor === 0) return "0.00";
+
+  return (goalsFor / played).toFixed(2);
 };
 
 export const StatsData = ({
@@ -87,20 +92,8 @@ export const StatsData = ({
 
       <StatSection title="Attacking">
         <StatItem
-          leftValue={
-            teamOneStanding
-              ? (
-                  teamOneStanding.all.goals.for / teamOneStanding.all.played
-                ).toFixed(2)
-              : "N/A"
-          }
-          rightValue={
-            teamTwoStanding
-              ? (
-                  teamTwoStanding.all.goals.for / teamTwoStanding.all.played
-                ).toFixed(2)
-              : "N/A"
-          }
+          leftValue={teamOneStanding ? goalsPerMatch(teamOneStanding) : "N/A"}
+          rightValue={teamTwoStanding ? goalsPerMatch(teamTwoStanding) : "N/A"}
           label="Goals per match"
         />
         <StatItem
@@ -138,18 +131,10 @@ export const StatsData = ({
         <StatItem leftValue="-" rightValue="-" label="Clean sheets" />
         <StatItem
           leftValue={
-            teamOneStanding
-              ? (
-                  teamOneStanding.all.goals.against / teamOneStanding.all.played
-                ).toFixed(2)
-              : "N/A"
+            teamOneStanding ? goalsConcededPerMatch(teamOneStanding) : "N/A"
           }
           rightValue={
-            teamTwoStanding
-              ? (
-                  teamTwoStanding.all.goals.against / teamTwoStanding.all.played
-                ).toFixed(2)
-              : "N/A"
+            teamTwoStanding ? goalsConcededPerMatch(teamTwoStanding) : "N/A"
           }
           label="Goals conceded per match"
         />
