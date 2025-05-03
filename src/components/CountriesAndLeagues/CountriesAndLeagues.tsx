@@ -41,7 +41,6 @@ const CountriesList = ({
         });
 
         setCountries(Array.from(countriesMap.values())); // Ustawienie unikalnych krajów
-        console.log(data)
       } catch (err) {
         console.error("Error fetching countries:", err);
       } finally {

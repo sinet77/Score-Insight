@@ -19,12 +19,26 @@
 }
 
 .rating-box {
-  background-color: vars.$green_light-accent;
-  color: vars.$white_text-color;
+  background-color: vars.$item-light-background;
   font-weight: bold;
-  padding: 4px 8px;
+  padding: 6px 10px;
   border-radius: 2px;
-  font-size: 14px;
+  font-size: 16px;
+}
+
+.green {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.orange {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.red {
+  background-color: #f8d7da;
+  color: #721c24;
 }
 
 .rating-label {

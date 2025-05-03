@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./H2HTeams.module.scss";
-import { Flag, Shield, ShieldUser, Trophy } from "lucide-react";
+import { Flag, RotateCcw, Shield, ShieldUser, Trophy } from "lucide-react";
 import countryData from "../../../../data/countriesData.json";
 import { SelectInput } from "./SelectInput/SelectInput";
 import { countriesApi } from "@api/countries-api";
@@ -45,8 +45,6 @@ export function TeamSelection() {
   const [leagues2, setLeagues2] = useState<League[]>([]);
   const [teams1, setTeams1] = useState<TeamStanding[]>([]);
   const [teams2, setTeams2] = useState<TeamStanding[]>([]);
-
-  const [league1Id, setLeague1Id] = useState<number>(0);
 
   const leagueOptions1 = leagues1
     .filter((item) => item.country?.name === leftSide.country)
@@ -172,24 +170,22 @@ export function TeamSelection() {
     fetchStandings2();
   }, [rightSide.league, rightSide.season, leagues2]);
 
-  const resetTeamSelection1 = () => {
-    setLeftSide((prev) => ({
+  const resetTeamSelection = (side: "left" | "right", fullReset = false) => {
+    const resetState = (prev: typeof leftSide) => ({
       ...prev,
+      country: fullReset ? "" : prev.country,
       league: "",
       team: "",
       season: "2023",
-    }));
-    setTeams1([]);
-  };
+    });
 
-  const resetTeamSelection2 = () => {
-    setRightSide((prev) => ({
-      ...prev,
-      league: "",
-      team: "",
-      season: "2023",
-    }));
-    setTeams2([]);
+    if (side === "left") {
+      setLeftSide((prev) => resetState(prev));
+      setTeams1([]);
+    } else {
+      setRightSide((prev) => resetState(prev));
+      setTeams2([]);
+    }
   };
 
   const handleSeasonChange = (
@@ -207,18 +203,27 @@ export function TeamSelection() {
       <div className={styles["team-selection-container"]}>
         {/* 1 kafelek */}
         <div className={styles["team-card"]}>
+          <div className={styles["button-container"]}>
+            <span className={styles["card-title"]}>Choose first team</span>
+            <button
+              onClick={() => resetTeamSelection("left", true)}
+              className={styles["reset-button"]}
+            >
+              <RotateCcw />
+            </button>
+          </div>
           <SelectInput
             icon={<Flag size={30} strokeWidth={1.5} />}
             placeholder="Select country"
             value={leftSide.country}
             onChange={(value) => {
               setLeftSide((prev) => ({ ...prev, country: value }));
-              resetTeamSelection1();
+              resetTeamSelection("left");
             }}
             options={countryOptions}
           />
           <SelectInput
-            icon={<Shield />}
+            icon={<Shield size={30} strokeWidth={1.5} />}
             placeholder="Select league"
             value={leftSide.league}
             onChange={(value) =>
@@ -227,7 +232,7 @@ export function TeamSelection() {
             options={leagueOptions1}
           />
           <SelectInput
-            icon={<ShieldUser />}
+            icon={<ShieldUser size={30} strokeWidth={1.5} />}
             placeholder="Select team"
             value={leftSide.team}
             onChange={(value) =>
@@ -266,13 +271,23 @@ export function TeamSelection() {
 
         {/* 2 kafelek */}
         <div className={styles["team-card"]}>
+          <div className={styles["button-container"]}>
+            <span className={styles["card-title"]}>Choose second team</span>
+            <button
+              onClick={() => resetTeamSelection("right", true)}
+              className={styles["reset-button"]}
+            >
+              <RotateCcw />
+            </button>
+          </div>
+
           <SelectInput
             icon={<Flag size={30} strokeWidth={1.5} />}
             placeholder="Select country"
             value={rightSide.country}
             onChange={(value) => {
               setRightSide((prev) => ({ ...prev, country: value }));
-              resetTeamSelection2();
+              resetTeamSelection("right");
             }}
             options={countryOptions}
           />

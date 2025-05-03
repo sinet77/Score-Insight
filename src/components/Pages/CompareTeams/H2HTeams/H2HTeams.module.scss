@@ -23,7 +23,32 @@
     padding: 16px;
     box-shadow: vars.$item-light-box-shadow;
 }
+.card-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: vars.$green_dark-accent;
+    margin-left: 8px;
+}
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.reset-button {
+    display: flex;
+    align-items: center;
+    background-color: vars.$green_dark-accent;
+    color: white;
+    border-radius: 6px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: vars.$transition;
 
+    &:hover {
+        background-color: vars.$green_light-accent;
+    }
+}
 .team-header {
     display: flex;
     align-items: center;

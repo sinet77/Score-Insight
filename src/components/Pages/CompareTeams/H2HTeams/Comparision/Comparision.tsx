@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { leagueTeamsApi } from "@api/leagueTeams-api";
-import { StatsData } from "./StatsData/StatsData";
+import { StatsData } from "./StatsData/AllStatsTogether/StatsData";
 import LoadingSpinner from "@components/ui/LoadingSpinner/LoadingSpinner";
 import {
   LeagueStanding,
@@ -55,7 +55,6 @@ export const Comparision = ({
           const leagueStandingTwo: LeagueStanding = dataTwo.response[0];
           setStandingsTwo(leagueStandingTwo.league.standings[0]);
         }
-
       } catch (error) {
         console.error("Error fetching one or both standings:", error);
       } finally {
@@ -89,11 +88,9 @@ export const Comparision = ({
   }
 
   return (
-    <>
-      <StatsData
-        teamOneStanding={teamOneStanding}
-        teamTwoStanding={teamTwoStanding}
-      />
-    </>
+    <StatsData
+      teamOneStanding={teamOneStanding}
+      teamTwoStanding={teamTwoStanding}
+    />
   );
 };
