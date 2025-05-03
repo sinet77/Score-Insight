@@ -75,6 +75,20 @@ export const StatsData = ({
 }: StatsDataProps) => {
   return (
     <div className={styles["stats-container"]}>
+      <div className={styles["watermark-container"]}>
+        <img
+          src={teamOneStanding?.team.logo}
+          alt={teamOneStanding?.team.name}
+          className={styles["watermark-logo"]}
+        />
+      </div>
+      <div className={styles["watermark-container"]}>
+        <img
+          src={teamTwoStanding?.team.logo}
+          alt={teamTwoStanding?.team.name}
+          className={`${styles["watermark-logo"]} ${styles["watermark-logo__right"]}`}
+        />
+      </div>
       <div className={styles["stats-header"]}>
         <div
           className={`${styles["rating-box"]} ${
@@ -99,7 +113,6 @@ export const StatsData = ({
           {teamTwoStanding ? calculateAverageScore(teamTwoStanding) : "N/A"}
         </div>
       </div>
-
       <StatSection title="General">
         <StatItem
           leftValue={teamOneStanding ? teamOneStanding.all.played : "N/A"}

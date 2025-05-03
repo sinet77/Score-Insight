@@ -9,6 +9,7 @@
   box-shadow: vars.$item-light-box-shadow;
   padding: 10px;
   gap: 10px;
+  z-index: 0;
 }
 
 .stats-header {
@@ -17,13 +18,31 @@
   align-items: center;
   padding: 12px 16px;
 }
+.watermark-container {
+  position: relative;
+}
 
+.watermark-logo {
+  position: absolute;
+  right: 80%;
+  opacity: 0.11;
+  width: 70%;
+  z-index: 0;
+  pointer-events: none;
+  object-fit: contain;
+
+}
+.watermark-logo__right {
+  right: 0%;
+  left: 80%;
+}
 .rating-box {
   background-color: vars.$item-light-background;
   font-weight: bold;
   padding: 6px 10px;
   border-radius: 2px;
   font-size: 16px;
+  z-index: 1;
 }
 
 .green {
