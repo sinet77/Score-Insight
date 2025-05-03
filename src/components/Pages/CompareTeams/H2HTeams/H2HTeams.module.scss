@@ -1,0 +1,155 @@
+@use "@styles/variables" as vars;
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 800px;
+    gap: 16px;
+    z-index: 2;
+}
+
+@media (max-width: 800px) {
+    .wrapper {
+        width: 100%;
+        padding: 0 10px;
+        display: flex;
+        flex-direction: column;
+    }
+    .team-selection-container {
+        flex-direction: column;
+    }
+}
+
+.team-selection-container {
+    display: flex;
+    gap: 16px;
+    background-color: #f5f5f7;
+    border-radius: vars.$border-radius;
+    width: 100%;
+}
+.team-card {
+    flex: 1;
+    background-color: white;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: vars.$item-light-box-shadow;
+}
+.card-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: vars.$green_dark-accent;
+    margin-left: 8px;
+}
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.reset-button {
+    display: flex;
+    align-items: center;
+    background-color: vars.$green_dark-accent;
+    color: white;
+    border-radius: 6px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: vars.$transition;
+
+    &:hover {
+        background-color: vars.$green_light-accent;
+    }
+}
+.team-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+    position: relative;
+    .team-icon {
+        color: vars.$green_dark-accent;
+        margin-left: 8px;
+    }
+
+    .input {
+        padding: 15px;
+        width: 100%;
+        border: 1px solid #e0e0e5;
+        border-radius: 6px;
+        background-color: vars.$item-light-background;
+        color: #666;
+        font-size: 16px;
+        transition: vars.$transition;
+
+        &:focus {
+            outline: none;
+            border-color: vars.$green_dark-accent;
+        }
+    }
+}
+
+.items {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .item {
+        display: flex;
+        align-items: center;
+        border: 1px solid #e0e0e5;
+        padding: 12px;
+        gap: 12px;
+        background-color: vars.$item-light-background;
+        border-radius: 6px;
+        flex: 1;
+        font-size: 15px;
+
+        &.wider {
+            flex: 3;
+        }
+    }
+    .trophy-icon {
+        width: 24px;
+        height: 24px;
+        color: vars.$green_dark-accent;
+    }
+
+    .team-position {
+        font-size: 15px;
+    }
+}
+
+.input-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    max-height: 150px;
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+    margin: 4px 0 0;
+
+    .team-option {
+        padding: 8px 12px;
+        cursor: pointer;
+        width: 100%;
+        display: flex;
+        box-sizing: border-box;
+
+        &:hover {
+            background-color: #f0f0f0;
+        }
+    }
+}

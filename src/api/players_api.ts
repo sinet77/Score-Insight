@@ -1,14 +1,12 @@
 import { Player } from "@components/PlayerDetails/player-types";
-import { baseApi } from "./baseApi";
+import { baseApi, isDevelopApi } from "./baseApi";
 import playersData from "../data/playersLiverpool2023.json";
-
-const isDevelop = import.meta.env.DEV;
 
 export const getPlayers = async (
   teamId: number,
   season: string
 ): Promise<Player[]> => {
-  if (isDevelop) {
+  if (isDevelopApi) {
     return playersData.response as Player[];
   }
 
