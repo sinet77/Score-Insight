@@ -1,0 +1,31 @@
+@use "@styles/variables" as vars;
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    width: 100%;
+    background-color: vars.$white-text-color;
+    box-shadow: vars.$item-light-box-shadow;
+    border-radius: vars.$border-radius;
+    padding: 20px;
+
+}
+.countries-container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    width: 100%;
+}
+.go-to-container {
+    display: flex;
+    gap: 60px;
+}
+@media (max-width: 768px) {
+    .go-to-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+}

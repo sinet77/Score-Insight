@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { countriesApi } from "../../api/countries-api";
+import { countriesApi } from "../../../../api/countries-api";
 import type { LeagueSelect, CountryWithLeagues } from "./countries-types";
 import styles from "./countries-list.module.scss";
 import LoadingSpinner from "@components/ui/LoadingSpinner/LoadingSpinner";

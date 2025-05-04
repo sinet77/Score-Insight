@@ -1,38 +1,53 @@
 import { useState } from "react";
-import CountriesList from "@components/CountriesAndLeagues/CountriesAndLeagues";
+import CountriesList from "@components/Pages/MainPage/CountriesAndLeagues/CountriesAndLeagues";
 import { LeagueTeams } from "@components/Teams/LeagueTeams";
+import { GoToH2H } from "@components/Pages/MainPage/GoToH2H/GoToH2H";
+import h2hTeams from "./assets/h2hteams.jpeg";
+import h2hPlayers from "./assets/h2hplayers.jpg";
+import styles from "./App.module.scss";
+import { useNavigate } from "react-router-dom";
+import { routes } from "./routes";
 
 function App() {
-  const [selectedLeagueId, setSelectedLeagueId] = useState<number | null>(null);
+  const [selectedLeagueId, setSelectedLeagueId] = useState<number | null>(39);
   const [selectedSeason, setSelectedSeason] = useState<string>("");
 
   const handleSeasonSelect = (selectedSeason: string) => {
     setSelectedSeason(selectedSeason);
   };
 
+  const navigate = useNavigate();
+
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        gap: "50px",
-        width: "100%",
-      }}
-    >
-      <div style={{ height: "600px"}}>
-        <CountriesList
-          onLeagueSelect={setSelectedLeagueId}
-          onSeasonSelect={handleSeasonSelect}
-          selectedSeason={selectedSeason}
+    <div className={styles["main-container"]}>
+      <div className={styles["go-to-container"]}>
+        <GoToH2H
+          image={h2hTeams}
+          title="Go to Head to Head for Teams"
+          where={() => navigate(routes.compareTeams)}
+        />
+        <GoToH2H
+          image={h2hPlayers}
+          title="Go to Head to Head for Players"
+          where={() => navigate(routes.comparePlayers)}
         />
       </div>
-      {selectedLeagueId && (
-        <LeagueTeams
-          key={`${selectedLeagueId}-${selectedSeason}`}
-          leagueId={selectedLeagueId}
-          season={selectedSeason || "2023"}
-        />
-      )}
+      <div className={styles["countries-container"]}>
+        <div style={{ height: "600px" }}>
+          <CountriesList
+            onLeagueSelect={setSelectedLeagueId}
+            onSeasonSelect={handleSeasonSelect}
+            selectedSeason={selectedSeason}
+          />
+        </div>
+        {selectedLeagueId && (
+          <LeagueTeams
+            key={`${selectedLeagueId}-${selectedSeason}`}
+            leagueId={selectedLeagueId}
+            season={selectedSeason || "2023"}
+          />
+        )}
+      </div>
     </div>
   );
 }
