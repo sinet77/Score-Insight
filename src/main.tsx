@@ -1,9 +1,9 @@
 import ReactDOM from "react-dom/client";
 import {
-  Route,
-  createHashRouter,
-  createRoutesFromElements,
-  RouterProvider,
+    Route,
+    createHashRouter,
+    createRoutesFromElements,
+    RouterProvider,
 } from "react-router-dom";
 import "./styles/global.scss";
 import App from "./App.tsx";
@@ -11,21 +11,23 @@ import Layout from "./Layout/Layout.tsx";
 import { routes } from "./routes.ts";
 import { TeamView } from "@components/TeamView/TeamView.tsx";
 import { Error404 } from "@components/Error404/Error404.tsx";
+import { PlayerProfileView } from "@components/PlayerProfileView/PlayerProfileView.tsx";
 
 const router = createHashRouter(
-  createRoutesFromElements(
-    <Route path="/">
-      <Route element={<Layout />}>
-        <Route index element={<App />} />
-        <Route path={routes.team} element={<TeamView />} />
-      </Route>
-      <Route path="*" element={<Error404 />} />
-    </Route>
-  )
+    createRoutesFromElements(
+        <Route path="/">
+            <Route element={<Layout />}>
+                <Route index element={<App />} />
+                <Route path={routes.team} element={<TeamView />} />
+                <Route path={routes.player} element={<PlayerProfileView />} />
+            </Route>
+            <Route path="*" element={<Error404 />} />
+        </Route>
+    )
 );
 
 const rootElement = document.getElementById("root");
 
 if (rootElement) {
-  ReactDOM.createRoot(rootElement).render(<RouterProvider router={router} />);
+    ReactDOM.createRoot(rootElement).render(<RouterProvider router={router} />);
 }
