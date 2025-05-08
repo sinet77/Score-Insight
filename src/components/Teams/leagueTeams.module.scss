@@ -1,8 +1,11 @@
+@use "@styles/variables" as vars;
+
 .team-table-container {
-    background-color: #1c1f26;
-    border-radius: 12px;
+    background-color: vars.$item-light-background;
+    border-radius: vars.$border-radius;
+    box-shadow: vars.$item-light-box-shadow;
     padding: 16px;
-    color: white;
+    color: vars.$color-black;
     max-width: 900px;
     width: 100%;
 }
@@ -52,8 +55,8 @@
 }
 
 .team-card {
-    background-color: #2a2f3e;
-    border-radius: 8px;
+    background-color: vars.$item-light-hover;
+    border-radius: vars.$border-radius;
     padding: 12px 16px;
     display: flex;
     align-items: center;
@@ -64,11 +67,11 @@
     box-sizing: border-box;
 
     &:hover {
-        background-color: #343a4d;
+        background-color: #cbced8;
     }
 
     &--expanded {
-        background-color: #343a4d;
+        background-color: #cbced8;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
     }
@@ -138,19 +141,8 @@ button {
     }
 }
 
-.dropdown-icon {
-    color: #8a8d98;
-    position: absolute;
-    right: 16px;
-    transition: transform 0.2s ease;
-
-    &--expanded {
-        transform: rotate(180deg);
-    }
-}
-
 .team-details {
-    background-color: #343a4d;
+    background-color: #aeb4c7;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     padding: 16px;
@@ -164,7 +156,7 @@ button {
     h4 {
         font-size: 0.9rem;
         margin: 0 0 8px 0;
-        color: #8a8d98;
+        color: #242527;
     }
 }
 
@@ -181,7 +173,7 @@ button {
 
     &__stat-label {
         font-size: 0.8rem;
-        color: #8a8d98;
+        color: vars.$color-black;
     }
 
     &__stat-value {
@@ -190,25 +182,9 @@ button {
     }
 }
 
-.team-description {
-    padding: 8px;
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 4px;
-
-    &__description-label {
-        font-size: 0.8rem;
-        color: #8a8d98;
-        margin-right: 8px;
-    }
-
-    &__description-value {
-        font-weight: 500;
-    }
-}
-
 .read-more-button {
     margin-top: 26px;
-
+color: vars.$white_text-color;
 }
 
 // Responsive adjustments

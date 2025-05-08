@@ -1,10 +1,10 @@
 @use "@styles/variables" as vars;
 
 .countries-container {
-    background-color: vars.$background-dark;
+    background-color: vars.$item-light-background;
     padding: 1.5rem;
     border-radius: vars.$border-radius;
-    color: vars.$white_text-color;
+    box-shadow: vars.$item-light-box-shadow;
     width: 350px;
     max-width: 400px;
 
@@ -78,19 +78,12 @@
     }
 }
 
-.loading {
-    text-align: center;
-    padding: 1rem;
-    color: vars.$grey_text-color-secondary;
-}
-
 .countries-list {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     max-height: 70vh;
     overflow-y: auto;
-    padding-right: 8px;
 
     &::-webkit-scrollbar {
         width: 6px;
@@ -113,10 +106,9 @@
     align-items: center;
     width: 100%;
     padding: 0.75rem 1rem;
-    background-color: vars.$item-background;
+    background-color: vars.$item-light-hover;
     border: none;
     border-radius: vars.$border-radius;
-    color: vars.$white_text-color;
     cursor: pointer;
     transition: vars.$transition;
     text-align: left;
@@ -124,33 +116,34 @@
     font-size: 0.95rem;
 
     &:hover {
-        background-color: vars.$item-hover;
+        background-color: vars.$item-active;
     }
 
     &--active {
-        background-color: vars.$item-active;
+
+        background-color: vars.$green_dark-accent-hover;
     }
 
     &--active:hover {
-        background-color: vars.$item-active;
+        background-color: vars.$green_dark-accent-hover;
     }
 
     &--league-item {
         margin-bottom: 10px;
         padding: 0.4rem 1rem;
-        background-color: #111111;
+        background-color: #d1cece;
     }
 
     &__chevron-icon {
         width: 1.25rem;
         height: 1.25rem;
         transition: transform 0.2s ease;
-        color: vars.$grey_text-color-secondary;
+        color: vars.$color-black;
         margin-left: auto;
 
         &--expanded {
             transform: rotate(180deg);
-            color: rgb(122, 132, 255);
+            color: rgb(6, 71, 9);
         }
     }
 }

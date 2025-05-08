@@ -12,14 +12,13 @@
     cursor: pointer;
     flex-direction: column;
     border-radius: vars.$border-radius;
-    background-color: vars.$green_light-accent;
+    background-color: vars.$item-light-hover;
     box-shadow: vars.$item-light-box-shadow;
     transition: vars.$transition;
     color: vars.$white_text-color;
     &:hover{
-        background-color: vars.$green_dark-accent;
-        box-shadow: vars.$item-light-box-shadow;
-        transform: scale(1.05);
+        background-color: vars.$item-light-background;
+        transform: scale(1.01);
     }
 }
 @media (max-width: 768px) {

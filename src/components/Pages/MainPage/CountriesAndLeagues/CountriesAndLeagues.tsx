@@ -106,7 +106,7 @@ const CountriesList = ({
         </svg>
         <input
           type="text"
-          placeholder="Filtr"
+          placeholder="Search for country"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className={styles["search-container__search-input"]}
