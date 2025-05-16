@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import styles from "./leagueTeams.module.scss";
+import styles from "./LeagueTeams.module.scss";
 import { leagueTeamsApi } from "../../api/leagueTeams-api";
 import type { TeamStanding, LeagueStanding } from "./standings-types";
 import { RenderTeamStats } from "./RenderTeamStats";

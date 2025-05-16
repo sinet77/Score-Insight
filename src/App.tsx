@@ -7,6 +7,7 @@ import h2hPlayers from "./assets/h2hplayers.jpg";
 import styles from "./App.module.scss";
 import { useNavigate } from "react-router-dom";
 import { routes } from "./routes";
+import BannerSlider from "@components/Pages/MainPage/Banner/Banner";
 
 function App() {
   const [selectedLeagueId, setSelectedLeagueId] = useState<number | null>(39);
@@ -20,6 +21,7 @@ function App() {
 
   return (
     <div className={styles["main-container"]}>
+              <BannerSlider />
       <div className={styles["go-to-container"]}>
         <GoToH2H
           image={h2hTeams}
