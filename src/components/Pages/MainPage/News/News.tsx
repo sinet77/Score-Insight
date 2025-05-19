@@ -4,10 +4,19 @@ import LoadingSpinner from '@components/ui/LoadingSpinner/LoadingSpinner';
 
 const RSS_FEED_URL = 'https://api.rss2json.com/v1/api.json?rss_url=https://feeds.bbci.co.uk/sport/football/rss.xml';
 
+type FootballNewsProps = {
+    title: string;
+    link: string;
+    guid: string;
+    thumbnail: string;
+    description: string;
+    pubDate: string;
+};
+
 const FootballNews = () => {
-    const [news, setNews] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [news, setNews] = useState<FootballNewsProps[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         fetch(RSS_FEED_URL)
@@ -38,18 +47,18 @@ const FootballNews = () => {
                 {news.map((item) => (
                     <article className={styles["newsItem"]} key={item.guid}>
                         <a href={item.link} target="_blank" rel="noopener noreferrer">
-                                <img
-                                    src={item.enclosure.thumbnail}
-                                    alt={item.title}
-                                    className={styles["newsImage"]}
-                                />
+                            <img
+                                src={item.thumbnail}
+                                alt={item.title}
+                                className={styles["newsImage"]}
+                            />
                             <div className={styles.newsDetails}>
                                 <h3 className={styles['newsDetails__newsDetailsTitle']}>{item.title}</h3>
                                 <p className={styles['newsDetails__newsDetailsDescription']}>{item.description}</p>
                             </div>
-                           <h4 className={styles["pubDate"]}>{item.pubDate}</h4> 
+                            <h4 className={styles["pubDate"]}>{item.pubDate}</h4>
                         </a>
-                        
+
                     </article>
                 ))}
             </div>
