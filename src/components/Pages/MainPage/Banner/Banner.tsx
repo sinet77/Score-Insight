@@ -5,11 +5,14 @@ import "swiper/scss";
 import "swiper/scss/navigation";
 import "swiper/scss/pagination";
 
-import ball from "../../../../assets/ball.jpg";
-import football from "../../../../assets/football.jpg";
-import world_cup from "../../../../assets/world_cup.jpg";
+import banner_Football_stats from "../../../../assets/banner_Football_stats.jpg";
+import banner_h2h from "../../../../assets/banner_h2h.jpg";
+import banner_Football_news from "../../../../assets/banner_Football_news.png";
+import banner_Score_Insight from "../../../../assets/banner_Score_Insight.jpg"
+import banner_Team_profile from "../../../../assets/banner_Team_profile.jpg";
+import banner_Player_profile from "../../../../assets/banner_Player_profile.jpg";
 
-const images = [ball, football, world_cup];
+const images = [banner_Score_Insight, banner_Football_stats, banner_Football_news, banner_Team_profile, banner_Player_profile, banner_h2h, ];
 
 export default function BannerSlider() {
   return (

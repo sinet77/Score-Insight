@@ -2,15 +2,15 @@
 
 .bannerSlider {
   max-width: 1500px;
-  height: 400px;
-  width:100%;
-  border-radius: vars.$border-radius;
+  height: 550px;
+  width: 100%;
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: vars.$border-radius;
+  }
 
 }
 
