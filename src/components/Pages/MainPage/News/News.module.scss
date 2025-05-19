@@ -1,0 +1,67 @@
+@use "@styles/variables" as vars;
+
+.newsContainer {
+    padding: 20px;
+    background-color: vars.$item-light-background;
+    border-radius: vars.$border-radius;
+    box-shadow: vars.$item-light-box-shadow;
+}
+
+.newsContainer a {
+    text-decoration: none;
+}
+
+.newsGrid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    margin-top: 40px;
+}
+
+.newsItem {
+    background-color: white;
+    border-radius: vars.$border-radius;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: vars.$transition;
+    position: relative;
+
+    &:hover {
+        transform: translateY(-5px);
+    }
+}
+
+.newsImage {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: vars.$border-radius vars.$border-radius 0 0;
+}
+
+.newsDetails {
+    padding: 15px;
+    min-height: 280px;
+
+    &__newsDetailsTitle {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    &__newsDetailsDescription {
+        font-size: 14px;
+        color: vars.$grey_text-color-secondary;
+        line-height: 1.5;
+    }
+
+
+}
+
+.pubDate {
+    position: absolute;
+    right: 15px;
+    bottom: 0px;
+    font-size: 11px;
+    color: vars.$footer;
+}

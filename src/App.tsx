@@ -8,6 +8,7 @@ import styles from "./App.module.scss";
 import { useNavigate } from "react-router-dom";
 import { routes } from "./routes";
 import BannerSlider from "@components/Pages/MainPage/Banner/Banner";
+import News from "@components/Pages/MainPage/News/News";
 
 function App() {
   const [selectedLeagueId, setSelectedLeagueId] = useState<number | null>(39);
@@ -21,7 +22,8 @@ function App() {
 
   return (
     <div className={styles["main-container"]}>
-              <BannerSlider />
+          <BannerSlider />
+          <News />
       <div className={styles["go-to-container"]}>
         <GoToH2H
           image={h2hTeams}
