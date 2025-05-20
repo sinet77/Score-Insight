@@ -4,4 +4,5 @@ export const routes ={
     player:"/player/:playerName/:playerId",
     compareTeams:"/compare-teams",
     comparePlayers:"/compare-players",
+    ranking:"fifa-world-ranking"
 }

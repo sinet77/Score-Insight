@@ -13,19 +13,64 @@
     padding: 20px;
 
 }
+
 .countries-container {
     display: flex;
     justify-content: center;
     gap: 50px;
     width: 100%;
 }
+
 .go-to-container {
     display: flex;
     gap: 60px;
 }
+
+.fifa_logo {
+    width: 100px;
+    height: auto;
+    object-fit: contain;
+}
+
+.button-first-text-part {
+    font-size: 24px
+}
+
+.button-text {
+    @extend .button-first-text-part;
+    font-weight: bold;
+}
+
+.fifa-ranking-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: vars.$border-radius;
+    padding: 12px 0px;
+    width: 100%;
+    gap: 10px;
+    background-color: #6ce78b;
+    cursor: pointer;
+    transition: vars.$transition;
+
+    &:hover {
+        transform: translateY(-5px);
+        background-color: #94dda6;
+    }
+}
+
 @media (max-width: 768px) {
     .go-to-container {
         flex-direction: column;
         gap: 20px;
+    }
+
+    .button-first-text-part {
+        font-size: 14px
+    }
+
+    .fifa_logo {
+        width: 50px;
+
     }
 }
