@@ -1,0 +1,35 @@
+@use "@styles/variables" as vars;
+
+.stat-row {
+  display: flex;
+  padding: 8px 16px;
+  align-items: center;
+  border-bottom: 1px solid vars.$item-active;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.stat-value {
+  font-weight: 500;
+  color: vars.$color-black;
+  text-align: left;
+}
+
+.stat-label {
+  flex: 1;
+  text-align: center;
+  color: #555;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .stat-row {
+    justify-content: space-between;
+  }
+  .stat-label {
+    width: 100px;
+    flex: none;
+  }
+}

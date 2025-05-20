@@ -1,11 +1,9 @@
 import { CoachApiResponse } from "@components/TeamView/Coach/coach-types";
 import coachLiverpool from "../data/coachLiverpool.json";
-import { baseApi } from "./baseApi";
-
-const isDevelop = import.meta.env.DEV;
+import { baseApi, isDevelopApi } from "./baseApi";
 
 const get = async (teamId: number): Promise<CoachApiResponse> => {
-  if (isDevelop) {
+  if (isDevelopApi) {
     return coachLiverpool as CoachApiResponse;
   }
   try {
