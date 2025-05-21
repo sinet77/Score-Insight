@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import styles from './Ranking.module.scss';
 import fifa_logo from "../../assets/fifa_logo.png"
 import { SearchBar } from '@components/ui/SearchBar/SearchBar';
+import { ArrowBigDown, ArrowBigUp } from 'lucide-react';
 
 type FifaRankingProps = {
     rank: number;
@@ -48,6 +49,24 @@ export const FifaRanking = () => {
 
     if (loading) return <LoadingSpinner />;
 
+    const higherOrLowerPosition = (previousRank: number, rank: number) => {
+        const positionChange = Math.abs(previousRank - rank);
+        if (positionChange === 0) return null;
+
+        return (
+            <div className={styles["position-container"]}>
+                <span className={styles["position"]}>{positionChange}</span>
+
+                {previousRank > rank ? (
+                    <ArrowBigUp size={30} fill="rgb(23, 211, 23)" strokeWidth={0} />
+                ) : (
+                    <ArrowBigDown size={30} fill="red" strokeWidth={0} />
+                )}
+            </div>
+        );
+    };
+
+
     return (
         <div className={styles["main"]}>
             <div className={styles["header"]}>
@@ -76,7 +95,9 @@ export const FifaRanking = () => {
                     {filteredRanking.map((team, index) => (
                         <tr key={index} className={styles["item"]}>
                             <td className={styles["wrapper"]}>
-                                <td className={styles["tableCell"]}>{team.rank}</td>
+                                <td className={styles["tableCell"]}>
+                                    <div className={styles["rank-container"]}>{team.rank} {higherOrLowerPosition(team.previous_rank, team.rank)}
+                                    </div> </td>
                                 <td className={styles["flag-name-cell"]}>
                                     <img
                                         src={team.flag}
