@@ -1,15 +1,16 @@
 import { Outlet } from "react-router-dom";
 import { Navbar } from "../components/Navbar/Navbar";
-import "./Layout.scss";
+import { Footer } from "@components/Footer/Footer";
+import styles from "./Layout.module.scss"
 
 export default function Layout() {
   return (
-    <div>
+    <div className={styles["main"]}>
       <Navbar />
-      <div style={{ maxWidth: "1500px", margin: "0 auto" }}>
+      <div className={styles["content"]}>
         <Outlet />
       </div>
-      {/* <Footer /> */}
+      <Footer /> 
     </div>
   );
 }
