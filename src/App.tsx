@@ -24,12 +24,14 @@ function App() {
   return (
     <div className={styles["main-container"]}>
       <BannerSlider />
-      <News />
+      <section id="news">
+        <News />
+      </section>
       <button className={styles["fifa-ranking-button"]} onClick={() => navigate(routes.ranking)}>
         <span className={styles["button-first-text-part"]}>Check newest</span>
         <img src={fifa_logo} alt={"fifa logo"} className={styles["fifa_logo"]} />
         <span className={styles["button-text"]}>FIFA Ranking</span></button>
-      <div className={styles["go-to-container"]}>
+      <section className={styles["go-to-container"]}>
         <GoToH2H
           image={h2hTeams}
           title="Go to Head to Head for Teams"
@@ -40,8 +42,8 @@ function App() {
           title="Go to Head to Head for Players"
           where={() => navigate(routes.comparePlayers)}
         />
-      </div>
-      <div className={styles["countries-container"]}>
+      </section>
+      <section className={styles["countries-container"]} id="choose-league">
         <div style={{ height: "600px" }}>
           <CountriesList
             onLeagueSelect={setSelectedLeagueId}
@@ -56,7 +58,7 @@ function App() {
             season={selectedSeason || "2023"}
           />
         )}
-      </div>
+      </section>
     </div>
   );
 }
