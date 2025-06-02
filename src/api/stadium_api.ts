@@ -1,14 +1,15 @@
-import { StadiumProps, TeamVenueApiResponse, VenueApiResponse } from "@components/TeamView/Stadium/stadium-types";
-import { baseApi } from "./baseApi";
+import {
+  StadiumProps,
+  TeamVenueApiResponse,
+  VenueApiResponse,
+} from "@components/TeamView/Stadium/stadium-types";
+import { baseApi, isDevelopApi } from "./baseApi";
 import stadiumData from "../data/stadiumAnfield.json";
-
-const isDevelop = import.meta.env.DEV;
-
 
 export const getStadium = async (
   teamId: number
 ): Promise<StadiumProps | null> => {
-  if (isDevelop) {
+  if (isDevelopApi) {
     return stadiumData.response[0] as StadiumProps;
   }
 
