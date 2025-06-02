@@ -47,6 +47,16 @@
         align-items: center;
         gap: 10px;
         cursor: pointer;
+
+        @media (max-width: 850px) {
+            border-bottom: 1px solid white;
+            padding: 30px;
+            width: 100%;
+
+            &:first-child {
+                border-top: 1px solid white;
+            }
+        }
     }
 
     &__hamburger {
