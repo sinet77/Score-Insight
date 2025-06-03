@@ -17,7 +17,6 @@ export const Navbar = () => {
         <button onClick={handleGoHome}>
           <img src={logo} alt="Football App Logo" className={styles["navbar__logo"]} />
         </button>
-
         <NavMobile />
         <NavLinks
           className={styles["navbar__links"]}

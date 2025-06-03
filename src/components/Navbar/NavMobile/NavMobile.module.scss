@@ -16,10 +16,9 @@
 
 .navmobile-container {
     display: none;
-
-    @media (max-width: 850px) {
+    
+    @media (max-width: 768px) {
         display: flex;
-
     }
 }
 
@@ -31,5 +30,5 @@
     display: flex;
     flex-direction: column;
     font-size: 20px;
-    margin-top: 144px;
+    margin-top: 84px;
 }

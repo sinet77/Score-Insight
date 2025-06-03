@@ -1,5 +1,5 @@
 import { useClickAway } from "react-use";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Squash as Hamburger } from "hamburger-react";
 import { AnimatePresence, motion } from "framer-motion";
 import styles from './NavMobile.module.scss';
@@ -12,8 +12,16 @@ export const NavMobile = () => {
   // Zamknięcie menu po kliknięciu poza nim
   useClickAway(menuRef, () => setOpen(false));
 
+    useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [isOpen]);
+
   return (
-    <div className={styles["navmobile-container"]}>
+    <div className={styles["navmobile-container"]} ref={menuRef}>
       <div className={styles["hamburger-wrapper"]}>
         <Hamburger toggled={isOpen} size={20} toggle={setOpen} color="white" />
       </div>
@@ -21,7 +29,7 @@ export const NavMobile = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            ref={menuRef} // Ref dla menu, by móc monitorować kliknięcia poza nim
+         
             initial={{ x: "100%" }} // Menu zaczyna się poza ekranem po prawej stronie
             animate={{ x: 0 }} // Menu przesuwa się na ekran od prawej
             exit={{ x: "100%" }} // Menu znika (przesuwa się z powrotem poza ekran)
