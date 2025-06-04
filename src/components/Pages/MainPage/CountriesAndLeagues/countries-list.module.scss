@@ -8,6 +8,7 @@
     width: 350px;
     max-width: 400px;
 
+
     &__countries-title {
         font-size: 1.25rem;
         font-weight: 600;
@@ -47,8 +48,12 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    max-height: 70vh;
+    max-height: 600px;
     overflow-y: auto;
+
+    @media(max-width:768px){
+        height:270px;
+    }
 
     &::-webkit-scrollbar {
         width: 6px;

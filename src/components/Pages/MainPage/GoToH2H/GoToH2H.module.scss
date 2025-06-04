@@ -21,11 +21,16 @@
         transform: scale(1.01);
     }
 }
+
+@media (max-width: 1200px) {
+    .image{
+        width: 650px;
+    }
+}
 @media (max-width: 768px) {
     .image{
         width: 100%;
         height: auto;
-
     }
     .wrapper{
         padding: 10px;

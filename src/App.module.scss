@@ -65,12 +65,22 @@
         gap: 20px;
     }
 
-    .button-first-text-part {
-        font-size: 14px
-    }
-
     .fifa_logo {
         width: 50px;
-
     }
+}
+
+@media (max-width: 1200px) {
+    .countries-container {
+        gap:20px;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .go-to-container {
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
 }

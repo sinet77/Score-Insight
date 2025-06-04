@@ -42,7 +42,7 @@ function App() {
         />
       </div>
       <div className={styles["countries-container"]}>
-        <div style={{ height: "600px" }}>
+        <div>
           <CountriesList
             onLeagueSelect={setSelectedLeagueId}
             onSeasonSelect={handleSeasonSelect}
