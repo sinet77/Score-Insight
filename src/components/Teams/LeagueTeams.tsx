@@ -117,11 +117,11 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
             <div className={styles["position-column"]}>#</div>
             <div className={styles["team-column"]}>Team</div>
             <div className={styles["stat-column"]}>M</div>
-            <div className={styles["stat-column"]}>W</div>
+            <div className={`${styles["stat-column"]} ${styles["mobile-visible"]}`}>W</div>
             <div className={styles["stat-column"]}>D</div>
             <div className={styles["stat-column"]}>L</div>
             <div className={styles["stat-column"]}>+/-</div>
-            <div className={styles["stat-column"]}>Goals</div>
+            <div className={`${styles["stat-column"]} ${styles["mobile-visible"]}`}>Goals</div>
             <div className={styles["last-five-column"]}>Last 5</div>
             <div className={styles["points-column"]}>PTS</div>
           </div>
@@ -149,14 +149,14 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
                     </span>
                   </div>
                   <div className={styles["stat-column"]}>{team.all.played}</div>
-                  <div className={styles["stat-column"]}>{team.all.win}</div>
+                  <div className={`${styles["stat-column"]} ${styles["mobile-visible"]}`}>{team.all.win}</div>
                   <div className={styles["stat-column"]}>{team.all.draw}</div>
                   <div className={styles["stat-column"]}>{team.all.lose}</div>
                   <div className={styles["stat-column"]}>
                     {team.goalsDiff > 0 ? "+" : ""}
                     {team.goalsDiff}
                   </div>
-                  <div className={styles["stat-column"]}>
+                  <div className={`${styles["stat-column"]} ${styles["mobile-visible"]}`}>
                     {team.all.goals.for}:{team.all.goals.against}
                   </div>
                   <div className={styles["last-five-column"]}>
