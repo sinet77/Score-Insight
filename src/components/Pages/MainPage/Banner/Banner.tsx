@@ -12,7 +12,6 @@ import banner_Football_news from "../../../../assets/banner_Football_news.png";
 import banner_Score_Insight from "../../../../assets/banner_Score_Insight.jpg";
 import banner_Team_profile from "../../../../assets/banner_Team_profile.jpg";
 import banner_Player_profile from "../../../../assets/banner_Player_profile.jpg";
-import mobileBanner from "../../../../assets/mobile_banner_Score_Insight.jpg"; 
 
 const images = [
   banner_Score_Insight,
@@ -24,29 +23,6 @@ const images = [
 ];
 
 export default function BannerSlider() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  if (isMobile) {
-    return (
-      <div className={styles.bannerSlider}>
-        <img
-          src={mobileBanner}
-          alt="Mobile Banner"
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-        />
-      </div>
-    );
-  }
 
   return (
     <div className={styles.bannerSlider}>
