@@ -187,7 +187,6 @@ button {
 color: vars.$white_text-color;
 }
 
-// Responsive adjustments
 @media (max-width: 768px) {
     .stat-column:nth-child(5),
     .stat-column:nth-child(6),
@@ -201,7 +200,6 @@ color: vars.$white_text-color;
   .mobile-visible{
     display: none;
   }
-
 
     .team-stats-grid {
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
