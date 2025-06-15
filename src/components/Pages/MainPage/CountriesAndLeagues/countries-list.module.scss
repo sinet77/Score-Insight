@@ -2,12 +2,11 @@
 
 .countries-container {
     background-color: vars.$item-light-background;
-    padding: 1.5rem;
+    padding: 10px;
+    padding-top:10px;
     border-radius: vars.$border-radius;
     box-shadow: vars.$item-light-box-shadow;
     width: 350px;
-    max-width: 400px;
-
 
     &__countries-title {
         font-size: 1.25rem;
@@ -21,8 +20,8 @@
         align-items: center;
         justify-content: center;
         gap: 20px;
-        padding: 20px;
         font-size: 15px;
+        padding:10px 0 20px 0;
     }
 }
 

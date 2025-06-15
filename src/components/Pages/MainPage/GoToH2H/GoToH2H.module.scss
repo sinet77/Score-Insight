@@ -1,11 +1,13 @@
 @use "@styles/variables" as vars;
 
-.image{
+.image {
     width: 700px;
     height: 370px;
-    border-radius: 0 0 vars.$border-radius  vars.$border-radius;
+    width: 100%;
+    border-radius: 0 0 vars.$border-radius vars.$border-radius;
 }
-.go-to-button{
+
+.go-to-button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,23 +18,26 @@
     box-shadow: vars.$item-light-box-shadow;
     transition: vars.$transition;
     color: vars.$white_text-color;
-    &:hover{
+
+    &:hover {
         background-color: vars.$item-light-background;
         transform: scale(1.01);
     }
 }
 
 @media (max-width: 1200px) {
-    .image{
+    .image {
         width: 650px;
     }
 }
+
 @media (max-width: 768px) {
-    .image{
+    .image {
         width: 100%;
         height: auto;
     }
-    .wrapper{
+
+    .wrapper {
         padding: 10px;
     }
 }

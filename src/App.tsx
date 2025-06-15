@@ -51,13 +51,13 @@ function App() {
           />
         </div>
         <div className={styles["countries-container"]}>
-          <div>
+
             <CountriesList
               onLeagueSelect={setSelectedLeagueId}
               onSeasonSelect={handleSeasonSelect}
               selectedSeason={selectedSeason}
             />
-          </div>
+
           {selectedLeagueId && (
             <LeagueTeams
               key={`${selectedLeagueId}-${selectedSeason}`}

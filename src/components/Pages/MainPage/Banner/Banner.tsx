@@ -12,7 +12,6 @@ import banner_Score_Insight from "../../../../assets/banner_Score_Insight.jpg";
 import banner_Team_profile from "../../../../assets/banner_Team_profile.jpg";
 import banner_Player_profile from "../../../../assets/banner_Player_profile.jpg";
 
-
 const images = [
   banner_Score_Insight,
   banner_Football_stats,

@@ -16,13 +16,14 @@
 .countries-container {
     display: flex;
     justify-content: center;
-    gap: 50px;
+    gap: 20px;
     width: 100%;
+
 }
 
 .go-to-container {
     display: flex;
-    gap: 60px;
+    gap: 20px;
 }
 
 .fifa_logo {
@@ -61,7 +62,6 @@
 @media (max-width: 768px) {
     .go-to-container {
         flex-direction: column;
-        gap: 20px;
     }
 
     .fifa_logo {
@@ -75,15 +75,17 @@
 }
 
 @media (max-width: 1200px) {
+    .go-to-container {
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 1024px) {
     .countries-container {
-        gap: 20px;
         flex-wrap: wrap;
         width: 100%;
     }
 
-    .go-to-container {
-        flex-direction: column;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
 }
