@@ -14,6 +14,12 @@
 
 }
 
+@media (max-width: 768px) {
+  .bannerSlider {
+    display: none;
+  }
+}
+
 :global {
 
   .swiper-button-next,
