@@ -1,5 +1,5 @@
 import leaguesData from "../data/leaguesData.json";
-import type { CountriesResponse } from "@components/CountriesAndLeagues/countries-types";
+import type { CountriesResponse } from "@components/Pages/MainPage/CountriesAndLeagues/countries-types";
 import { baseApi } from "./baseApi";
 
 const isDevelop = import.meta.env.DEV;

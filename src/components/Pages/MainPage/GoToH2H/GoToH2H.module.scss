@@ -1,0 +1,43 @@
+@use "@styles/variables" as vars;
+
+.image {
+    width: 700px;
+    height: 370px;
+    width: 100%;
+    border-radius: 0 0 vars.$border-radius vars.$border-radius;
+}
+
+.go-to-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    flex-direction: column;
+    border-radius: vars.$border-radius;
+    background-color: vars.$item-light-hover;
+    box-shadow: vars.$item-light-box-shadow;
+    transition: vars.$transition;
+    color: vars.$white_text-color;
+
+    &:hover {
+        background-color: vars.$item-light-background;
+        transform: scale(1.01);
+    }
+}
+
+@media (max-width: 1200px) {
+    .image {
+        width: 650px;
+    }
+}
+
+@media (max-width: 768px) {
+    .image {
+        width: 100%;
+        height: auto;
+    }
+
+    .wrapper {
+        padding: 10px;
+    }
+}

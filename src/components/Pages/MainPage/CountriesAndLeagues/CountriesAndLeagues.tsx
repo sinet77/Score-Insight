@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { countriesApi } from "../../api/countries-api";
+import { countriesApi } from "../../../../api/countries-api";
 import type { LeagueSelect, CountryWithLeagues } from "./countries-types";
 import styles from "./countries-list.module.scss";
 import LoadingSpinner from "@components/ui/LoadingSpinner/LoadingSpinner";
+import { SearchBar } from "@components/ui/SearchBar/SearchBar";
 
 const CountriesList = ({
   onLeagueSelect,
@@ -89,30 +90,7 @@ const CountriesList = ({
           <option value="2023">2023</option>
         </select>
       </div>
-
-      <div className={styles["search-container"]}>
-        <svg
-          className={styles["search-container__search-icon"]}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-          />
-        </svg>
-        <input
-          type="text"
-          placeholder="Filtr"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className={styles["search-container__search-input"]}
-        />
-      </div>
-
+      <SearchBar placeholder="Search for country" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
       {loading ? (
         <LoadingSpinner />
       ) : (
@@ -122,15 +100,13 @@ const CountriesList = ({
             return (
               <div key={countryId}>
                 <button
-                  className={`${styles["country-item"]} ${
-                    expandedCountries.includes(countryId)
+                  className={`${styles["country-item"]} ${expandedCountries.includes(countryId)
                       ? styles["country-item--expanded"]
                       : ""
-                  } ${
-                    expandedCountries.includes(countryId)
+                    } ${expandedCountries.includes(countryId)
                       ? styles["country-item--active"]
                       : ""
-                  }`}
+                    }`}
                   onClick={() => handleCountryClick(countryId)}
                 >
                   <div className={styles["country-flag"]}>
@@ -144,11 +120,10 @@ const CountriesList = ({
                   </div>
                   <span>{country.name}</span>
                   <svg
-                    className={`${styles["country-item__chevron-icon"]} ${
-                      expandedCountries.includes(countryId)
+                    className={`${styles["country-item__chevron-icon"]} ${expandedCountries.includes(countryId)
                         ? styles["country-item__chevron-icon--expanded"]
                         : ""
-                    }`}
+                      }`}
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"

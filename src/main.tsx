@@ -11,6 +11,7 @@ import Layout from "./Layout/Layout.tsx";
 import { routes } from "./routes.ts";
 import { TeamView } from "@components/TeamView/TeamView.tsx";
 import { Error404 } from "@components/Error404/Error404.tsx";
+import { FifaRanking } from "@components/FIFA Ranking/Ranking.tsx";
 import { CompareTeams } from "@components/Pages/CompareTeams/CompareTeams.tsx";
 
 const router = createHashRouter(
@@ -20,6 +21,7 @@ const router = createHashRouter(
         <Route index element={<App />} />
         <Route path={routes.team} element={<TeamView />} />
         <Route path={routes.compareTeams} element={<CompareTeams />} />
+        <Route path={routes.ranking} element={<FifaRanking />} />
       </Route>
       <Route path="*" element={<Error404 />} />
     </Route>
