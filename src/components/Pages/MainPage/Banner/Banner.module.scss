@@ -9,9 +9,15 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: vars.$border-radius;
+    border-radius: vars.$border-radius vars.$border-radius 0 0;
   }
 
+}
+
+@media (max-width: 768px) {
+  .bannerSlider {
+    display: none;
+  }
 }
 
 :global {

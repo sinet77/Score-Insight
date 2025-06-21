@@ -187,7 +187,6 @@ button {
 color: vars.$white_text-color;
 }
 
-// Responsive adjustments
 @media (max-width: 768px) {
     .stat-column:nth-child(5),
     .stat-column:nth-child(6),
@@ -195,35 +194,15 @@ color: vars.$white_text-color;
         display: none;
     }
 
-    .last-five-column {
-        width: 100px;
-    }
+  .last-five-column {
+    display: none;
+  }
+  .mobile-visible{
+    display: none;
+  }
 
     .team-stats-grid {
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     }
 }
 
-@media (max-width: 576px) {
-    .team-card {
-        flex-wrap: wrap;
-    }
-
-    .stat-column {
-        width: 30px;
-    }
-
-    .last-five-column {
-        width: 100%;
-        margin-top: 8px;
-        justify-content: flex-start;
-    }
-
-    .team-details {
-        padding: 12px;
-    }
-
-    .team-stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
