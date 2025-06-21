@@ -1,0 +1,17 @@
+@use "@styles/variables" as vars;
+
+.stat-section {
+    padding: 10px;
+    margin-bottom: 2px;
+    background-color: vars.$item-light-background;
+    border-radius: vars.$border-radius;
+    
+  }
+  
+  .section-title {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: vars.$color-black;
+    margin: 8px 0 12px;
+  }

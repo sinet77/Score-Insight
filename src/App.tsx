@@ -36,47 +36,52 @@ function App() {
   const navigate = useNavigate();
 
   return (
-    <div className={styles["main-container"]}>
+    <>
       <BannerSlider />
-      <News />
-      <button
-        className={styles["fifa-ranking-button"]}
-        onClick={() => navigate(routes.ranking)}
-      >
-        <span className={styles["button-first-text-part"]}>Check newest</span>
-        <img src={fifa_logo} alt={"fifa logo"} className={styles["fifa_logo"]} />
-        <span className={styles["button-text"]}>FIFA Ranking</span>
-      </button>
-
-      <div className={styles["go-to-container"]}>
-        <GoToH2H
-          image={h2hTeams}
-          title="Go to Head to Head for Teams"
-          where={() => navigate(routes.compareTeams)}
-        />
-        <GoToH2H
-          image={h2hPlayers}
-          title="Go to Head to Head for Players"
-          where={() => navigate(routes.comparePlayers)}
-        />
-      </div>
-      <div ref={leaguesRef} className={styles["countries-container"]}>
-        <div style={{ height: "600px" }}>
-          <CountriesList
-            onLeagueSelect={setSelectedLeagueId}
-            onSeasonSelect={handleSeasonSelect}
-            selectedSeason={selectedSeason}
+      <div className={styles["main-container"]}>
+        <News />
+        <button
+          className={styles["fifa-ranking-button"]}
+          onClick={() => navigate(routes.ranking)}
+        >
+          <span className={styles["button-first-text-part"]}>Check newest</span>
+          <img
+            src={fifa_logo}
+            alt={"fifa logo"}
+            className={styles["fifa_logo"]}
+          />
+          <span className={styles["button-text"]}>FIFA Ranking</span>
+        </button>
+        <div className={styles["go-to-container"]}>
+          <GoToH2H
+            image={h2hTeams}
+            title="Go to Head to Head for Teams"
+            where={() => navigate(routes.compareTeams)}
+          />
+          <GoToH2H
+            image={h2hPlayers}
+            title="Go to Head to Head for Players"
+            where={() => navigate(routes.comparePlayers)}
           />
         </div>
-        {selectedLeagueId && (
-          <LeagueTeams
-            key={`${selectedLeagueId}-${selectedSeason}`}
-            leagueId={selectedLeagueId}
-            season={selectedSeason || "2023"}
-          />
-        )}
+        <div className={styles["countries-container"]}>
+
+            <CountriesList
+              onLeagueSelect={setSelectedLeagueId}
+              onSeasonSelect={handleSeasonSelect}
+              selectedSeason={selectedSeason}
+            />
+
+          {selectedLeagueId && (
+            <LeagueTeams
+              key={`${selectedLeagueId}-${selectedSeason}`}
+              leagueId={selectedLeagueId}
+              season={selectedSeason || "2023"}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

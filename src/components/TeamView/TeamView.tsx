@@ -14,7 +14,8 @@ import { Info } from "./Info/Info";
 import { getFixturesForTeam } from "@api/fixturesForTeam_api";
 import { Fixture } from "./Matches/matches_types";
 import { MatchData } from "./Matches/Matches";
-
+import {TeamSelection} from "@components/Pages/CompareTeams/H2HTeams/H2HTeams";
+import { getAllStatsForTeam } from "@api/teamAllStats_api";
 
 export const TeamView = () => {
   const { teamId, season, leagueId } = useParams<{
@@ -27,6 +28,18 @@ export const TeamView = () => {
   const [stadium, setStadium] = useState<StadiumProps | null>(null);
   const [loading, setLoading] = useState(true);
   const [fixtures, setFixtures] = useState<Fixture[]>([]);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      if (!teamId) return;
+      const response = await getAllStatsForTeam(
+        Number(teamId), 2023, leagueId ?? "");
+
+      console.log("All stats for team:", response);
+    };
+
+    fetchStats();
+  },[])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,13 +87,14 @@ export const TeamView = () => {
               <Info players={players} />
             </div>
             <div className={styles["right"]}>
-            {fixtures.length > 0 && <MatchData fixtures={fixtures} />}
-              
+              {fixtures.length > 0 && <MatchData fixtures={fixtures} />}
+
               {stadium && <StadiumCard stadium={stadium} />}
             </div>
           </div>
 
           <PlayerGrid players={players} />
+          <TeamSelection />
         </div>
       )}
     </div>
