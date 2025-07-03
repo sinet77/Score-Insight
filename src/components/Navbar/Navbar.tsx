@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/football_logo_transparent.png";
-import "./Navbar.scss";
+import styles from "./Navbar.module.scss";
+import { NavMobile } from "./NavMobile/NavMobile";
+import { NavLinks } from "./NavLinks/NavLinks";
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -10,14 +12,16 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="navbar">
-        <div className="navbar__content">
-          <button onClick={handleGoHome}>
-           <img src={logo} alt="Football App Logo" className="navbar__logo" />     
-          </button>
-        
-        </div>
-      
+    <nav className={styles["navbar"]}>
+      <div className={styles["navbar__content"]}>
+        <button onClick={handleGoHome}>
+          <img src={logo} alt="Football App Logo" className={styles["navbar__logo"]} />
+        </button>
+        <NavMobile />
+        <NavLinks
+          className={styles["navbar__links"]}
+        />
+      </div>
     </nav>
   );
 };

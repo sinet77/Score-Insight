@@ -1,0 +1,34 @@
+@use "@styles/variables" as vars;
+
+.styledMenu {
+    display: flex;
+    flex-direction: column;
+    background-color: vars.$green_light-accent;
+    color: vars.$white-text-color;
+    height: 100vh;
+    text-align: left;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 99;
+
+}
+
+.navmobile-container {
+    display: none;
+    
+    @media (max-width: 768px) {
+        display: flex;
+    }
+}
+
+.hamburger-wrapper {
+    z-index: 100;
+}
+
+.mobileLinks {
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    margin-top: 84px;
+}

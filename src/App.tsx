@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { routes } from "./routes";
 import BannerSlider from "@components/Pages/MainPage/Banner/Banner";
 import News from "@components/Pages/MainPage/News/News";
-import fifa_logo from "./assets/fifa_logo.png";
+import fifa_logo from "./assets/fifa_logo.png"
 
 function App() {
   const [selectedLeagueId, setSelectedLeagueId] = useState<number | null>(39);
@@ -22,52 +22,44 @@ function App() {
   const navigate = useNavigate();
 
   return (
-    <>
+    <div className={styles["main-container"]}>
       <BannerSlider />
-      <div className={styles["main-container"]}>
+      <section id="news">
         <News />
-        <button
-          className={styles["fifa-ranking-button"]}
-          onClick={() => navigate(routes.ranking)}
-        >
-          <span className={styles["button-first-text-part"]}>Check newest</span>
-          <img
-            src={fifa_logo}
-            alt={"fifa logo"}
-            className={styles["fifa_logo"]}
-          />
-          <span className={styles["button-text"]}>FIFA Ranking</span>
-        </button>
-        <div className={styles["go-to-container"]}>
-          <GoToH2H
-            image={h2hTeams}
-            title="Go to Head to Head for Teams"
-            where={() => navigate(routes.compareTeams)}
-          />
-          <GoToH2H
-            image={h2hPlayers}
-            title="Go to Head to Head for Players"
-            where={() => navigate(routes.comparePlayers)}
+      </section>
+      <button className={styles["fifa-ranking-button"]} onClick={() => navigate(routes.ranking)}>
+        <span className={styles["button-first-text-part"]}>Check newest</span>
+        <img src={fifa_logo} alt={"fifa logo"} className={styles["fifa_logo"]} />
+        <span className={styles["button-text"]}>FIFA Ranking</span></button>
+      <section className={styles["go-to-container"]}>
+        <GoToH2H
+          image={h2hTeams}
+          title="Go to Head to Head for Teams"
+          where={() => navigate(routes.compareTeams)}
+        />
+        <GoToH2H
+          image={h2hPlayers}
+          title="Go to Head to Head for Players"
+          where={() => navigate(routes.comparePlayers)}
+        />
+      </section>
+      <section className={styles["countries-container"]} id="choose-league">
+        <div style={{ height: "600px" }}>
+          <CountriesList
+            onLeagueSelect={setSelectedLeagueId}
+            onSeasonSelect={handleSeasonSelect}
+            selectedSeason={selectedSeason}
           />
         </div>
-        <div className={styles["countries-container"]}>
-
-            <CountriesList
-              onLeagueSelect={setSelectedLeagueId}
-              onSeasonSelect={handleSeasonSelect}
-              selectedSeason={selectedSeason}
-            />
-
-          {selectedLeagueId && (
-            <LeagueTeams
-              key={`${selectedLeagueId}-${selectedSeason}`}
-              leagueId={selectedLeagueId}
-              season={selectedSeason || "2023"}
-            />
-          )}
-        </div>
-      </div>
-    </>
+        {selectedLeagueId && (
+          <LeagueTeams
+            key={`${selectedLeagueId}-${selectedSeason}`}
+            leagueId={selectedLeagueId}
+            season={selectedSeason || "2023"}
+          />
+        )}
+      </section>
+    </div>
   );
 }
 

@@ -1,0 +1,72 @@
+@use "@styles/variables" as vars;
+
+.navbar {
+    background-color: vars.$green_dark-accent;
+    width: 100%;
+    margin-bottom: 50px;
+    position: relative;
+
+    &__content {
+        max-width: 1500px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__logo {
+        width: 80px;
+        height: 80px;
+        cursor: pointer;
+    }
+
+    &__links {
+        display: flex;
+        gap: 80px;
+        margin: auto;
+        color: vars.$white_text-color;
+        font-size: 22px;
+
+        @media (max-width: 1200px) {
+            gap: 50px;
+            font-size: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            gap: 25px;
+            font-size: 15px;
+       
+        }
+
+        @media (max-width: 768px) {
+            display: none;
+        }
+    }
+
+    &__button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+
+        @media (max-width: 768px) {
+            border-bottom: 1px solid white;
+            padding: 30px;
+            width: 100%;
+
+            &:first-child {
+                border-top: 1px solid white;
+            }
+        }
+    }
+
+    &__hamburger {
+        display: none;
+        font-size: 30px;
+        background: transparent;
+        border: none;
+        color: black;
+        cursor: pointer;
+        z-index: 100;
+    }
+}
