@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import styles from "./H2HTeams.module.scss";
-import { Flag, RotateCcw, Shield, ShieldUser, Trophy } from "lucide-react";
+import { Flag, Shield, ShieldUser } from "lucide-react";
 import countryData from "../../../../data/countriesData.json";
-import { SelectInput } from "./SelectInput/SelectInput";
 import { countriesApi } from "@api/countries-api";
 import { leagueTeamsApi } from "@api/leagueTeams-api";
 import { TeamStanding } from "@components/Teams/standings-types";
 import { Comparision } from "./Comparision/Comparision";
-import Select, { SingleValue } from "react-select";
+import { SingleValue } from "react-select";
 import { customSelectStyles } from "./SelectInput/selectStyles";
+import { SelectionCard } from "@components/Pages/H2H/SelectionCard";
 interface League {
   league: {
     id: number;
@@ -201,142 +201,107 @@ export function TeamSelection() {
   return (
     <div className={styles["wrapper"]}>
       <div className={styles["team-selection-container"]}>
-        {/* 1 kafelek */}
-        <div className={styles["team-card"]}>
-          <div className={styles["button-container"]}>
-            <span className={styles["card-title"]}>Choose first team</span>
-            <button
-              onClick={() => resetTeamSelection("left", true)}
-              className={styles["reset-button"]}
-            >
-              <RotateCcw />
-            </button>
-          </div>
-          <SelectInput
-            icon={<Flag size={30} strokeWidth={1.5} />}
-            placeholder="Select country"
-            value={leftSide.country}
-            onChange={(value) => {
-              setLeftSide((prev) => ({ ...prev, country: value }));
-              resetTeamSelection("left");
-            }}
-            options={countryOptions}
-          />
-          <SelectInput
-            icon={<Shield size={30} strokeWidth={1.5} />}
-            placeholder="Select league"
-            value={leftSide.league}
-            onChange={(value) =>
-              setLeftSide((prev) => ({ ...prev, league: value }))
-            }
-            options={leagueOptions1}
-          />
-          <SelectInput
-            icon={<ShieldUser size={30} strokeWidth={1.5} />}
-            placeholder="Select team"
-            value={leftSide.team}
-            onChange={(value) =>
-              setLeftSide((prev) => ({ ...prev, team: value }))
-            }
-            options={teamOptions1}
-          />
-          <div className={styles["items"]}>
-            <div className={`${styles["item"]} ${styles["wider"]}`}>
-              <div className={styles["trophy-icon"]}>
-                <Trophy />
-              </div>
-              <span className={styles["team-position"]}>
-                {(() => {
-                  const team = teams1.find(
-                    (team) => team.team.name === leftSide.team
-                  );
-                  return team
-                    ? `Finished in #${team.rank} place`
-                    : "Position unknown";
-                })()}
-              </span>
-            </div>
-            <Select
-              options={seasonOptions}
-              value={
-                seasonOptions.find(
-                  (opt) => opt.value === Number(leftSide.season)
-                ) || seasonOptions[2]
-              } // default 2023
-              onChange={(selected) => handleSeasonChange(selected, "left")}
-              styles={customSelectStyles}
-            />
-          </div>
-        </div>
+        <SelectionCard
+          title="Choose first team"
+          reset={() => resetTeamSelection("left", true)}
+          selects={[
+            {
+              icon: <Flag size={30} strokeWidth={1.5} />,
+              placeholder: "Select country",
+              value: leftSide.country,
+              onChange: (value) => {
+                setLeftSide((prev) => ({ ...prev, country: value }));
+                resetTeamSelection("left");
+              },
+              options: countryOptions,
+            },
+            {
+              icon: <Shield size={30} strokeWidth={1.5} />,
+              placeholder: "Select league",
+              value: leftSide.league,
+              onChange: (value) =>
+                setLeftSide((prev) => ({ ...prev, league: value })),
+              options: leagueOptions1,
+            },
+            {
+              icon: <ShieldUser size={30} strokeWidth={1.5} />,
+              placeholder: "Select team",
+              value: leftSide.team,
+              onChange: (value) =>
+                setLeftSide((prev) => ({ ...prev, team: value })),
+              options: teamOptions1,
+            },
+          ]}
+          showPosition
+          positionLabel={
+            (() => {
+              const team = teams1.find(
+                (team) => team.team.name === leftSide.team
+              );
+              return team ? `Finished in #${team.rank} place` : "Position unknown";
+            })()
+          }
+          seasonSelect={{
+            options: seasonOptions,
+            value:
+              seasonOptions.find(
+                (opt) => opt.value === Number(leftSide.season)
+              ) || seasonOptions[2],
+            onChange: (selected) => handleSeasonChange(selected, "left"),
+            styles: customSelectStyles,
+          }}
+        />
 
-        {/* 2 kafelek */}
-        <div className={styles["team-card"]}>
-          <div className={styles["button-container"]}>
-            <span className={styles["card-title"]}>Choose second team</span>
-            <button
-              onClick={() => resetTeamSelection("right", true)}
-              className={styles["reset-button"]}
-            >
-              <RotateCcw />
-            </button>
-          </div>
-
-          <SelectInput
-            icon={<Flag size={30} strokeWidth={1.5} />}
-            placeholder="Select country"
-            value={rightSide.country}
-            onChange={(value) => {
-              setRightSide((prev) => ({ ...prev, country: value }));
-              resetTeamSelection("right");
-            }}
-            options={countryOptions}
-          />
-          <SelectInput
-            icon={<Shield size={30} strokeWidth={1.5} />}
-            placeholder="Select league"
-            value={rightSide.league}
-            onChange={(value) =>
-              setRightSide((prev) => ({ ...prev, league: value }))
-            }
-            options={leagueOptions2}
-          />
-          <SelectInput
-            icon={<ShieldUser size={30} strokeWidth={1.5} />}
-            placeholder="Select team"
-            value={rightSide.team}
-            onChange={(value) =>
-              setRightSide((prev) => ({ ...prev, team: value }))
-            }
-            options={teamOptions2}
-          />
-          <div className={styles["items"]}>
-            <div className={`${styles["item"]} ${styles["wider"]}`}>
-              <div className={styles["trophy-icon"]}>
-                <Trophy />
-              </div>
-              <span className={styles["team-position"]}>
-                {(() => {
-                  const team = teams2.find(
-                    (team) => team.team.name === rightSide.team
-                  );
-                  return team
-                    ? `Finished in #${team.rank} place`
-                    : "Position unknown";
-                })()}
-              </span>
-            </div>
-            <Select
-              options={seasonOptions}
-              value={
-                seasonOptions.find(
-                  (opt) => opt.value === Number(rightSide.season)
-                ) || seasonOptions[2]
-              } // default 2023
-              onChange={(selected) => handleSeasonChange(selected, "right")}
-              styles={customSelectStyles}
-            />
-          </div>
-        </div>
+        <SelectionCard
+          title="Choose second team"
+          reset={() => resetTeamSelection("right", true)}
+          selects={[
+            {
+              icon: <Flag size={30} strokeWidth={1.5} />,
+              placeholder: "Select country",
+              value: rightSide.country,
+              onChange: (value) => {
+                setRightSide((prev) => ({ ...prev, country: value }));
+                resetTeamSelection("right");
+              },
+              options: countryOptions,
+            },
+            {
+              icon: <Shield size={30} strokeWidth={1.5} />,
+              placeholder: "Select league",
+              value: rightSide.league,
+              onChange: (value) =>
+                setRightSide((prev) => ({ ...prev, league: value })),
+              options: leagueOptions2,
+            },
+            {
+              icon: <ShieldUser size={30} strokeWidth={1.5} />,
+              placeholder: "Select team",
+              value: rightSide.team,
+              onChange: (value) =>
+                setRightSide((prev) => ({ ...prev, team: value })),
+              options: teamOptions2,
+            },
+          ]}
+          showPosition
+          positionLabel={
+            (() => {
+              const team = teams2.find(
+                (team) => team.team.name === rightSide.team
+              );
+              return team ? `Finished in #${team.rank} place` : "Position unknown";
+            })()
+          }
+          seasonSelect={{
+            options: seasonOptions,
+            value:
+              seasonOptions.find(
+                (opt) => opt.value === Number(rightSide.season)
+              ) || seasonOptions[2],
+            onChange: (selected) => handleSeasonChange(selected, "right"),
+            styles: customSelectStyles,
+          }}
+        />
       </div>
       <Comparision
         teamOneName={leftSide.team}
