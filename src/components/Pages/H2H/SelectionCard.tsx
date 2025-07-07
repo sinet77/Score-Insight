@@ -1,7 +1,7 @@
 import { RotateCcw, Trophy } from "lucide-react";
 import Select from "react-select";
 import styles from "./SelectionCard.module.scss";
-import { SelectInput } from "../CompareTeams/H2HTeams/SelectInput/SelectInput";
+import { SelectInput } from "../../SelectInputH2H/SelectInput";
 
 interface SelectInputConfig {
   icon: React.ReactNode;
