@@ -2,6 +2,7 @@ import { countriesApi } from "@api/countries-api";
 import { leagueTeamsApi } from "../api/leagueTeams-api";
 import countryData from "../data/countriesData.json";
 import { TeamStanding } from "@components/Teams/standings-types";
+import { getPlayers } from "@api/players_api";
 
 export interface League {
   league: {
@@ -81,6 +82,47 @@ export const fetchStandings = async (
     setTeams(teamsList);
   } catch (error) {
     console.error("Error fetching standings:", error);
+  }
+};
+
+export const fetchPlayerData = async (
+  countryName: string,
+  selectedLeagueName: string,
+  teamName: string,
+  season: string
+) => {
+  try {
+
+    const leaguesRes = await countriesApi.get();
+    const leagues: League[] = leaguesRes.response.filter(
+      (league: League) => league.country?.name === countryName
+    );
+
+    const selectedLeague = leagues.find(
+      (league) => league.league.name === selectedLeagueName
+    );
+    if (!selectedLeague) throw new Error("No league found");
+
+    const leagueId = selectedLeague.league.id;
+
+    const standingsData = await leagueTeamsApi.get(leagueId, season);
+    const teams: TeamStanding[] = standingsData.response?.[0]?.league?.standings?.[0] || [];
+
+    const selectedTeam = teams.find((t) => t.team.name === teamName);
+    if (!selectedTeam) throw new Error("No team found");
+
+    const teamId = selectedTeam.team.id;
+
+    const players = await getPlayers(teamId, season);
+
+    return {
+      league: selectedLeague.league,
+      team: selectedTeam.team,
+      players,
+    };
+  } catch (error) {
+    console.error("Error fetching player data:", error);
+    return null;
   }
 };
 

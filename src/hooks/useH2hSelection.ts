@@ -7,9 +7,11 @@ import {
   fetchLeaguesByCountry,
   fetchStandings,
   resetSelectionState,
+  fetchPlayerData,
   League,
 } from "../utils/h2hSelectionHelpers";
 import { TeamStanding } from "@components/Teams/standings-types";
+import { Player } from "@components/PlayerDetails/player-types";
 
 export function useH2HSelection() {
   const [leftSide, setLeftSide] = useState({
@@ -18,6 +20,7 @@ export function useH2HSelection() {
     leagueId: 0,
     team: "",
     season: "2023",
+    players1: "",
   });
   const [rightSide, setRightSide] = useState({
     country: "",
@@ -25,12 +28,15 @@ export function useH2HSelection() {
     leagueId: 0,
     team: "",
     season: "2023",
+    players2: "",
   });
 
   const [leagues1, setLeagues1] = useState<League[]>([]);
   const [leagues2, setLeagues2] = useState<League[]>([]);
   const [teams1, setTeams1] = useState<TeamStanding[]>([]);
   const [teams2, setTeams2] = useState<TeamStanding[]>([]);
+  const [players1, setPlayers1] = useState<Player[]>([]);
+  const [players2, setPlayers2] = useState<Player[]>([]);
 
   const leagueOptions1 = getLeagueOptions(leagues1, leftSide.country);
   const leagueOptions2 = getLeagueOptions(leagues2, rightSide.country);
@@ -63,6 +69,32 @@ export function useH2HSelection() {
     );
   }, [rightSide.league, rightSide.season, leagues2]);
 
+  const loadPlayerData = async (side: "left" | "right") => {
+    const current = side === "left" ? leftSide : rightSide;
+
+    if (!current.country || !current.league || !current.team) return;
+
+    const result = await fetchPlayerData(
+      current.country,
+      current.league,
+      current.team,
+      current.season
+    );
+
+    if (result) {
+      if (side === "left") setPlayers1(result.players);
+      else setPlayers2(result.players);
+    }
+  };
+
+  useEffect(() => {
+    if (leftSide.team) loadPlayerData("left");
+  }, [leftSide.team, leftSide.league, leftSide.country, leftSide.season]);
+
+  useEffect(() => {
+    if (rightSide.team) loadPlayerData("right");
+  }, [rightSide.team, rightSide.league, rightSide.country, rightSide.season]);
+
   const resetTeamSelection = (side: "left" | "right", fullReset = false) => {
     if (side === "left") {
       setLeftSide((prev) => ({
@@ -70,12 +102,14 @@ export function useH2HSelection() {
         leagueId: 0,
       }));
       setTeams1([]);
+      setPlayers1([]);
     } else {
       setRightSide((prev) => ({
         ...resetSelectionState(prev, fullReset),
         leagueId: 0,
       }));
       setTeams2([]);
+      setPlayers2([]);
     }
   };
 
@@ -102,6 +136,8 @@ export function useH2HSelection() {
     resetTeamSelection,
     handleSeasonChange,
     teams1,
-    teams2
+    teams2,
+    players1,
+    players2,
   };
 }

@@ -1,11 +1,16 @@
 import styles from "./PlayerSelection.module.scss";
-import { Flag, RotateCcw, Shield, ShieldUser } from "lucide-react";
+import { Flag, RotateCcw, Shield, ShieldUser, User } from "lucide-react";
 import { SelectInput } from "@components/SelectInputH2H/SelectInput";
 import Select from "react-select";
 import { customSelectStyles } from "@components/SelectInputH2H/selectStyles";
 import { useH2HSelection } from "../../../../hooks/useh2hSelection";
+import { useEffect, useState } from "react";
+import { PlayersStatsData } from "../PlayersStatsData/PlayersStatsData";
 
 export function PlayerSelection() {
+  const [selectedPlayer1, setSelectedPlayer1] = useState<string>();
+  const [selectedPlayer2, setSelectedPlayer2] = useState<string>();
+
   const {
     leftSide,
     rightSide,
@@ -19,8 +24,26 @@ export function PlayerSelection() {
     teamOptions2,
     resetTeamSelection,
     handleSeasonChange,
+    players1,
+    players2,
   } = useH2HSelection();
 
+  const playerOptions1 = players1.map((p) => ({
+    label: p.player.name,
+    value: p.player.id,
+  }));
+
+  const playerOptions2 = players2.map((p) => ({
+    label: p.player.name,
+    value: p.player.id,
+  }));
+  useEffect(() => {
+    console.log("selectedPlayer1", selectedPlayer1);
+    console.log(
+      "players1",
+      players1.map((p) => p.player)
+    );
+  }, [selectedPlayer1, players1]);
   return (
     <div className="wrapper">
       <div className="team-selection-container">
@@ -62,6 +85,13 @@ export function PlayerSelection() {
               setLeftSide((prev) => ({ ...prev, team: value }))
             }
             options={teamOptions1}
+          />
+          <SelectInput
+            icon={<User size={30} strokeWidth={1.5} />}
+            placeholder="Select player"
+            value={selectedPlayer1}
+            onChange={(value) => setSelectedPlayer1(value)}
+            options={playerOptions1}
           />
           <div className="items">
             <Select
@@ -117,6 +147,13 @@ export function PlayerSelection() {
             }
             options={teamOptions2}
           />
+          <SelectInput
+            icon={<User size={30} strokeWidth={1.5} />}
+            placeholder="Select player"
+            value={selectedPlayer2}
+            onChange={(value) => setSelectedPlayer2(value)}
+            options={playerOptions2}
+          />
           <div className="items">
             <Select
               options={seasonOptions}
@@ -131,6 +168,14 @@ export function PlayerSelection() {
           </div>
         </div>
       </div>
+      <PlayersStatsData
+        playerOne={
+          players1.find((p) => p.player.name === selectedPlayer1) ?? null
+        }
+        playerTwo={
+          players2.find((p) => p.player.name === selectedPlayer2) ?? null
+        }
+      />
     </div>
   );
 }

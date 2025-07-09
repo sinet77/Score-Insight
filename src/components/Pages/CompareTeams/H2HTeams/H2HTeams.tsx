@@ -1,9 +1,9 @@
 import { Flag, RotateCcw, Shield, ShieldUser, Trophy } from "lucide-react";
 import { SelectInput } from "@components/SelectInputH2H/SelectInput";
-import { Comparision } from "./Comparision/Comparision";
+import { StatsData } from "@components/Pages/CompareTeams/H2HTeams/StatsData/StatsData";
 import Select from "react-select";
 import { customSelectStyles } from "@components/SelectInputH2H/selectStyles";
-import { useH2HSelection } from "../../../../hooks/useh2hSelection";
+import { useH2HSelection } from "../../../../hooks/useH2hSelection";
 
 export function TeamSelection() {
   const {
@@ -163,13 +163,13 @@ export function TeamSelection() {
           </div>
         </div>
       </div>
-      <Comparision
-        teamOneName={leftSide.team}
-        teamTwoName={rightSide.team}
-        leagueOneId={leftSide.leagueId}
-        leagueTwoId={rightSide.leagueId}
-        seasonOne={leftSide.season}
-        seasonTwo={rightSide.season}
+      <StatsData
+        teamOneStanding={
+          teams1.find((team) => team.team.name === leftSide.team) ?? null
+        }
+        teamTwoStanding={
+          teams2.find((team) => team.team.name === rightSide.team) ?? null
+        }
       />
     </div>
   );
