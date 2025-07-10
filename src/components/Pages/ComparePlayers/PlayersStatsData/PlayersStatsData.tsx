@@ -17,15 +17,28 @@ export const PlayersStatsData = ({
     playerOne,
     playerTwo
   );
+
+  const getScoreClass = (score: number) => {
+    if (score >= 7) return styles.green;
+    if (score >= 4) return styles.orange;
+    return styles.red;
+  };
+
+  const renderFlagWithCountry = (flag?: string, country?: string) => (
+    <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+      {flag && (
+        <img
+          src={flag}
+          alt="flag or logo"
+          style={{ width: "22px", height: "20px", objectFit: "contain" }}
+        />
+      )}
+      {country ?? "N/A"}
+    </span>
+  );
+
   return (
     <div className={styles["stats-container"]}>
-      <StatSection title="General">
-        <StatItem
-          leftValue={playerOne?.player.firstname ?? "N/A"}
-          rightValue={playerTwo?.statistics?.[0]?.goals.total ?? "N/A"}
-          label="Name"
-        />
-      </StatSection>
       <StatSection title="General">
         <StatItem
           label=""
@@ -49,8 +62,8 @@ export const PlayersStatsData = ({
         />
         <StatItem
           label="Age"
-          leftValue={playerOne?.player.age?.toString() ?? "N/A"}
-          rightValue={playerTwo?.player.age?.toString() ?? "N/A"}
+          leftValue={playerOne?.player.age ?? "N/A"}
+          rightValue={playerTwo?.player.age ?? "N/A"}
         />
         <StatItem
           label="Birthdate"
@@ -78,28 +91,36 @@ export const PlayersStatsData = ({
       <StatSection title="Team & League">
         <StatItem
           label="Team"
-          leftValue={playerOne?.statistics?.[0]?.team?.logo ?? "N/A"}
-          rightValue={playerTwo?.statistics?.[0]?.team?.logo ?? "N/A"}
-        />
-        <StatItem
-          label="Team Name"
-          leftValue={playerOne?.statistics?.[0]?.team?.name ?? "N/A"}
-          rightValue={playerTwo?.statistics?.[0]?.team?.name ?? "N/A"}
+          leftValue={renderFlagWithCountry(
+            playerOne?.statistics?.[0]?.team?.logo ?? undefined,
+            playerOne?.statistics?.[0]?.team?.name ?? undefined
+          )}
+          rightValue={renderFlagWithCountry(
+            playerTwo?.statistics?.[0]?.league?.flag ?? undefined,
+            playerTwo?.statistics?.[0]?.league?.country ?? undefined
+          )}
         />
         <StatItem
           label="League"
-          leftValue={playerOne?.statistics?.[0]?.league?.name ?? "N/A"}
-          rightValue={playerTwo?.statistics?.[0]?.league?.name ?? "N/A"}
+          leftValue={renderFlagWithCountry(
+            playerOne?.statistics?.[0]?.league?.logo ?? undefined,
+            playerOne?.statistics?.[0]?.league?.name ?? undefined
+          )}
+          rightValue={renderFlagWithCountry(
+            playerTwo?.statistics?.[0]?.league?.logo ?? undefined,
+            playerTwo?.statistics?.[0]?.league?.name ?? undefined
+          )}
         />
         <StatItem
           label="Country"
-          leftValue={playerOne?.statistics?.[0]?.league?.country ?? "N/A"}
-          rightValue={playerTwo?.statistics?.[0]?.league?.country ?? "N/A"}
-        />
-        <StatItem
-          label="League Flag"
-          leftValue={playerOne?.statistics?.[0]?.league?.flag ?? "N/A"}
-          rightValue={playerTwo?.statistics?.[0]?.league?.flag ?? "N/A"}
+          leftValue={renderFlagWithCountry(
+            playerOne?.statistics?.[0]?.league?.flag ?? undefined,
+            playerOne?.statistics?.[0]?.league?.country ?? undefined
+          )}
+          rightValue={renderFlagWithCountry(
+            playerTwo?.statistics?.[0]?.league?.flag ?? undefined,
+            playerTwo?.statistics?.[0]?.league?.country ?? undefined
+          )}
         />
         <StatItem
           label="Season"
@@ -131,8 +152,26 @@ export const PlayersStatsData = ({
         />
         <StatItem
           label="Rating"
-          leftValue={playerOne?.statistics?.[0]?.games?.rating ?? "N/A"}
-          rightValue={playerTwo?.statistics?.[0]?.games?.rating ?? "N/A"}
+          leftValue={
+            playerOne?.statistics?.[0]?.games?.rating
+              ? parseFloat(playerOne.statistics[0].games.rating).toFixed(2)
+              : "N/A"
+          }
+          rightValue={
+            playerTwo?.statistics?.[0]?.games?.rating
+              ? parseFloat(playerTwo.statistics[0].games.rating).toFixed(2)
+              : "N/A"
+          }
+          leftClassName={
+            playerOne?.statistics?.[0]?.games?.rating
+              ? getScoreClass(parseFloat(playerOne.statistics[0].games.rating))
+              : ""
+          }
+          rightClassName={
+            playerTwo?.statistics?.[0]?.games?.rating
+              ? getScoreClass(parseFloat(playerTwo.statistics[0].games.rating))
+              : ""
+          }
         />
         <StatItem
           label="Captain"
