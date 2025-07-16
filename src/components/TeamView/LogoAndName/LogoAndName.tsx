@@ -1,25 +1,72 @@
 import type { Player } from "@components/PlayerDetails/player-types";
 import { usePalette } from "color-thief-react";
 import styles from "./LogoAndName.module.scss";
+import { useEffect, useState } from "react";
+import { Star } from "lucide-react";
 
 export const LogoAndName = ({ data }: { data: Player[] }) => {
+  const [isFavourite, setIsFavourite] = useState(false);
+
   const team = data[0]?.statistics?.[0]?.team;
   const league = data[0]?.statistics?.[0]?.league;
 
-  const { data: colors } = usePalette(team?.logo ?? "/placeholder.svg", 3, "rgbArray", {
-    crossOrigin: "anonymous",
-  });
+  const { data: colors } = usePalette(
+    team?.logo ?? "/placeholder.svg",
+    3,
+    "rgbArray",
+    {
+      crossOrigin: "anonymous",
+    }
+  );
 
   //always add white to the end of the gradient
-  const gradientColors = colors ? [...colors, [255, 255, 255]] : [[255, 255, 255]];
+  const gradientColors = colors
+    ? [...colors, [255, 255, 255]]
+    : [[255, 255, 255]];
 
-  const gradient = `linear-gradient(to right, ${gradientColors.map(
-    (color) => `rgb(${color[0]}, ${color[1]}, ${color[2]})`
-  ).join(", ")})`;
+  const gradient = `linear-gradient(to right, ${gradientColors
+    .map((color) => `rgb(${color[0]}, ${color[1]}, ${color[2]})`)
+    .join(", ")})`;
+
+  useEffect(() => {
+    if (team?.name) {
+      const storedTeam = localStorage.getItem("favouriteTeam");
+      if (storedTeam) {
+        const parsed = JSON.parse(storedTeam);
+        setIsFavourite(parsed.name === team.name);
+      }
+    }
+  }, [team?.name]);
+
+  useEffect(() => {
+    if (team?.logo && team?.name) {
+      const teamData = {
+        logo: team.logo,
+        name: team.name,
+      };
+      localStorage.setItem("selectedTeam", JSON.stringify(teamData));
+    }
+  }, [team?.logo, team?.name]);
 
   if (!team) {
     return <p>No data about the team</p>;
   }
+
+  const toggleFavourite = () => {
+    if (!team) return;
+    const teamData = {
+      logo: team.logo,
+      name: team.name,
+    };
+
+    if (isFavourite) {
+      localStorage.removeItem("favouriteTeam");
+      setIsFavourite(false);
+    } else {
+      localStorage.setItem("favouriteTeam", JSON.stringify(teamData));
+      setIsFavourite(true);
+    }
+  };
 
   return (
     <div className={styles["team-card"]} style={{ background: gradient }}>
@@ -44,6 +91,18 @@ export const LogoAndName = ({ data }: { data: Player[] }) => {
           <h2 className={styles["country-name"]}>{league?.country}</h2>
         </div>
       </div>
+      <button
+        className={`${styles["favourite-btn"]} ${
+          isFavourite
+            ? styles["favourite-btn--active"]
+            : styles["favourite-btn--inactive"]
+        }`}
+        onClick={toggleFavourite}
+      >
+        <div className={styles["favourite-btn__text"]}>
+          <Star /> {isFavourite ? "Favourite" : "Add to Favourite"}
+        </div>
+      </button>
     </div>
   );
 };

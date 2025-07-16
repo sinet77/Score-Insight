@@ -14,7 +14,6 @@ import { Info } from "./Info/Info";
 import { getFixturesForTeam } from "@api/fixturesForTeam_api";
 import { Fixture } from "./Matches/matches_types";
 import { MatchData } from "./Matches/Matches";
-import {TeamSelection} from "@components/Pages/CompareTeams/H2HTeams/H2HTeams";
 import { getAllStatsForTeam } from "@api/teamAllStats_api";
 
 export const TeamView = () => {
@@ -94,7 +93,6 @@ export const TeamView = () => {
           </div>
 
           <PlayerGrid players={players} />
-          <TeamSelection />
         </div>
       )}
     </div>
