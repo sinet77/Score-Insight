@@ -12,6 +12,7 @@ import h2hPlayers from "./assets/h2hplayers.jpg";
 import fifa_logo from "./assets/fifa_logo.png";
 import { routes } from "./routes";
 import { FavouriteTeam } from "@components/FavouriteTeam/FavouriteTeam";
+import Modal from "@components/ui/Modal/Modal";
 
 type ContextType = {
   scrollToLeagues: () => void;
@@ -20,12 +21,11 @@ type ContextType = {
 };
 
 function App() {
-  const {
-    setSelectedLeagueId,
-    selectedLeagueId,
-  } = useOutletContext<ContextType>();
+  const { setSelectedLeagueId, selectedLeagueId } =
+    useOutletContext<ContextType>();
 
   const [selectedSeason, setSelectedSeason] = useState<string>("");
+  const [isOpen, setIsOpen] = useState(true);
 
   const handleSeasonSelect = (season: string) => {
     setSelectedSeason(season);
@@ -35,15 +35,48 @@ function App() {
 
   return (
     <div className={styles["main-container"]}>
-      <FavouriteTeam />
+      <FavouriteTeam onClick={() => setIsOpen(true)} />
+      {isOpen && (
+        <Modal handleClose={() => setIsOpen(false)}>
+          <div
+            className={styles["modal-countries-container"]}
+            id="modal-choose-league"
+          >
+            <div style={{ height: "600px" }}>
+              <CountriesList
+                onLeagueSelect={setSelectedLeagueId}
+                onSeasonSelect={handleSeasonSelect}
+                selectedSeason={selectedSeason}
+              />
+            </div>
+            <div className={styles["modal-teams-container"]}>
+              {selectedLeagueId && (
+                <LeagueTeams
+                  key={`${selectedLeagueId}-${selectedSeason}`}
+                  leagueId={selectedLeagueId}
+                  season={selectedSeason || "2023"}
+                />
+              )}
+            </div>
+          </div>
+        </Modal>
+      )}
       <BannerSlider />
       <section id="news">
         <News />
       </section>
-      <button className={styles["fifa-ranking-button"]} onClick={() => navigate(routes.ranking)}>
+      <button
+        className={styles["fifa-ranking-button"]}
+        onClick={() => navigate(routes.ranking)}
+      >
         <span className={styles["button-first-text-part"]}>Check newest</span>
-        <img src={fifa_logo} alt={"fifa logo"} className={styles["fifa_logo"]} />
-        <span className={styles["button-text"]}>FIFA Ranking</span></button>
+        <img
+          src={fifa_logo}
+          alt={"fifa logo"}
+          className={styles["fifa_logo"]}
+        />
+        <span className={styles["button-text"]}>FIFA Ranking</span>
+      </button>
       <section className={styles["go-to-container"]}>
         <GoToH2H
           image={h2hTeams}

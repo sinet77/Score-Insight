@@ -1,6 +1,6 @@
 @use "@styles/variables" as vars;
 
-.button{
+.button {
     align-self: center;
     border-radius: 8px;
     border: 1px solid transparent;
@@ -9,6 +9,15 @@
     background-color: vars.$green_dark-accent;
     cursor: pointer;
     transition: vars.$transition;
+
+    &--modal {
+        padding: 8px;
+        position: absolute;
+        border-radius: 0px vars.$border-radius ;
+        color: vars.$white_text-color;
+        top: 0;
+        right: 0;
+    }
 }
 
 .button:hover {
