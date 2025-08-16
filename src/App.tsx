@@ -25,7 +25,7 @@ function App() {
     useOutletContext<ContextType>();
 
   const [selectedSeason, setSelectedSeason] = useState<string>("");
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleSeasonSelect = (season: string) => {
     setSelectedSeason(season);
