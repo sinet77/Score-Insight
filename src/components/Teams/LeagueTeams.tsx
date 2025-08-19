@@ -10,9 +10,14 @@ import { useFavouriteTeam } from "../../hooks/useFavouriteTeam";
 interface TeamTableProps {
   leagueId: number;
   season: string;
+  showInlineFavourite?: boolean;
 }
 
-export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
+export const LeagueTeams = ({
+  leagueId,
+  season,
+  showInlineFavourite,
+}: TeamTableProps) => {
   const [loading, setLoading] = useState(true);
   const [standings, setStandings] = useState<TeamStanding[]>([]);
   const [leagueInfo, setLeagueInfo] = useState<{
@@ -98,6 +103,14 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
             />
             <h2 className="title title--fs24">{leagueInfo.name}</h2>
           </div>
+          {showInlineFavourite && fav && (
+            <button
+              className={`button ${styles["favourite-button"]}`}
+              onClick={() => toggle(fav)}
+            >
+              Remove favourite
+            </button>
+          )}
           <div className={styles["country-info"]}>
             <img
               src={leagueInfo.flag || "/placeholder.svg"}
@@ -204,7 +217,7 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
                       Read More
                     </button>
                     <button
-                    className={`button ${styles["favourite-button"]}`}
+                      className={`button ${styles["favourite-button"]}`}
                       onClick={() =>
                         toggle({
                           id: team.team.id,

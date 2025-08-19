@@ -1,34 +1,61 @@
 @use "@styles/variables" as vars;
 
 .main {
-    position: relative;
     cursor: pointer;
-    border: 1px solid black;
+    border: 1px solid #ddd;
     border-radius: vars.$border-radius;
-    padding: 10px;
+    padding: 22px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    transition: vars.$transition;
+    position: relative;
+    width: 150px;
+    height: 160px;
+
+    &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        border:1px solid vars.$green_dark-accent-hover;
+    }
 }
 
-.star-icon {
-    position: absolute;
-    right: 3px;
-    bottom: 5px;
-    fill: rgb(196, 191, 191);
-}
-.star-active {
-  fill: gold; 
+.active {
+    border:1px solid vars.$green_dark-accent;
 }
 
-.team-name {
-    font-size: 14px;
-    text-align: center;
+.empty {
+    border-style: dashed;
+    color: #777;
 }
 
-.team-image {
-    width: 100px;
-    height: 100px;
+
+.teamImage {
+    width: 120px;
+    height: 120px;
     object-fit: contain;
+    border-radius: 8px;
+}
+
+.starIcon {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    width: 28px;
+    height: 28px;
+    color: #c4bfbf;
+}
+
+.starActive {
+    color: rgb(90, 89, 89);
+    fill: gold;
+}
+
+.teamName {
+    font-size: 17px;
+    text-align: center;
+    margin-top: 15px;
+    font-weight: 600;
+
 
 }

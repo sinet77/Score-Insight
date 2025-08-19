@@ -35,7 +35,6 @@ function App() {
 
   return (
     <div className={styles["main-container"]}>
-      <FavouriteTeam onClick={() => setIsOpen(true)} />
       {isOpen && (
         <Modal handleClose={() => setIsOpen(false)}>
           <div
@@ -55,6 +54,7 @@ function App() {
                   key={`${selectedLeagueId}-${selectedSeason}`}
                   leagueId={selectedLeagueId}
                   season={selectedSeason || "2023"}
+                  showInlineFavourite 
                 />
               )}
             </div>
@@ -62,6 +62,7 @@ function App() {
         </Modal>
       )}
       <BannerSlider />
+      <FavouriteTeam onClick={() => setIsOpen(true)} />
       <section id="news">
         <News />
       </section>
