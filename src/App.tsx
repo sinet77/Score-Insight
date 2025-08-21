@@ -1,6 +1,6 @@
 // App.tsx
 import { useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useNavigate } from "react-router-dom";
 import CountriesList from "@components/Pages/MainPage/CountriesAndLeagues/CountriesAndLeagues";
 import { LeagueTeams } from "@components/Teams/LeagueTeams";
 import { GoToH2H } from "@components/Pages/MainPage/GoToH2H/GoToH2H";
@@ -10,24 +10,22 @@ import styles from "./App.module.scss";
 import h2hTeams from "./assets/h2hteams.jpeg";
 import h2hPlayers from "./assets/h2hplayers.jpg";
 import fifa_logo from "./assets/fifa_logo.png";
-import { useNavigate } from "react-router-dom";
 import { routes } from "./routes";
+import { FavouriteTeam } from "@components/FavouriteTeam/FavouriteTeam";
+import Modal from "@components/ui/Modal/Modal";
 
 type ContextType = {
   scrollToLeagues: () => void;
   setSelectedLeagueId: (id: number) => void;
   selectedLeagueId: number;
-  leaguesRef: React.RefObject<HTMLDivElement>;
 };
 
 function App() {
-  const {
-    setSelectedLeagueId,
-    selectedLeagueId,
-    leaguesRef,
-  } = useOutletContext<ContextType>();
+  const { setSelectedLeagueId, selectedLeagueId } =
+    useOutletContext<ContextType>();
 
   const [selectedSeason, setSelectedSeason] = useState<string>("");
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleSeasonSelect = (season: string) => {
     setSelectedSeason(season);
@@ -37,14 +35,49 @@ function App() {
 
   return (
     <div className={styles["main-container"]}>
+      {isOpen && (
+        <Modal handleClose={() => setIsOpen(false)}>
+          <div
+            className={styles["modal-countries-container"]}
+            id="modal-choose-league"
+          >
+            <div style={{ height: "600px" }}>
+              <CountriesList
+                onLeagueSelect={setSelectedLeagueId}
+                onSeasonSelect={handleSeasonSelect}
+                selectedSeason={selectedSeason}
+              />
+            </div>
+            <div className={styles["modal-teams-container"]}>
+              {selectedLeagueId && (
+                <LeagueTeams
+                  key={`${selectedLeagueId}-${selectedSeason}`}
+                  leagueId={selectedLeagueId}
+                  season={selectedSeason || "2023"}
+                  showInlineFavourite 
+                />
+              )}
+            </div>
+          </div>
+        </Modal>
+      )}
       <BannerSlider />
+      <FavouriteTeam onClick={() => setIsOpen(true)} />
       <section id="news">
         <News />
       </section>
-      <button className={styles["fifa-ranking-button"]} onClick={() => navigate(routes.ranking)}>
+      <button
+        className={styles["fifa-ranking-button"]}
+        onClick={() => navigate(routes.ranking)}
+      >
         <span className={styles["button-first-text-part"]}>Check newest</span>
-        <img src={fifa_logo} alt={"fifa logo"} className={styles["fifa_logo"]} />
-        <span className={styles["button-text"]}>FIFA Ranking</span></button>
+        <img
+          src={fifa_logo}
+          alt={"fifa logo"}
+          className={styles["fifa_logo"]}
+        />
+        <span className={styles["button-text"]}>FIFA Ranking</span>
+      </button>
       <section className={styles["go-to-container"]}>
         <GoToH2H
           image={h2hTeams}

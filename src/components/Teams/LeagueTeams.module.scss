@@ -184,7 +184,11 @@ button {
 
 .read-more-button {
     margin-top: 26px;
-color: vars.$white_text-color;
+    color: vars.$white_text-color;
+}
+
+.favourite-button {
+    background-color: yellowgreen;
 }
 
 @media (max-width: 768px) {
@@ -194,15 +198,14 @@ color: vars.$white_text-color;
         display: none;
     }
 
-  .last-five-column {
-    display: none;
-  }
-  .mobile-visible{
-    display: none;
-  }
+    .last-five-column {
+        display: none;
+    }
+    .mobile-visible {
+        display: none;
+    }
 
     .team-stats-grid {
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     }
 }
-

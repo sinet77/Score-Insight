@@ -5,13 +5,19 @@ import type { TeamStanding, LeagueStanding } from "./standings-types";
 import { RenderTeamStats } from "./RenderTeamStats";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "@components/ui/LoadingSpinner/LoadingSpinner";
+import { useFavouriteTeam } from "../../hooks/useFavouriteTeam";
 
 interface TeamTableProps {
   leagueId: number;
   season: string;
+  showInlineFavourite?: boolean;
 }
 
-export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
+export const LeagueTeams = ({
+  leagueId,
+  season,
+  showInlineFavourite,
+}: TeamTableProps) => {
   const [loading, setLoading] = useState(true);
   const [standings, setStandings] = useState<TeamStanding[]>([]);
   const [leagueInfo, setLeagueInfo] = useState<{
@@ -22,11 +28,12 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
   } | null>(null);
   const [expandedTeams, setExpandedTeams] = useState<number[]>([]);
 
+  const { fav, toggle } = useFavouriteTeam();
+
   const navigate = useNavigate();
 
   const handleReadMore = (teamName: string, teamId: number) => {
     navigate(`/team/${leagueId}/${season}/${teamName}/${teamId}`);
-
   };
 
   useEffect(() => {
@@ -96,6 +103,14 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
             />
             <h2 className="title title--fs24">{leagueInfo.name}</h2>
           </div>
+          {showInlineFavourite && fav && (
+            <button
+              className={`button ${styles["favourite-button"]}`}
+              onClick={() => toggle(fav)}
+            >
+              Remove favourite
+            </button>
+          )}
           <div className={styles["country-info"]}>
             <img
               src={leagueInfo.flag || "/placeholder.svg"}
@@ -117,11 +132,19 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
             <div className={styles["position-column"]}>#</div>
             <div className={styles["team-column"]}>Team</div>
             <div className={styles["stat-column"]}>M</div>
-            <div className={`${styles["stat-column"]} ${styles["mobile-visible"]}`}>W</div>
+            <div
+              className={`${styles["stat-column"]} ${styles["mobile-visible"]}`}
+            >
+              W
+            </div>
             <div className={styles["stat-column"]}>D</div>
             <div className={styles["stat-column"]}>L</div>
             <div className={styles["stat-column"]}>+/-</div>
-            <div className={`${styles["stat-column"]} ${styles["mobile-visible"]}`}>Goals</div>
+            <div
+              className={`${styles["stat-column"]} ${styles["mobile-visible"]}`}
+            >
+              Goals
+            </div>
             <div className={styles["last-five-column"]}>Last 5</div>
             <div className={styles["points-column"]}>PTS</div>
           </div>
@@ -149,14 +172,20 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
                     </span>
                   </div>
                   <div className={styles["stat-column"]}>{team.all.played}</div>
-                  <div className={`${styles["stat-column"]} ${styles["mobile-visible"]}`}>{team.all.win}</div>
+                  <div
+                    className={`${styles["stat-column"]} ${styles["mobile-visible"]}`}
+                  >
+                    {team.all.win}
+                  </div>
                   <div className={styles["stat-column"]}>{team.all.draw}</div>
                   <div className={styles["stat-column"]}>{team.all.lose}</div>
                   <div className={styles["stat-column"]}>
                     {team.goalsDiff > 0 ? "+" : ""}
                     {team.goalsDiff}
                   </div>
-                  <div className={`${styles["stat-column"]} ${styles["mobile-visible"]}`}>
+                  <div
+                    className={`${styles["stat-column"]} ${styles["mobile-visible"]}`}
+                  >
                     {team.all.goals.for}:{team.all.goals.against}
                   </div>
                   <div className={styles["last-five-column"]}>
@@ -182,10 +211,24 @@ export const LeagueTeams = ({ leagueId, season }: TeamTableProps) => {
                     <button
                       className={`button ${styles["read-more-button"]}`}
                       onClick={() =>
-                      handleReadMore(team.team.name, team.team.id)
+                        handleReadMore(team.team.name, team.team.id)
                       }
                     >
                       Read More
+                    </button>
+                    <button
+                      className={`button ${styles["favourite-button"]}`}
+                      onClick={() =>
+                        toggle({
+                          id: team.team.id,
+                          name: team.team.name,
+                          logo: team.team.logo,
+                        })
+                      }
+                    >
+                      {fav?.id === team.team.id
+                        ? "Remove favourite"
+                        : "Add favourite"}
                     </button>
                   </div>
                 )}

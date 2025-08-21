@@ -18,6 +18,18 @@
     justify-content: center;
     gap: 20px;
     width: 100%;
+}
+.modal-countries-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    max-height: 920px;
+    overflow-y: auto;
+    padding-right: 8px; 
+}
+.modal-teams-container {
+    width: 100%;
 
 }
 
@@ -87,5 +99,4 @@
         flex-wrap: wrap;
         width: 100%;
     }
-
 }
