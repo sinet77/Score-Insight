@@ -1,11 +1,16 @@
-import { Flag, RotateCcw, Shield, ShieldUser, Trophy } from "lucide-react";
+import styles from "./PlayerSelection.module.scss";
+import { Flag, RotateCcw, Shield, ShieldUser, User } from "lucide-react";
 import { SelectInput } from "@components/SelectInputH2H/SelectInput";
-import { StatsData } from "@components/Pages/CompareTeams/H2HTeams/StatsData/StatsData";
 import Select from "react-select";
 import { customSelectStyles } from "@components/SelectInputH2H/selectStyles";
-import { useH2HSelection } from "../../../../hooks/useH2hSelection";
+import { useH2HSelection } from "../../../../hooks/useh2hSelection";
+import { useEffect, useState } from "react";
+import { PlayersStatsData } from "../PlayersStatsData/PlayersStatsData";
 
-export function TeamSelection() {
+export function PlayerSelection() {
+  const [selectedPlayer1, setSelectedPlayer1] = useState<string>();
+  const [selectedPlayer2, setSelectedPlayer2] = useState<string>();
+
   const {
     leftSide,
     rightSide,
@@ -19,17 +24,33 @@ export function TeamSelection() {
     teamOptions2,
     resetTeamSelection,
     handleSeasonChange,
-    teams1,
-    teams2,
+    players1,
+    players2,
   } = useH2HSelection();
 
+  const playerOptions1 = players1.map((p) => ({
+    label: p.player.name,
+    value: p.player.id,
+  }));
+
+  const playerOptions2 = players2.map((p) => ({
+    label: p.player.name,
+    value: p.player.id,
+  }));
+  useEffect(() => {
+    console.log("selectedPlayer1", selectedPlayer1);
+    console.log(
+      "players1",
+      players1.map((p) => p.player)
+    );
+  }, [selectedPlayer1, players1]);
   return (
     <div className="wrapper">
       <div className="team-selection-container">
         {/* 1 kafelek */}
         <div className="team-card">
           <div className="button-container">
-            <span className="card-title">Choose first team</span>
+            <span className="card-title">Choose first player</span>
             <button
               onClick={() => resetTeamSelection("left", true)}
               className="reset-button"
@@ -65,22 +86,14 @@ export function TeamSelection() {
             }
             options={teamOptions1}
           />
+          <SelectInput
+            icon={<User size={30} strokeWidth={1.5} />}
+            placeholder="Select player"
+            value={selectedPlayer1}
+            onChange={(value) => setSelectedPlayer1(value)}
+            options={playerOptions1}
+          />
           <div className="items">
-            <div className="item wider">
-              <div className="trophy-icon">
-                <Trophy />
-              </div>
-              <span className="team-position">
-                {(() => {
-                  const team = teams1.find(
-                    (team) => team.team.name === leftSide.team
-                  );
-                  return team
-                    ? `Finished in #${team.rank} place`
-                    : "Position unknown";
-                })()}
-              </span>
-            </div>
             <Select
               options={seasonOptions}
               value={
@@ -97,7 +110,7 @@ export function TeamSelection() {
         {/* 2 kafelek */}
         <div className="team-card">
           <div className="button-container">
-            <span className="card-title">Choose second team</span>
+            <span className="card-title">Choose second player</span>
             <button
               onClick={() => resetTeamSelection("right", true)}
               className="reset-button"
@@ -134,22 +147,14 @@ export function TeamSelection() {
             }
             options={teamOptions2}
           />
+          <SelectInput
+            icon={<User size={30} strokeWidth={1.5} />}
+            placeholder="Select player"
+            value={selectedPlayer2}
+            onChange={(value) => setSelectedPlayer2(value)}
+            options={playerOptions2}
+          />
           <div className="items">
-            <div className="item wider">
-              <div className="trophy-icon">
-                <Trophy />
-              </div>
-              <span className="team-position">
-                {(() => {
-                  const team = teams2.find(
-                    (team) => team.team.name === rightSide.team
-                  );
-                  return team
-                    ? `Finished in #${team.rank} place`
-                    : "Position unknown";
-                })()}
-              </span>
-            </div>
             <Select
               options={seasonOptions}
               value={
@@ -163,12 +168,12 @@ export function TeamSelection() {
           </div>
         </div>
       </div>
-      <StatsData
-        teamOneStanding={
-          teams1.find((team) => team.team.name === leftSide.team) ?? null
+      <PlayersStatsData
+        playerOne={
+          players1.find((p) => p.player.name === selectedPlayer1) ?? null
         }
-        teamTwoStanding={
-          teams2.find((team) => team.team.name === rightSide.team) ?? null
+        playerTwo={
+          players2.find((p) => p.player.name === selectedPlayer2) ?? null
         }
       />
     </div>

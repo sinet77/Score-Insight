@@ -7,7 +7,7 @@ export const CompareTeams = () => {
     <div className={styles["container"]}>
       <div className={styles["header"]}>
         <h1>Compare Teams</h1>
-        <GitCompareArrows size={40} />
+        <GitCompareArrows size={50} />
       </div>
       <TeamSelection />
     </div>
