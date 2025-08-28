@@ -1,213 +1,38 @@
-import { useEffect, useState } from "react";
-import styles from "./H2HTeams.module.scss";
 import { Flag, RotateCcw, Shield, ShieldUser, Trophy } from "lucide-react";
-import countryData from "../../../../data/countriesData.json";
-import { SelectInput } from "./SelectInput/SelectInput";
-import { countriesApi } from "@api/countries-api";
-import { leagueTeamsApi } from "@api/leagueTeams-api";
-import { TeamStanding } from "@components/Teams/standings-types";
-import { Comparision } from "./Comparision/Comparision";
-import Select, { SingleValue } from "react-select";
-import { customSelectStyles } from "./SelectInput/selectStyles";
-interface League {
-  league: {
-    id: number;
-    name: string;
-    logo: string;
-  };
-  country?: {
-    name: string;
-  };
-}
-
-const countryOptions = countryData.response.map((c) => ({
-  label: c.name,
-  value: Number(c.code) || 0,
-  image: c.flag ?? "",
-}));
+import { SelectInput } from "@components/SelectInputH2H/SelectInput";
+import { StatsData } from "@components/Pages/CompareTeams/H2HTeams/StatsData/StatsData";
+import Select from "react-select";
+import { customSelectStyles } from "@components/SelectInputH2H/selectStyles";
+import { useH2HSelection } from "../../../../hooks/useH2hSelection";
 
 export function TeamSelection() {
-  const [leftSide, setLeftSide] = useState({
-    country: "",
-    league: "",
-    leagueId: 0,
-    team: "",
-    season: "2023",
-  });
-  const [rightSide, setRightSide] = useState({
-    country: "",
-    league: "",
-    leagueId: 0,
-    team: "",
-    season: "2023",
-  });
-  const [leagues1, setLeagues1] = useState<League[]>([]);
-  const [leagues2, setLeagues2] = useState<League[]>([]);
-  const [teams1, setTeams1] = useState<TeamStanding[]>([]);
-  const [teams2, setTeams2] = useState<TeamStanding[]>([]);
-
-  const leagueOptions1 = leagues1
-    .filter((item) => item.country?.name === leftSide.country)
-    .map((item) => ({
-      label: item.league.name,
-      value: item.league.id,
-      image: item.league.logo,
-    }));
-
-  const leagueOptions2 = leagues2
-    .filter((item) => item.country?.name === rightSide.country)
-    .map((item) => ({
-      label: item.league.name,
-      value: item.league.id,
-      image: item.league.logo,
-    }));
-
-  const teamOptions1 = teams1.map((item) => ({
-    label: item.team.name,
-    value: item.team.id,
-    image: item.team.logo,
-  }));
-
-  const teamOptions2 = teams2.map((item) => ({
-    label: item.team.name,
-    value: item.team.id,
-    image: item.team.logo,
-  }));
-
-  const seasonOptions = [
-    { value: 2021, label: "2021" },
-    { value: 2022, label: "2022" },
-    { value: 2023, label: "2023" },
-  ];
-
-  useEffect(() => {
-    const fetchLeaguesByCountry = async (
-      countryName: string,
-      setter: (leagues: League[]) => void
-    ) => {
-      try {
-        const data = await countriesApi.get();
-        if (!data) return;
-
-        const leaguesForCountry = data.response.filter(
-          (league: League) => league.country?.name === countryName
-        );
-        setter(leaguesForCountry);
-      } catch (error) {
-        console.error("Error fetching leagues:", error);
-      }
-    };
-
-    if (leftSide.country) {
-      fetchLeaguesByCountry(leftSide.country, setLeagues1);
-    }
-    if (rightSide.country) {
-      fetchLeaguesByCountry(rightSide.country, setLeagues2);
-    }
-  }, [leftSide.country, rightSide.country]);
-
-  useEffect(() => {
-    const fetchStandings1 = async () => {
-      if (!leftSide.league || !leftSide.season) return;
-
-      const selectedLeague = leagues1.find(
-        (league) => league.league.name === leftSide.league
-      );
-      const selectedLeagueId = selectedLeague?.league.id;
-
-      if (!selectedLeagueId) return;
-      else {
-        setLeftSide((prev) => ({
-          ...prev,
-          leagueId: selectedLeagueId,
-        }));
-      }
-
-      try {
-        const data = await leagueTeamsApi.get(
-          selectedLeagueId,
-          leftSide.season
-        );
-        const teamsList = data.response?.[0]?.league?.standings?.[0] || [];
-        setTeams1(teamsList);
-      } catch (error) {
-        console.error("Error fetching standings 1:", error);
-      }
-    };
-
-    fetchStandings1();
-  }, [leftSide.league, leftSide.season, leagues1]);
-
-  useEffect(() => {
-    const fetchStandings2 = async () => {
-      if (!rightSide.league || !rightSide.season) return;
-
-      const selectedLeague = leagues2.find(
-        (league) => league.league.name === rightSide.league
-      );
-      const selectedLeagueId = selectedLeague?.league.id;
-
-      if (!selectedLeagueId) return;
-      else {
-        setRightSide((prev) => ({
-          ...prev,
-          leagueId: selectedLeagueId,
-        }));
-      }
-
-      try {
-        const data = await leagueTeamsApi.get(
-          selectedLeagueId,
-          rightSide.season
-        );
-        const teamsList = data.response?.[0]?.league?.standings?.[0] || [];
-        setTeams2(teamsList);
-      } catch (error) {
-        console.error("Error fetching standings 2:", error);
-      }
-    };
-
-    fetchStandings2();
-  }, [rightSide.league, rightSide.season, leagues2]);
-
-  const resetTeamSelection = (side: "left" | "right", fullReset = false) => {
-    const resetState = (prev: typeof leftSide) => ({
-      ...prev,
-      country: fullReset ? "" : prev.country,
-      league: "",
-      team: "",
-      season: "2023",
-    });
-
-    if (side === "left") {
-      setLeftSide((prev) => resetState(prev));
-      setTeams1([]);
-    } else {
-      setRightSide((prev) => resetState(prev));
-      setTeams2([]);
-    }
-  };
-
-  const handleSeasonChange = (
-    selected: SingleValue<{ value: number; label: string }>,
-    side: "left" | "right"
-  ) => {
-    if (!selected) return;
-
-    const setter = side === "left" ? setLeftSide : setRightSide;
-    setter((prev) => ({ ...prev, season: selected.value.toString() }));
-  };
+  const {
+    leftSide,
+    rightSide,
+    setLeftSide,
+    setRightSide,
+    countryOptions,
+    seasonOptions,
+    leagueOptions1,
+    leagueOptions2,
+    teamOptions1,
+    teamOptions2,
+    resetTeamSelection,
+    handleSeasonChange,
+    teams1,
+    teams2,
+  } = useH2HSelection();
 
   return (
-    <div className={styles["wrapper"]}>
-      <div className={styles["team-selection-container"]}>
+    <div className="wrapper">
+      <div className="team-selection-container">
         {/* 1 kafelek */}
-        <div className={styles["team-card"]}>
-          <div className={styles["button-container"]}>
-            <span className={styles["card-title"]}>Choose first team</span>
+        <div className="team-card">
+          <div className="button-container">
+            <span className="card-title">Choose first team</span>
             <button
               onClick={() => resetTeamSelection("left", true)}
-              className={styles["reset-button"]}
+              className="reset-button"
             >
               <RotateCcw />
             </button>
@@ -240,12 +65,12 @@ export function TeamSelection() {
             }
             options={teamOptions1}
           />
-          <div className={styles["items"]}>
-            <div className={`${styles["item"]} ${styles["wider"]}`}>
-              <div className={styles["trophy-icon"]}>
+          <div className="items">
+            <div className="item wider">
+              <div className="trophy-icon">
                 <Trophy />
               </div>
-              <span className={styles["team-position"]}>
+              <span className="team-position">
                 {(() => {
                   const team = teams1.find(
                     (team) => team.team.name === leftSide.team
@@ -270,12 +95,12 @@ export function TeamSelection() {
         </div>
 
         {/* 2 kafelek */}
-        <div className={styles["team-card"]}>
-          <div className={styles["button-container"]}>
-            <span className={styles["card-title"]}>Choose second team</span>
+        <div className="team-card">
+          <div className="button-container">
+            <span className="card-title">Choose second team</span>
             <button
               onClick={() => resetTeamSelection("right", true)}
-              className={styles["reset-button"]}
+              className="reset-button"
             >
               <RotateCcw />
             </button>
@@ -309,12 +134,12 @@ export function TeamSelection() {
             }
             options={teamOptions2}
           />
-          <div className={styles["items"]}>
-            <div className={`${styles["item"]} ${styles["wider"]}`}>
-              <div className={styles["trophy-icon"]}>
+          <div className="items">
+            <div className="item wider">
+              <div className="trophy-icon">
                 <Trophy />
               </div>
-              <span className={styles["team-position"]}>
+              <span className="team-position">
                 {(() => {
                   const team = teams2.find(
                     (team) => team.team.name === rightSide.team
@@ -338,13 +163,13 @@ export function TeamSelection() {
           </div>
         </div>
       </div>
-      <Comparision
-        teamOneName={leftSide.team}
-        teamTwoName={rightSide.team}
-        leagueOneId={leftSide.leagueId}
-        leagueTwoId={rightSide.leagueId}
-        seasonOne={leftSide.season}
-        seasonTwo={rightSide.season}
+      <StatsData
+        teamOneStanding={
+          teams1.find((team) => team.team.name === leftSide.team) ?? null
+        }
+        teamTwoStanding={
+          teams2.find((team) => team.team.name === rightSide.team) ?? null
+        }
       />
     </div>
   );

@@ -1,7 +1,7 @@
 import styles from "./StatsData.module.scss";
 import { TeamStanding } from "@components/Teams/standings-types";
-import { StatItem } from "../StatItem/StatItem";
-import { StatSection } from "../StatSection/StatSection";
+import { StatItem } from "../../../../StatsH2H/StatItem/StatItem";
+import { StatSection } from "../../../../StatsH2H/StatSection/StatSection";
 
 type StatsDataProps = {
   teamOneStanding: TeamStanding | null;
