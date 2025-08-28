@@ -100,6 +100,7 @@ export function useH2HSelection() {
       setLeftSide((prev) => ({
         ...resetSelectionState(prev, fullReset),
         leagueId: 0,
+        players1: "",
       }));
       setTeams1([]);
       setPlayers1([]);
@@ -107,6 +108,7 @@ export function useH2HSelection() {
       setRightSide((prev) => ({
         ...resetSelectionState(prev, fullReset),
         leagueId: 0,
+        players2: "",
       }));
       setTeams2([]);
       setPlayers2([]);
